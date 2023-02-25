@@ -1,5 +1,5 @@
 import { Scene } from "../src/Scene";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
 export default function Home() {
@@ -20,6 +20,17 @@ export default function Home() {
 				<Link href='https://www.instagram.com/miamigooners/'>
 					<InstagramIcon color='primary' fontSize='large' />
 				</Link>
+			</div>
+			<div
+				style={{
+					position: "absolute",
+					bottom: "2rem",
+					left: "50%",
+					transform: "translateX(-50%)",
+				}}>
+				<Typography variant='body1' color='primary'>
+					coming soon...
+				</Typography>
 			</div>
 		</>
 	);
