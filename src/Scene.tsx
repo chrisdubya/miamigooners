@@ -7,9 +7,9 @@ const Model = () => {
 	const gltf = useLoader(GLTFLoader, "/gooners-logo.glb");
 	const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef();
 
-	// useFrame(() => {
-	// 	if (modelRef.current) modelRef.current.rotation.z += -0.01;
-	// });
+	useFrame(() => {
+		if (modelRef.current) modelRef.current.rotation.z += -0.01;
+	});
 
 	return (
 		<>
