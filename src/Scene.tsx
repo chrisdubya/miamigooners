@@ -5,10 +5,10 @@ import { Environment, OrbitControls } from "@react-three/drei";
 
 const Model = () => {
 	const gltf = useLoader(GLTFLoader, "/gooners-logo.glb");
-	const modelRef = useRef();
+	const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef();
 
 	useFrame(() => {
-		modelRef.current.rotation.z += -0.01;
+		if (modelRef.current) modelRef.current.rotation.z += -0.01;
 	});
 
 	return (
