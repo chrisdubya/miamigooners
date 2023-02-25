@@ -9,15 +9,15 @@ export default function Home() {
 			<Head>
 				{/* Primary Meta Tags */}
 				<title>
-					Arsenal Football Club Supporters Group in Miami, FL - Miami Gooners
+					Arsenal Football Supporters Club in Miami, FL - Miami Gooners
 				</title>
 				<meta
 					name='title'
-					content='Arsenal Football Club Supporters Group in Miami, FL - Miami Gooners'
+					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					name='description'
-					content='Miami Gooners, the Rebel Arsenal Football Club Supporters Group in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
 				/>
 
 				{/* Open Graph / Facebook */}
@@ -25,11 +25,11 @@ export default function Home() {
 				<meta property='og:url' content='https://miamigooners.com/' />
 				<meta
 					property='og:title'
-					content='Arsenal Football Club Supporters Group in Miami, FL - Miami Gooners'
+					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					property='og:description'
-					content='Miami Gooners, the Rebel Arsenal Football Club Supporters Group in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
 				/>
 				<meta
 					property='og:image'
@@ -41,11 +41,11 @@ export default function Home() {
 				<meta property='twitter:url' content='https://miamigooners.com/' />
 				<meta
 					property='twitter:title'
-					content='Arsenal Football Club Supporters Group in Miami, FL - Miami Gooners'
+					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					property='twitter:description'
-					content='Miami Gooners, the Rebel Arsenal Football Club Supporters Group in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
 				/>
 				<meta
 					property='twitter:image'
