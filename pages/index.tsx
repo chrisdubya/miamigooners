@@ -70,11 +70,11 @@ export default function Home() {
 			<div
 				style={{
 					position: "absolute",
-					bottom: "2rem",
+					bottom: "4rem",
 					left: "50%",
 					transform: "translateX(-50%)",
 				}}>
-				<Typography variant='body1' color='primary'>
+				<Typography sx={{ fontWeight: "bold" }} variant='body1' color='primary'>
 					coming soon...
 				</Typography>
 			</div>
