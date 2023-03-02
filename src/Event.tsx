@@ -7,12 +7,15 @@ import {
 } from "@mui/material";
 import { EventType } from "./AllEvents";
 import Grid from "@mui/material/Unstable_Grid2";
+import { DateTime } from "luxon";
 
 interface EventProps {
 	event: EventType;
+	past?: boolean;
 }
 
-export const Event = ({ event }: EventProps) => {
+export const Event = ({ event, past }: EventProps) => {
+	console.log(event);
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275 }}>
@@ -24,11 +27,11 @@ export const Event = ({ event }: EventProps) => {
 						{event.title}
 					</Typography>
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-						{event.date}
+						{event.date.toISODate()}
 					</Typography>
 					<Typography variant='body2'>{event.location}</Typography>
 				</CardContent>
-				{event.rsvpLink && (
+				{event.rsvpLink && !past && (
 					<CardActions>
 						<Button href={event.rsvpLink} size='small'>
 							RSVP
