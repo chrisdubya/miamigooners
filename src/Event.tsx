@@ -17,7 +17,11 @@ interface EventProps {
 
 export const Event = ({ event, past }: EventProps) => {
 	const formatDuration = (date: DateTime) => {
-		return date.diffNow().shiftTo("days").toObject().days?.toFixed();
+		const duration = Math.ceil(
+			date.diffNow().shiftTo("days").toObject().days as number
+		);
+
+		return duration > 1 ? `${duration} days` : `${duration} day`;
 	};
 
 	return (
@@ -33,7 +37,7 @@ export const Event = ({ event, past }: EventProps) => {
 						}}
 						variant='h5'
 						color={"primary"}>
-						{formatDuration(event.date)} days
+						{formatDuration(event.date)}
 					</Typography>
 				)}
 				<CardMedia
@@ -51,7 +55,7 @@ export const Event = ({ event, past }: EventProps) => {
 						{event.title}
 					</Typography>
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-						{event.date.toFormat("EEEE, MMMM d")}
+						{event.date.toFormat("EEEE, M/d h:mma")}
 					</Typography>
 					<Typography variant='body2'>{event.location}</Typography>
 				</CardContent>
