@@ -14,6 +14,14 @@ export interface EventType {
 const events: EventType[] = [
 	{
 		type: "Europa League",
+		date: DateTime.fromISO("2023-03-12T10:00:00"),
+		title: "Arsenal vs Fulham",
+		location: "Fritz and Franz",
+		rsvpLink:
+			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+	},
+	{
+		type: "Europa League",
 		date: DateTime.fromISO("2023-03-09T12:45:00"),
 		title: "Arsenal vs Sporting CP",
 		location: "Lost Boy, Dry Goods",
