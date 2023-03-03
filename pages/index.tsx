@@ -1,5 +1,5 @@
 import { Scene } from "../src/Scene";
-import { Container, Box, Link, Typography } from "@mui/material";
+import { Container, Box, Link } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { AllEvents } from "../src/AllEvents";
 
