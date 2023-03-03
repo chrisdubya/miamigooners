@@ -25,11 +25,11 @@ const Model = () => {
 
 export const Scene = () => {
 	return (
-		<div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+		<div style={{ position: "absolute", height: "80vh", inset: 0, zIndex: 0 }}>
 			<Canvas>
 				<Suspense fallback={null}>
 					<Model />
-					<OrbitControls />
+					<OrbitControls enableZoom={false} />
 					<Environment background={false} preset='sunset' />
 				</Suspense>
 			</Canvas>

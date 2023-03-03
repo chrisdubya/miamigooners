@@ -3,6 +3,7 @@ import {
 	Card,
 	CardActions,
 	CardContent,
+	CardMedia,
 	Typography,
 } from "@mui/material";
 import { EventType } from "./AllEvents";
@@ -15,10 +16,33 @@ interface EventProps {
 }
 
 export const Event = ({ event, past }: EventProps) => {
-	console.log(event);
+	const formatDuration = (date: DateTime) => {
+		return date.diffNow().shiftTo("days").toObject().days?.toFixed();
+	};
+
 	return (
 		<Grid xs={12} md={6}>
-			<Card sx={{ minWidth: 275 }}>
+			<Card sx={{ minWidth: 275, position: "relative" }}>
+				{!past && (
+					<Typography
+						sx={{
+							position: "absolute",
+							top: "1rem",
+							right: "1rem",
+							fontWeight: "700",
+						}}
+						variant='h5'
+						color={"primary"}>
+						{formatDuration(event.date)} days
+					</Typography>
+				)}
+				<CardMedia
+					sx={{ height: 140 }}
+					image={`https://picsum.photos/300/300?grayscale&random=${
+						Math.floor(Math.random() * 10) + 1
+					}`}
+					title={event.title}
+				/>
 				<CardContent>
 					<Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
 						{event.type}
@@ -27,17 +51,16 @@ export const Event = ({ event, past }: EventProps) => {
 						{event.title}
 					</Typography>
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
-						{event.date.toISODate()}
+						{event.date.toFormat("EEEE, MMMM d")}
 					</Typography>
 					<Typography variant='body2'>{event.location}</Typography>
 				</CardContent>
-				{event.rsvpLink && !past && (
-					<CardActions>
-						<Button href={event.rsvpLink} size='small'>
-							RSVP
-						</Button>
-					</CardActions>
-				)}
+
+				<CardActions>
+					<Button disabled={past} href={event.rsvpLink} size='small'>
+						RSVP {past && "closed"}
+					</Button>
+				</CardActions>
 			</Card>
 		</Grid>
 	);
