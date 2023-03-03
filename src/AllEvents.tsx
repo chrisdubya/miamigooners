@@ -38,7 +38,7 @@ const events: EventType[] = [
 	},
 	{
 		type: "Premier League",
-		date: DateTime.fromISO("2023-02-25T14:45:00"),
+		date: DateTime.fromISO("2023-02-25T10:00:00"),
 		title: "Arsenal vs Leicester",
 		location: "Fritz and Franz",
 		rsvpLink:
