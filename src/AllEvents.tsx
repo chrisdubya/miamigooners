@@ -29,7 +29,7 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-fulham-watch-with-the-miami-gooners-tickets-582387906907",
-		img: "/images/random/DSC02352.JPG",
+		img: "/images/random/DSC02352.jpg",
 		bgPosition: "0 -56px",
 	},
 	{
@@ -49,7 +49,7 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
-		img: "/images/vs-bournemouth.jpg",
+		img: "/images/vs-bournemouth.jpeg",
 		bgPosition: "0 -44px",
 	},
 	{
