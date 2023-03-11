@@ -27,8 +27,6 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-03-12T10:00:00"),
 		title: "Arsenal vs Fulham",
 		location: "Fritz and Franz",
-		rsvpLink:
-			"https://www.eventbrite.com/e/arsenal-v-fulham-watch-with-the-miami-gooners-tickets-582387906907",
 		img: "/images/random/DSC02352.jpg",
 		bgPosition: "0 -56px",
 	},
