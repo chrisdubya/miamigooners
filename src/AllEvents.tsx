@@ -8,17 +8,29 @@ export interface EventType {
 	date: DateTime;
 	title: string;
 	location: string;
-	rsvpLink: string;
+	rsvpLink?: string;
+	img?: string;
+	bgPosition?: string;
 }
 
 const events: EventType[] = [
 	{
 		type: "Europa League",
+		date: DateTime.fromISO("2023-03-16T16:00:00"),
+		title: "Arsenal vs Sporting CP",
+		location: "Lost Boy, Dry Goods",
+		img: "/images/random/891E46C3-606F-4B57-BC5C-4413BCE8E4C5.jpg",
+		bgPosition: "0 -25px",
+	},
+	{
+		type: "Premier League",
 		date: DateTime.fromISO("2023-03-12T10:00:00"),
 		title: "Arsenal vs Fulham",
 		location: "Fritz and Franz",
 		rsvpLink:
-			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+			"https://www.eventbrite.com/e/arsenal-v-fulham-watch-with-the-miami-gooners-tickets-582387906907",
+		img: "/images/random/DSC02352.JPG",
+		bgPosition: "0 -56px",
 	},
 	{
 		type: "Europa League",
@@ -27,6 +39,8 @@ const events: EventType[] = [
 		location: "Lost Boy, Dry Goods",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+		img: "/images/random/IMG_1430.jpg",
+		bgPosition: "0 -50px",
 	},
 	{
 		type: "Premier League",
@@ -35,6 +49,8 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+		img: "/images/vs-bournemouth.jpg",
+		bgPosition: "0 -44px",
 	},
 	{
 		type: "Premier League",
@@ -43,6 +59,8 @@ const events: EventType[] = [
 		location: "Lost Boy, Dry Goods",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+		img: "/images/vs-everton.jpg",
+		bgPosition: "0 -21px",
 	},
 	{
 		type: "Premier League",
@@ -51,6 +69,7 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
+		img: "/images/vs-leicester.jpg",
 	},
 ];
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
 	Button,
 	Card,
@@ -16,6 +17,7 @@ interface EventProps {
 }
 
 export const Event = ({ event, past }: EventProps) => {
+	const [isHovering, setIsHovering] = useState<boolean>(false);
 	const formatDuration = (date: DateTime) => {
 		const duration = Math.ceil(
 			date.diffNow().shiftTo("days").toObject().days as number
@@ -41,10 +43,14 @@ export const Event = ({ event, past }: EventProps) => {
 					</Typography>
 				)}
 				<CardMedia
-					sx={{ height: 140 }}
-					image={`https://picsum.photos/300/300?grayscale&random=${
-						Math.floor(Math.random() * 10) + 1
-					}`}
+					onMouseEnter={() => setIsHovering(true)}
+					onMouseLeave={() => setIsHovering(false)}
+					sx={{
+						height: 140,
+						filter: isHovering ? "grayscale(0%)" : "grayscale(100%)",
+						backgroundPosition: event.bgPosition ? event.bgPosition : null,
+					}}
+					image={event.img ?? undefined}
 					title={event.title}
 				/>
 				<CardContent>
@@ -60,11 +66,13 @@ export const Event = ({ event, past }: EventProps) => {
 					<Typography variant='body2'>{event.location}</Typography>
 				</CardContent>
 
-				<CardActions>
-					<Button disabled={past} href={event.rsvpLink} size='small'>
-						RSVP {past && "closed"}
-					</Button>
-				</CardActions>
+				{event.rsvpLink && (
+					<CardActions>
+						<Button disabled={past} href={event.rsvpLink} size='small'>
+							RSVP {past && "closed"}
+						</Button>
+					</CardActions>
+				)}
 			</Card>
 		</Grid>
 	);
