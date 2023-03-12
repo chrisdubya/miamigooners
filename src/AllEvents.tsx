@@ -20,7 +20,7 @@ const events: EventType[] = [
 		title: "Arsenal vs Sporting CP",
 		location: "Lost Boy, Dry Goods",
 		img: "/images/random/random-3.jpg",
-		bgPosition: "0 -25px",
+		bgPosition: "0 -51px",
 	},
 	{
 		type: "Premier League",
@@ -35,8 +35,6 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-03-09T12:45:00"),
 		title: "Arsenal vs Sporting CP",
 		location: "Lost Boy, Dry Goods",
-		rsvpLink:
-			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
 		img: "/images/random/random-1.jpg",
 		bgPosition: "0 -50px",
 	},
@@ -45,8 +43,6 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-03-04T10:00:00"),
 		title: "Arsenal vs Bournemouth",
 		location: "Fritz and Franz",
-		rsvpLink:
-			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
 		img: "/images/bournemouth.jpeg",
 		bgPosition: "0 -44px",
 	},
@@ -65,8 +61,6 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-02-25T10:00:00"),
 		title: "Arsenal vs Leicester",
 		location: "Fritz and Franz",
-		rsvpLink:
-			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
 		img: "/images/leicester.jpg",
 	},
 ];
