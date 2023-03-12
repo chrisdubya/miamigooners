@@ -19,7 +19,7 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-03-16T16:00:00"),
 		title: "Arsenal vs Sporting CP",
 		location: "Lost Boy, Dry Goods",
-		img: "/images/random/891E46C3-606F-4B57-BC5C-4413BCE8E4C5.jpg",
+		img: "/images/random/random-3.jpg",
 		bgPosition: "0 -25px",
 	},
 	{
@@ -27,7 +27,7 @@ const events: EventType[] = [
 		date: DateTime.fromISO("2023-03-12T10:00:00"),
 		title: "Arsenal vs Fulham",
 		location: "Fritz and Franz",
-		img: "/images/random/DSC02352.jpg",
+		img: "/images/random/random-2.jpg",
 		bgPosition: "0 -56px",
 	},
 	{
@@ -37,7 +37,7 @@ const events: EventType[] = [
 		location: "Lost Boy, Dry Goods",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
-		img: "/images/random/IMG_1430.jpg",
+		img: "/images/random/random-1.jpg",
 		bgPosition: "0 -50px",
 	},
 	{
@@ -47,7 +47,7 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
-		img: "/images/vs-bournemouth.jpeg",
+		img: "/images/bournemouth.jpeg",
 		bgPosition: "0 -44px",
 	},
 	{
@@ -57,7 +57,7 @@ const events: EventType[] = [
 		location: "Lost Boy, Dry Goods",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
-		img: "/images/vs-everton.jpg",
+		img: "/images/everton.jpg",
 		bgPosition: "0 -21px",
 	},
 	{
@@ -67,7 +67,7 @@ const events: EventType[] = [
 		location: "Fritz and Franz",
 		rsvpLink:
 			"https://www.eventbrite.com/e/arsenal-v-everton-watch-with-the-miami-gooners-tickets-566559092497",
-		img: "/images/vs-leicester.jpg",
+		img: "/images/leicester.jpg",
 	},
 ];
 
