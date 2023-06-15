@@ -18,12 +18,28 @@ interface EventProps {
 
 export const Event = ({ event, past }: EventProps) => {
 	const [isHovering, setIsHovering] = useState<boolean>(false);
-	const formatDuration = (date: DateTime) => {
-		const duration = Math.ceil(
-			date.diffNow().shiftTo("days").toObject().days as number
-		);
+	const formatDuration = (date: string) => {
+		// Create a Luxon DateTime object from the futureDate string
+		const futureDate = DateTime.fromFormat(date, "yyyy-MM-dd HH:mm:ss'Z'", {
+			zone: "utc",
+		});
 
-		return duration > 1 ? `${duration} days` : `${duration} day`;
+		// Get the current date
+		const currentDate = DateTime.now();
+
+		// Calculate the difference in days
+		const diff = futureDate.diff(currentDate, "days").toObject();
+
+		if (diff?.days) {
+			const daysDifference = Math.ceil(diff.days);
+
+			// Display the number of days
+			console.log("Number of days from now:", daysDifference);
+
+			return daysDifference > 1
+				? `${daysDifference} days`
+				: `${daysDifference} day`;
+		}
 	};
 
 	const formattedDateTime = useMemo(() => {
@@ -47,7 +63,7 @@ export const Event = ({ event, past }: EventProps) => {
 						}}
 						variant='h5'
 						color={"primary"}>
-						{formatDuration(DateTime.fromISO(event.DateUtc))}
+						{formatDuration(event.DateUtc)}
 					</Typography>
 				)}
 				<CardMedia
@@ -57,13 +73,22 @@ export const Event = ({ event, past }: EventProps) => {
 						height: 140,
 						filter: isHovering ? "grayscale(0%)" : "grayscale(100%)",
 					}}
-					image={event.image ?? undefined}
-					title={`${event.AwayTeam} @ ${event.HomeTeam}`}
-				/>
-				<CardContent>
-					<Typography variant='h5' component='div'>
-						{`${event.AwayTeam} @ ${event.HomeTeam}`}
+					image={past ? event.image ?? undefined : undefined}>
+					<Typography
+						variant='h4'
+						component='div'
+						sx={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+						}}>
+						{event.AwayTeam === "Arsenal"
+							? `${event.HomeTeam.toUpperCase()}[A]`
+							: `${event.AwayTeam.toUpperCase()}[H]`}
 					</Typography>
+				</CardMedia>
+				<CardContent>
 					{event?.HomeTeamScore?.toString() &&
 						event?.AwayTeamScore?.toString() && (
 							<Typography

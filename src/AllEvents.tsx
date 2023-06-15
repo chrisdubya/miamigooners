@@ -52,19 +52,40 @@ export const AllEvents = () => {
 	return (
 		<Container>
 			<Box component='div' mb={8}>
-				{/* <Typography variant='h3' gutterBottom color={"primary"} mt={4}>
+				<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
 					Upcoming Events
-				</Typography> */}
-				{/* 
+				</Typography>
+
 				<Grid container spacing={2} mt={2}>
 					{data?.length &&
 						data
 							.filter(
-								(val) => val.DateUtc.toISODate() > DateTime.now().toISODate()
+								(val) =>
+									DateTime.fromFormat(val.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+										zone: "utc",
+									})
+										.setZone("America/New_York")
+										.toISODate() > DateTime.now().toISODate()
 							)
-							.sort((a, b) => a.date.toMillis() - b.date.toMillis())
+							.sort((a, b) => {
+								const dateA = DateTime.fromFormat(
+									a.DateUtc,
+									"yyyy-MM-dd HH:mm:ss'Z'",
+									{
+										zone: "utc",
+									}
+								);
+								const dateB = DateTime.fromFormat(
+									b.DateUtc,
+									"yyyy-MM-dd HH:mm:ss'Z'",
+									{
+										zone: "utc",
+									}
+								);
+								return dateA.toMillis() - dateB.toMillis();
+							})
 							.map((event, index) => <Event key={index} event={event} />)}
-				</Grid> */}
+				</Grid>
 
 				<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
 					Past Events
