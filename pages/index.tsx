@@ -1,7 +1,6 @@
 import { Scene } from "../src/Scene";
 import { Container, Box, Link } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { AllEvents } from "../src/AllEvents";
 
 export default function Home() {
 	return (
@@ -23,10 +22,6 @@ export default function Home() {
 						<InstagramIcon color='primary' fontSize='large' />
 					</Link>
 				</div>
-			</Box>
-
-			<Box component='div'>
-				<AllEvents />
 			</Box>
 		</Container>
 	);
