@@ -1,28 +1,42 @@
 import { Scene } from "../src/Scene";
 import { Container, Box, Link } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import { Twitter, Instagram } from "@mui/icons-material";
 import { AllEvents } from "../src/AllEvents";
 
 export default function Home() {
 	return (
 		<Container>
 			<Box component='div' sx={{ height: "80vh" }}>
-				<div
-					style={{
+				<Box
+					component='div'
+					sx={{
 						position: "absolute",
 						height: "80vh",
 						zIndex: "-1",
 						inset: 0,
 						background: "url(/background.jpeg) no-repeat center center fixed",
 						backgroundSize: "cover",
-					}}></div>
+					}}
+				/>
+
 				<Scene />
 
-				<div style={{ position: "absolute", top: "2rem", right: "2rem" }}>
-					<Link href='https://www.instagram.com/miamigooners/'>
-						<InstagramIcon color='primary' fontSize='large' />
+				<Box
+					component='div'
+					sx={{
+						display: "flex",
+						gap: "0.5rem",
+						position: "absolute",
+						top: "2rem",
+						right: "2rem",
+					}}>
+					<Link href='https://www.instagram.com/miamigooners'>
+						<Instagram color='primary' fontSize='large' />
 					</Link>
-				</div>
+					<Link href='https://twitter.com/miamigooners'>
+						<Twitter color='primary' fontSize='large' />
+					</Link>
+				</Box>
 			</Box>
 
 			<Box component='div'>

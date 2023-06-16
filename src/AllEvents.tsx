@@ -57,7 +57,7 @@ export const AllEvents = () => {
 				</Typography>
 
 				<Grid container spacing={2} mt={2}>
-					{data?.length &&
+					{data?.length ? (
 						data
 							.filter(
 								(val) =>
@@ -84,7 +84,12 @@ export const AllEvents = () => {
 								);
 								return dateA.toMillis() - dateB.toMillis();
 							})
-							.map((event, index) => <Event key={index} event={event} />)}
+							.map((event, index) => <Event key={index} event={event} />)
+					) : (
+						<Typography variant='h5' gutterBottom color={"#fff"}>
+							loading...
+						</Typography>
+					)}
 				</Grid>
 
 				<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
@@ -92,7 +97,7 @@ export const AllEvents = () => {
 				</Typography>
 
 				<Grid container spacing={2} mt={2}>
-					{data?.length &&
+					{data?.length ? (
 						data
 							.filter(
 								(val) =>
@@ -121,7 +126,12 @@ export const AllEvents = () => {
 							})
 							.map((event, index) => (
 								<Event key={index} event={event} past={true} />
-							))}
+							))
+					) : (
+						<Typography variant='h5' gutterBottom color={"#fff"}>
+							loading...
+						</Typography>
+					)}
 				</Grid>
 			</Box>
 		</Container>

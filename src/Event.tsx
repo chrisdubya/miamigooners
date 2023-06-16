@@ -18,23 +18,16 @@ interface EventProps {
 
 export const Event = ({ event, past }: EventProps) => {
 	const [isHovering, setIsHovering] = useState<boolean>(false);
+
 	const formatDuration = (date: string) => {
-		// Create a Luxon DateTime object from the futureDate string
 		const futureDate = DateTime.fromFormat(date, "yyyy-MM-dd HH:mm:ss'Z'", {
 			zone: "utc",
 		});
-
-		// Get the current date
 		const currentDate = DateTime.now();
-
-		// Calculate the difference in days
 		const diff = futureDate.diff(currentDate, "days").toObject();
 
 		if (diff?.days) {
 			const daysDifference = Math.ceil(diff.days);
-
-			// Display the number of days
-			console.log("Number of days from now:", daysDifference);
 
 			return daysDifference > 1
 				? `${daysDifference} days`
@@ -66,6 +59,7 @@ export const Event = ({ event, past }: EventProps) => {
 						{formatDuration(event.DateUtc)}
 					</Typography>
 				)}
+
 				<CardMedia
 					onMouseEnter={() => setIsHovering(true)}
 					onMouseLeave={() => setIsHovering(false)}
@@ -88,6 +82,7 @@ export const Event = ({ event, past }: EventProps) => {
 							: `${event.AwayTeam.toUpperCase()}[H]`}
 					</Typography>
 				</CardMedia>
+
 				<CardContent>
 					{event?.HomeTeamScore?.toString() &&
 						event?.AwayTeamScore?.toString() && (
