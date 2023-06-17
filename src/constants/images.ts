@@ -1,0 +1,17 @@
+export const images: string[] = [
+	"bournemouth-home",
+	"everton-home",
+	"leicester-away",
+	"chelsea-home",
+	"brighton-home",
+	"nottingham-forest-away",
+	"fulham-away",
+	"leeds-home",
+	"liverpool-away",
+	"man-city-away",
+	"crystal-palace-home",
+	"southampton-home",
+	"west-ham-away",
+	"newcastle-away",
+	"wolves-home",
+];
