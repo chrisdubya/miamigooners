@@ -10,14 +10,13 @@ import {
 import { EventType } from "./AllEvents";
 import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
+import { teamColors } from "./constants/teamColors";
 
 interface EventProps {
 	index: number;
 	event: EventType;
 	past?: boolean;
 }
-
-const overlayColors: string[] = ["red", "blue", "white"];
 
 export const Event = ({ index, event, past }: EventProps) => {
 	const [isHovering, setIsHovering] = useState<boolean>(false);
@@ -46,6 +45,16 @@ export const Event = ({ index, event, past }: EventProps) => {
 		return dateTime.toFormat("EEEE, M/d h:mma");
 	}, [event.DateUtc]);
 
+	const getTeamColor = (
+		event: EventType,
+		colorType: "primary" | "secondary"
+	) => {
+		const team = event.HomeTeam === "Arsenal" ? event.AwayTeam : event.HomeTeam;
+		const color = teamColors.find((item) => item.team === team);
+
+		return colorType === "primary" ? color?.primary : color?.secondary;
+	};
+
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275, position: "relative" }}>
@@ -59,7 +68,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 						}}
 						variant='h5'
 						color={"white"}>
-						{formatDuration(event.DateUtc)} {index}
+						{formatDuration(event.DateUtc)}
 					</Typography>
 				)}
 
@@ -69,7 +78,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 					sx={{
 						position: "relative",
 						height: 140,
-						backgroundColor: overlayColors[index % 3],
+						backgroundColor: getTeamColor(event, "primary"),
 					}}
 					image={past ? event.image ?? undefined : undefined}>
 					<Typography
@@ -80,6 +89,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 							top: "50%",
 							left: "50%",
 							transform: "translate(-50%, -50%)",
+							color: getTeamColor(event, "secondary"),
 						}}>
 						{event.AwayTeam === "Arsenal"
 							? `${event.HomeTeam.toUpperCase()}[A]`
