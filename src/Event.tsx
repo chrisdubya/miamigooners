@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
+	Box,
 	Button,
 	Card,
 	CardActions,
@@ -19,8 +20,6 @@ interface EventProps {
 }
 
 export const Event = ({ index, event, past }: EventProps) => {
-	const [isHovering, setIsHovering] = useState<boolean>(false);
-
 	const formatDuration = (date: string) => {
 		const futureDate = DateTime.fromFormat(date, "yyyy-MM-dd HH:mm:ss'Z'", {
 			zone: "utc",
@@ -55,6 +54,17 @@ export const Event = ({ index, event, past }: EventProps) => {
 		return colorType === "primary" ? color?.primary : color?.secondary;
 	};
 
+	const getCountdownColor = (event: EventType) => {
+		if (
+			getTeamColor(event, "primary") === "#fff" ||
+			getTeamColor(event, "primary") === "rgba(255,255,255,1)"
+		) {
+			return "#000";
+		} else {
+			return "#fff";
+		}
+	};
+
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275, position: "relative" }}>
@@ -65,26 +75,40 @@ export const Event = ({ index, event, past }: EventProps) => {
 							top: "1rem",
 							right: "1rem",
 							fontWeight: "700",
+							zIndex: 1,
 						}}
-						variant='h5'
-						color={"white"}>
+						variant='h6'
+						color={getCountdownColor(event)}>
 						{formatDuration(event.DateUtc)}
 					</Typography>
 				)}
 
 				<CardMedia
-					onMouseEnter={() => setIsHovering(true)}
-					onMouseLeave={() => setIsHovering(false)}
 					sx={{
 						position: "relative",
 						height: 140,
-						backgroundColor: getTeamColor(event, "primary"),
-					}}
-					image={past ? event.image ?? undefined : undefined}>
+						backgroundImage: past
+							? `linear-gradient(black, black), url(${event.image})` ??
+							  undefined
+							: undefined,
+						backgroundBlendMode: "saturation",
+					}}>
+					<Box
+						component='div'
+						sx={{
+							position: "absolute",
+							top: 0,
+							left: 0,
+							right: 0,
+							bottom: 0,
+							backgroundColor: getTeamColor(event, "primary"),
+							opacity: past && event.image ? 0.7 : 1,
+						}}></Box>
 					<Typography
 						variant='h4'
 						component='div'
 						sx={{
+							fontWeight: "bold",
 							position: "absolute",
 							top: "50%",
 							left: "50%",

@@ -88,7 +88,7 @@ export const AllEvents = () => {
 								<Event key={index} index={index} event={event} />
 							))
 					) : (
-						<Typography variant='h5' gutterBottom color={"#fff"}>
+						<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
 							loading...
 						</Typography>
 					)}
@@ -130,7 +130,7 @@ export const AllEvents = () => {
 								<Event key={index} index={index} event={event} past={true} />
 							))
 					) : (
-						<Typography variant='h5' gutterBottom color={"#fff"}>
+						<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
 							loading...
 						</Typography>
 					)}
