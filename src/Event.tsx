@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
 	Box,
 	Button,
@@ -107,10 +107,10 @@ export const Event = ({ index, event, past }: EventProps) => {
 					sx={{
 						position: "relative",
 						height: 140,
-						backgroundImage: past
-							? `linear-gradient(black, black), url(${event.image})` ??
-							  undefined
-							: undefined,
+						backgroundImage:
+							past && event.image
+								? `linear-gradient(black, black), url(${event.image})`
+								: undefined,
 						backgroundBlendMode: "saturation",
 					}}>
 					<Box
