@@ -6,12 +6,12 @@ import { AllEvents } from "../src/AllEvents";
 export default function Home() {
 	return (
 		<Container sx={{ paddingRight: 0, paddingLeft: 0 }}>
-			<Box component='div' sx={{ height: "80vh" }}>
+			<Box component='div' sx={{ height: "70vh" }}>
 				<Box
 					component='div'
 					sx={{
 						position: "absolute",
-						height: "80vh",
+						height: "70vh",
 						zIndex: "-1",
 						inset: 0,
 						background: "url(/background.jpeg) no-repeat center center fixed",
