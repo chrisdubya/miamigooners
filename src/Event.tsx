@@ -65,6 +65,26 @@ export const Event = ({ index, event, past }: EventProps) => {
 		}
 	};
 
+	const renderScore = (homeTeamScore: number, awayTeamScore: number) => {
+		const winLossOrDraw = (arsScore: number, oppScore: number) => {
+			if (arsScore > oppScore) {
+				return "W";
+			} else if (arsScore < oppScore) {
+				return "L";
+			} else if (arsScore === oppScore) {
+				return "D";
+			}
+		};
+
+		if (event.AwayTeam === "Arsenal") {
+			const wLD = winLossOrDraw(awayTeamScore, homeTeamScore);
+			return `${wLD} ${awayTeamScore} - ${homeTeamScore}`;
+		} else {
+			const wLD = winLossOrDraw(homeTeamScore, awayTeamScore);
+			return `${wLD} ${homeTeamScore} - ${awayTeamScore}`;
+		}
+	};
+
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275, position: "relative" }}>
@@ -128,7 +148,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 								sx={{ fontSize: 14 }}
 								color='text.secondary'
 								gutterBottom>
-								{event.AwayTeamScore} - {event.HomeTeamScore}
+								{renderScore(event?.HomeTeamScore, event?.AwayTeamScore)}
 							</Typography>
 						)}
 					<Typography sx={{ mb: 1.5 }} color='text.secondary'>
