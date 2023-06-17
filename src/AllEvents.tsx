@@ -1,9 +1,18 @@
-import { Container, Box, Typography } from "@mui/material";
+import {
+	Container,
+	Box,
+	Typography,
+	Accordion,
+	AccordionSummary,
+	AccordionDetails,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Event } from "./Event";
 import { DateTime } from "luxon";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { images } from "./constants/images";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export interface EventType {
 	MatchNumber: number;
@@ -17,24 +26,6 @@ export interface EventType {
 	AwayTeamScore?: number;
 	image?: string;
 }
-
-const images = [
-	"bournemouth-home",
-	"everton-home",
-	"leicester-away",
-	"chelsea-home",
-	"brighton-home",
-	"nottingham-forest-away",
-	"fulham-away",
-	"leeds-home",
-	"liverpool-away",
-	"man-city-away",
-	"crystal-palace-home",
-	"southampton-home",
-	"west-ham-away",
-	"newcastle-away",
-	"wolves-home",
-];
 
 export const AllEvents = () => {
 	const [data, setData] = useState<EventType[]>([]);
@@ -74,89 +65,130 @@ export const AllEvents = () => {
 	return (
 		<Container>
 			<Box component='div' mb={8}>
-				<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
-					Upcoming Events
-				</Typography>
-
-				<Grid container spacing={2} mt={2}>
-					{data?.length ? (
-						data
-							.filter(
-								(val) =>
-									DateTime.fromFormat(val.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-										zone: "utc",
-									})
-										.setZone("America/New_York")
-										.toISODate() > DateTime.now().toISODate()
-							)
-							.sort((a, b) => {
-								const dateA = DateTime.fromFormat(
-									a.DateUtc,
-									"yyyy-MM-dd HH:mm:ss'Z'",
-									{
-										zone: "utc",
-									}
-								);
-								const dateB = DateTime.fromFormat(
-									b.DateUtc,
-									"yyyy-MM-dd HH:mm:ss'Z'",
-									{
-										zone: "utc",
-									}
-								);
-								return dateA.toMillis() - dateB.toMillis();
-							})
-							.map((event, index) => (
-								<Event key={index} index={index} event={event} />
-							))
-					) : (
-						<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
-							loading...
+				<Accordion
+					defaultExpanded={true}
+					sx={{
+						bgcolor: "transparent",
+						backgroundImage: "none",
+						boxShadow: "none",
+					}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon color='primary' />}
+						aria-controls='panel1a-content'
+						id='panel1a-header'>
+						<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
+							Upcoming Events
 						</Typography>
-					)}
-				</Grid>
+					</AccordionSummary>
 
-				<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
-					Past Events
-				</Typography>
-
-				<Grid container spacing={2} mt={2}>
-					{data?.length ? (
-						data
-							.filter(
-								(val) =>
-									DateTime.fromFormat(val.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-										zone: "utc",
+					<AccordionDetails>
+						<Grid container spacing={2} mt={2}>
+							{data?.length ? (
+								data
+									.filter(
+										(val) =>
+											DateTime.fromFormat(
+												val.DateUtc,
+												"yyyy-MM-dd HH:mm:ss'Z'",
+												{
+													zone: "utc",
+												}
+											)
+												.setZone("America/New_York")
+												.toISODate() > DateTime.now().toISODate()
+									)
+									.sort((a, b) => {
+										const dateA = DateTime.fromFormat(
+											a.DateUtc,
+											"yyyy-MM-dd HH:mm:ss'Z'",
+											{
+												zone: "utc",
+											}
+										);
+										const dateB = DateTime.fromFormat(
+											b.DateUtc,
+											"yyyy-MM-dd HH:mm:ss'Z'",
+											{
+												zone: "utc",
+											}
+										);
+										return dateA.toMillis() - dateB.toMillis();
 									})
-										.setZone("America/New_York")
-										.toISODate() < DateTime.now().toISODate()
-							)
-							.sort((a, b) => {
-								const dateA = DateTime.fromFormat(
-									a.DateUtc,
-									"yyyy-MM-dd HH:mm:ss'Z'",
-									{
-										zone: "utc",
-									}
-								);
-								const dateB = DateTime.fromFormat(
-									b.DateUtc,
-									"yyyy-MM-dd HH:mm:ss'Z'",
-									{
-										zone: "utc",
-									}
-								);
-								return dateA.toMillis() - dateB.toMillis();
-							})
-							.map((event, index) => (
-								<Event key={index} index={index} event={event} past={true} />
-							))
-					) : (
-						<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
-							loading...
+									.map((event, index) => (
+										<Event key={index} index={index} event={event} />
+									))
+							) : (
+								<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
+									loading...
+								</Typography>
+							)}
+						</Grid>
+					</AccordionDetails>
+				</Accordion>
+
+				<Accordion
+					sx={{
+						bgcolor: "transparent",
+						backgroundImage: "none",
+						boxShadow: "none",
+					}}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon color='primary' />}
+						aria-controls='panel1a-content'
+						id='panel1a-header'>
+						<Typography variant='h3' gutterBottom color={"primary"} mt={4}>
+							Past Events
 						</Typography>
-					)}
-				</Grid>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Grid container spacing={2} mt={2}>
+							{data?.length ? (
+								data
+									.filter(
+										(val) =>
+											DateTime.fromFormat(
+												val.DateUtc,
+												"yyyy-MM-dd HH:mm:ss'Z'",
+												{
+													zone: "utc",
+												}
+											)
+												.setZone("America/New_York")
+												.toISODate() < DateTime.now().toISODate()
+									)
+									.sort((a, b) => {
+										const dateA = DateTime.fromFormat(
+											a.DateUtc,
+											"yyyy-MM-dd HH:mm:ss'Z'",
+											{
+												zone: "utc",
+											}
+										);
+										const dateB = DateTime.fromFormat(
+											b.DateUtc,
+											"yyyy-MM-dd HH:mm:ss'Z'",
+											{
+												zone: "utc",
+											}
+										);
+										return dateB.toMillis() - dateA.toMillis();
+									})
+									.map((event, index) => (
+										<Event
+											key={index}
+											index={index}
+											event={event}
+											past={true}
+										/>
+									))
+							) : (
+								<Typography variant='h5' gutterBottom color={"#fff"} ml={1}>
+									loading...
+								</Typography>
+							)}
+						</Grid>
+					</AccordionDetails>
+				</Accordion>
 			</Box>
 		</Container>
 	);
