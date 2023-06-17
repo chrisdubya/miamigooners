@@ -84,7 +84,9 @@ export const AllEvents = () => {
 								);
 								return dateA.toMillis() - dateB.toMillis();
 							})
-							.map((event, index) => <Event key={index} event={event} />)
+							.map((event, index) => (
+								<Event key={index} index={index} event={event} />
+							))
 					) : (
 						<Typography variant='h5' gutterBottom color={"#fff"}>
 							loading...
@@ -125,7 +127,7 @@ export const AllEvents = () => {
 								return dateA.toMillis() - dateB.toMillis();
 							})
 							.map((event, index) => (
-								<Event key={index} event={event} past={true} />
+								<Event key={index} index={index} event={event} past={true} />
 							))
 					) : (
 						<Typography variant='h5' gutterBottom color={"#fff"}>

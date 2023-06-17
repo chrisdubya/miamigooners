@@ -12,11 +12,14 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
 
 interface EventProps {
+	index: number;
 	event: EventType;
 	past?: boolean;
 }
 
-export const Event = ({ event, past }: EventProps) => {
+const overlayColors: string[] = ["red", "blue", "white"];
+
+export const Event = ({ index, event, past }: EventProps) => {
 	const [isHovering, setIsHovering] = useState<boolean>(false);
 
 	const formatDuration = (date: string) => {
@@ -55,8 +58,8 @@ export const Event = ({ event, past }: EventProps) => {
 							fontWeight: "700",
 						}}
 						variant='h5'
-						color={"primary"}>
-						{formatDuration(event.DateUtc)}
+						color={"white"}>
+						{formatDuration(event.DateUtc)} {index}
 					</Typography>
 				)}
 
@@ -64,8 +67,9 @@ export const Event = ({ event, past }: EventProps) => {
 					onMouseEnter={() => setIsHovering(true)}
 					onMouseLeave={() => setIsHovering(false)}
 					sx={{
+						position: "relative",
 						height: 140,
-						filter: isHovering ? "grayscale(0%)" : "grayscale(100%)",
+						backgroundColor: overlayColors[index % 3],
 					}}
 					image={past ? event.image ?? undefined : undefined}>
 					<Typography
