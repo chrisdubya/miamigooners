@@ -18,7 +18,23 @@ export interface EventType {
 	image?: string;
 }
 
-const images = ["bournemouth-home", "everton-away", "leicester-away"];
+const images = [
+	"bournemouth-home",
+	"everton-home",
+	"leicester-away",
+	"chelsea-home",
+	"brighton-home",
+	"nottingham-forest-away",
+	"fulham-away",
+	"leeds-home",
+	"liverpool-away",
+	"man-city-away",
+	"crystal-palace-home",
+	"southampton-home",
+	"west-ham-away",
+	"newcastle-away",
+	"wolves-home",
+];
 
 export const AllEvents = () => {
 	const [data, setData] = useState<EventType[]>([]);
@@ -28,15 +44,21 @@ export const AllEvents = () => {
 		const events = res.data;
 
 		const updatedEvents = events.map((event: EventType) => {
-			const homeTeamImage = event.HomeTeam.toLowerCase();
-			const awayTeamImage = event.AwayTeam.toLowerCase();
+			const homeTeamImage = event.HomeTeam.toLowerCase().replace(/\s/g, "-");
+			const awayTeamImage = event.AwayTeam.toLowerCase().replace(/\s/g, "-");
 
 			if (images.includes(`${awayTeamImage}-home`)) {
-				return { ...event, image: `/images/${awayTeamImage}-home.jpg` };
+				return {
+					...event,
+					image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${awayTeamImage}-home.jpg`,
+				};
 			}
 
 			if (images.includes(`${homeTeamImage}-away`)) {
-				return { ...event, image: `/images/${homeTeamImage}-away.jpg` };
+				return {
+					...event,
+					image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${homeTeamImage}-away.jpg`,
+				};
 			}
 
 			return event;
