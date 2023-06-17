@@ -5,7 +5,7 @@ import { AllEvents } from "../src/AllEvents";
 
 export default function Home() {
 	return (
-		<Container>
+		<Container sx={{ paddingRight: 0, paddingLeft: 0 }}>
 			<Box component='div' sx={{ height: "80vh" }}>
 				<Box
 					component='div'

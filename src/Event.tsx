@@ -96,8 +96,8 @@ export const Event = ({ index, event, past }: EventProps) => {
 							right: "1rem",
 							fontWeight: "700",
 							zIndex: 1,
+							fontSize: { sm: "1rem", md: "1.25rem" },
 						}}
-						variant='h6'
 						color={getCountdownColor(event)}>
 						{formatDuration(event.DateUtc)}
 					</Typography>
@@ -134,6 +134,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 							left: "50%",
 							transform: "translate(-50%, -50%)",
 							color: getTeamColor(event, "secondary"),
+							fontSize: { xs: "1.5rem", md: "2.125rem" },
 						}}>
 						{event.AwayTeam === "Arsenal"
 							? `${event.HomeTeam.toUpperCase()}[A]`
