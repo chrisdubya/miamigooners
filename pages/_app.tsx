@@ -26,11 +26,11 @@ export default function MyApp(props: MyAppProps) {
 				</title>
 				<meta
 					name='title'
-					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
+					content='Arsenal FC Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					name='description'
-					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners.'
 				/>
 
 				{/* Open Graph / Facebook */}
@@ -38,11 +38,11 @@ export default function MyApp(props: MyAppProps) {
 				<meta property='og:url' content='https://miamigooners.com/' />
 				<meta
 					property='og:title'
-					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
+					content='Arsenal FC Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					property='og:description'
-					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners.'
 				/>
 				<meta
 					property='og:image'
@@ -54,11 +54,11 @@ export default function MyApp(props: MyAppProps) {
 				<meta property='twitter:url' content='https://miamigooners.com/' />
 				<meta
 					property='twitter:title'
-					content='Arsenal Football Supporters Club in Miami, FL - Miami Gooners'
+					content='Arsenal FC Supporters Club in Miami, FL - Miami Gooners'
 				/>
 				<meta
 					property='twitter:description'
-					content='Miami Gooners, the Rebel Arsenal FC Supporters Club in Miami, Florida.  Follow us on instagram @miamigooners.'
+					content='Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners.'
 				/>
 				<meta
 					property='twitter:image'
@@ -76,6 +76,27 @@ export default function MyApp(props: MyAppProps) {
 						`,
 					}}
 				/>
+				<link
+					rel='apple-touch-icon'
+					sizes='180x180'
+					href='/apple-touch-icon.png'
+				/>
+				<link
+					rel='icon'
+					type='image/png'
+					sizes='32x32'
+					href='/favicon-32x32.png'
+				/>
+				<link
+					rel='icon'
+					type='image/png'
+					sizes='16x16'
+					href='/favicon-16x16.png'
+				/>
+				<link rel='manifest' href='/site.webmanifest' />
+				<link rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5' />
+				<meta name='msapplication-TileColor' content='#da532c' />
+				<meta name='theme-color' content='#ff0000'></meta>
 			</Head>
 			<Script
 				strategy='afterInteractive'
