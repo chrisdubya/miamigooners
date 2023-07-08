@@ -25,6 +25,7 @@ export interface EventType {
 	HomeTeamScore?: number;
 	AwayTeamScore?: number;
 	image?: string;
+	competition?: string;
 }
 
 export const AllEvents = () => {
@@ -39,17 +40,72 @@ export const AllEvents = () => {
 			const awayTeamImage = event.AwayTeam.toLowerCase().replace(/\s/g, "-");
 
 			if (images.includes(`${awayTeamImage}-home`)) {
-				return {
+				event = {
 					...event,
 					image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${awayTeamImage}-home.jpg`,
 				};
 			}
 
 			if (images.includes(`${homeTeamImage}-away`)) {
-				return {
+				event = {
 					...event,
 					image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${homeTeamImage}-away.jpg`,
 				};
+			}
+
+			// schedule updates July 8th (until API updates)
+			if (
+				DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+					zone: "utc",
+				}).year === 2023
+			) {
+				if (
+					event.HomeTeam === "Crystal Palace" &&
+					DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+						zone: "utc",
+					}).month === 8
+				) {
+					event = {
+						...event,
+						DateUtc: "2023-08-21 19:00:00Z",
+					};
+				}
+
+				if (
+					event.AwayTeam === "Man Utd" &&
+					DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+						zone: "utc",
+					}).month === 9
+				) {
+					event = {
+						...event,
+						DateUtc: "2023-09-03 15:30:00Z",
+					};
+				}
+
+				if (
+					event.HomeTeam === "Everton" &&
+					DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+						zone: "utc",
+					}).month === 9
+				) {
+					event = {
+						...event,
+						DateUtc: "2023-09-16 16:30:00Z",
+					};
+				}
+
+				if (
+					event.AwayTeam === "Spurs" &&
+					DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
+						zone: "utc",
+					}).month === 9
+				) {
+					event = {
+						...event,
+						DateUtc: "2023-09-24 13:00:00Z",
+					};
+				}
 			}
 
 			return event;
