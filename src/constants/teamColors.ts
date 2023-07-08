@@ -100,4 +100,24 @@ export const teamColors: TeamColors[] = [
 		secondary: "rgba(27,177,231,1)",
 		team: "West Ham",
 	},
+	{
+		primary: "rgb(128, 2, 2)",
+		secondary: "rgba(255,255,255,1)",
+		team: "FC Nürnberg",
+	},
+	{
+		primary: "rgb(164, 0, 71)",
+		secondary: "rgba(237, 187, 0, 1)",
+		team: "Barcelona",
+	},
+	{
+		primary: "rgba(28, 15, 88, 1)",
+		secondary: "rgb(215, 50, 32)",
+		team: "MLS All-Stars",
+	},
+	{
+		primary: "rgba(229, 27, 34, 1)",
+		secondary: "rgb(255, 255, 255)",
+		team: "Monaco",
+	},
 ];

@@ -25,6 +25,7 @@ export interface EventType {
 	HomeTeamScore?: number;
 	AwayTeamScore?: number;
 	image?: string;
+	competition?: string;
 }
 
 export const AllEvents = () => {

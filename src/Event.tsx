@@ -143,6 +143,14 @@ export const Event = ({ index, event, past }: EventProps) => {
 				</CardMedia>
 
 				<CardContent>
+					{event?.competition && (
+						<Typography
+							sx={{ fontSize: 14, fontStyle: "italic" }}
+							color='text.secondary'
+							gutterBottom>
+							{event.competition}
+						</Typography>
+					)}
 					{event?.HomeTeamScore?.toString() &&
 						event?.AwayTeamScore?.toString() && (
 							<Typography
