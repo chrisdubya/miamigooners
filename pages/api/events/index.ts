@@ -1,17 +1,5 @@
 import axios from "axios";
-interface EventType {
-	MatchNumber: number;
-	RoundNumber: number;
-	DateUtc: string;
-	Location: string;
-	HomeTeam: string;
-	AwayTeam: string;
-	Group?: string;
-	HomeTeamScore?: number;
-	AwayTeamScore?: number;
-	image?: string;
-	competition?: string;
-}
+import { EventType } from "../../../types";
 
 export default async function handler(req: any, res: any) {
 	if (req.method === "GET") {
@@ -33,6 +21,8 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "FC Nürnberg",
 					AwayTeam: "Arsenal",
 					competition: "Pre-season Friendly",
+					HomeTeamScore: 1,
+					AwayTeamScore: 1,
 				},
 				{
 					MatchNumber: 2,
@@ -42,6 +32,8 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "MLS All-Stars",
 					AwayTeam: "Arsenal",
 					competition: "Pre-season Friendly",
+					rsvpLink:
+						"https://www.eventbrite.com/e/arsenal-vs-mls-all-stars-watch-party-with-the-miami-gooners-tickets-678283693787?aff=oddtdtcreator",
 				},
 				{
 					MatchNumber: 3,

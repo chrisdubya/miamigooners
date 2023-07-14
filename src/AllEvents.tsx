@@ -13,20 +13,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { images } from "./constants/images";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-export interface EventType {
-	MatchNumber: number;
-	RoundNumber: number;
-	DateUtc: string;
-	Location: string;
-	HomeTeam: string;
-	AwayTeam: string;
-	Group?: string;
-	HomeTeamScore?: number;
-	AwayTeamScore?: number;
-	image?: string;
-	competition?: string;
-}
+import { EventType } from "../types";
 
 export const AllEvents = () => {
 	const [data, setData] = useState<EventType[]>([]);
@@ -141,18 +128,19 @@ export const AllEvents = () => {
 						<Grid container spacing={2} mt={2}>
 							{data?.length ? (
 								data
-									.filter(
-										(val) =>
-											DateTime.fromFormat(
-												val.DateUtc,
-												"yyyy-MM-dd HH:mm:ss'Z'",
-												{
-													zone: "utc",
-												}
-											)
-												.setZone("America/New_York")
-												.toISODate() > DateTime.now().toISODate()
-									)
+									.filter((val) => {
+										const eventDate = DateTime.fromFormat(
+											val.DateUtc,
+											"yyyy-MM-dd HH:mm:ss'Z'",
+											{
+												zone: "utc",
+											}
+										).setZone("America/New_York");
+
+										const today = DateTime.now().setZone("America/New_York");
+
+										return eventDate.toISODate() >= today.toISODate();
+									})
 									.sort((a, b) => {
 										const dateA = DateTime.fromFormat(
 											a.DateUtc,
@@ -160,14 +148,16 @@ export const AllEvents = () => {
 											{
 												zone: "utc",
 											}
-										);
+										).setZone("America/New_York");
+
 										const dateB = DateTime.fromFormat(
 											b.DateUtc,
 											"yyyy-MM-dd HH:mm:ss'Z'",
 											{
 												zone: "utc",
 											}
-										);
+										).setZone("America/New_York");
+
 										return dateA.toMillis() - dateB.toMillis();
 									})
 									.map((event, index) => (
