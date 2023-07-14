@@ -8,7 +8,7 @@ import {
 	CardMedia,
 	Typography,
 } from "@mui/material";
-import { EventType } from "./AllEvents";
+import { EventType } from "../types";
 import Grid from "@mui/material/Unstable_Grid2";
 import { DateTime } from "luxon";
 import { teamColors } from "./constants/teamColors";
@@ -32,6 +32,8 @@ export const Event = ({ index, event, past }: EventProps) => {
 
 			return daysDifference > 1
 				? `${daysDifference} days`
+				: daysDifference <= 0
+				? "Today"
 				: `${daysDifference} day`;
 		}
 	};
@@ -88,6 +90,13 @@ export const Event = ({ index, event, past }: EventProps) => {
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275, position: "relative" }}>
+				{event.rsvpLink && (
+					<CardActions sx={{ position: "absolute", zIndex: 1 }}>
+						<Button disabled={past} href={event.rsvpLink} size='small'>
+							RSVP {past && "closed"}
+						</Button>
+					</CardActions>
+				)}
 				{!past && (
 					<Typography
 						sx={{
@@ -165,14 +174,6 @@ export const Event = ({ index, event, past }: EventProps) => {
 					</Typography>
 					<Typography variant='body2'>{event.Location}</Typography>
 				</CardContent>
-
-				{/* {event.rsvpLink && (
-					<CardActions>
-						<Button disabled={past} href={event.rsvpLink} size='small'>
-							RSVP {past && "closed"}
-						</Button>
-					</CardActions>
-				)} */}
 			</Card>
 		</Grid>
 	);
