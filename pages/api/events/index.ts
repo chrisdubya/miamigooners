@@ -43,6 +43,8 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Man Utd",
 					competition: "Pre-season Friendly",
+					rsvpLink:
+						"https://www.eventbrite.com/e/arsenal-vs-manchester-united-watch-party-with-the-miami-gooners-tickets-679510132097?aff=oddtdtcreator",
 				},
 				{
 					MatchNumber: 3,
