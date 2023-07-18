@@ -92,7 +92,11 @@ export const Event = ({ index, event, past }: EventProps) => {
 			<Card sx={{ minWidth: 275, position: "relative" }}>
 				{event.rsvpLink && (
 					<CardActions sx={{ position: "absolute", zIndex: 1 }}>
-						<Button disabled={past} href={event.rsvpLink} size='small'>
+						<Button
+							disabled={past}
+							href={event.rsvpLink}
+							size='large'
+							variant='outlined'>
 							RSVP {past && "closed"}
 						</Button>
 					</CardActions>
