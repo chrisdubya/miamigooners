@@ -34,6 +34,8 @@ export default async function handler(req: any, res: any) {
 					competition: "Pre-season Friendly",
 					rsvpLink:
 						"https://www.eventbrite.com/e/arsenal-vs-mls-all-stars-watch-party-with-the-miami-gooners-tickets-678283693787?aff=oddtdtcreator",
+					HomeTeamScore: 0,
+					AwayTeamScore: 5,
 				},
 				{
 					MatchNumber: 3,
@@ -45,6 +47,8 @@ export default async function handler(req: any, res: any) {
 					competition: "Pre-season Friendly",
 					rsvpLink:
 						"https://www.eventbrite.com/e/arsenal-vs-manchester-united-watch-party-with-the-miami-gooners-tickets-679510132097?aff=oddtdtcreator",
+					HomeTeamScore: 0,
+					AwayTeamScore: 2,
 				},
 				{
 					MatchNumber: 3,

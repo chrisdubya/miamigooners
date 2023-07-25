@@ -90,14 +90,14 @@ export const Event = ({ index, event, past }: EventProps) => {
 	return (
 		<Grid xs={12} md={6}>
 			<Card sx={{ minWidth: 275, position: "relative" }}>
-				{event.rsvpLink && (
+				{event.rsvpLink && !past && (
 					<CardActions sx={{ position: "absolute", zIndex: 1 }}>
 						<Button
 							disabled={past}
 							href={event.rsvpLink}
 							size='large'
 							variant='outlined'>
-							RSVP {past && "closed"}
+							RSVP
 						</Button>
 					</CardActions>
 				)}
