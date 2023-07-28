@@ -16,7 +16,6 @@
 		"@emotion/styled": "latest",
 		"@mui/icons-material": "^5.11.9",
 		"@mui/material": "^5.11.11",
-		"@next/font": "latest",
 		"@react-three/drei": "^9.74.15",
 		"@react-three/fiber": "^8.11.5",
 		"luxon": "^3.2.1",
