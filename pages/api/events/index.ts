@@ -58,6 +58,8 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Barcelona",
 					competition: "Pre-season Friendly",
+					HomeTeamScore: 5,
+					AwayTeamScore: 3,
 				},
 				{
 					MatchNumber: 1,
