@@ -78,6 +78,8 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Man City",
 					competition: "FA Community Shield",
+					rsvpLink:
+						"https://www.eventbrite.com/e/arsenal-vs-man-city-watch-party-with-the-miami-gooners-tickets-690106897307?aff=oddtdtcreator",
 				},
 			];
 
