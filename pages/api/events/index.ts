@@ -74,7 +74,7 @@ export default async function handler(req: any, res: any) {
 					MatchNumber: 1,
 					RoundNumber: 1,
 					DateUtc: "2023-08-06 15:00:00Z",
-					Location: "Emirates Stadium",
+					Location: "Wembley Stadium",
 					HomeTeam: "Arsenal",
 					AwayTeam: "Man City",
 					competition: "FA Community Shield",
