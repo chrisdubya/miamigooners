@@ -11,4 +11,5 @@ export interface EventType {
 	image?: string;
 	competition?: string;
 	rsvpLink?: string;
+	winnerOnPenalties?: string;
 }
