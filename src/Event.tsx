@@ -74,7 +74,13 @@ export const Event = ({ index, event, past }: EventProps) => {
 			} else if (arsScore < oppScore) {
 				return "L";
 			} else if (arsScore === oppScore) {
-				return "D";
+				if (!event.winnerOnPenalties) {
+					return "D";
+				} else if (event.winnerOnPenalties === "Arsenal") {
+					return "W (P)";
+				} else {
+					return "L (P)";
+				}
 			}
 		};
 
@@ -96,7 +102,7 @@ export const Event = ({ index, event, past }: EventProps) => {
 							disabled={past}
 							href={event.rsvpLink}
 							size='large'
-							variant='outlined'>
+							variant='outlined' sx={{ color: getTeamColor(event, "primary") === 'rgba(221,0,0,1)' ? '#fff' : null, borderColor: getTeamColor(event, "primary") === 'rgba(221,0,0,1)' ? '#fff' : null}}>
 							RSVP
 						</Button>
 					</CardActions>

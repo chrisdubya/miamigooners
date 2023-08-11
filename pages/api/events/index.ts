@@ -69,6 +69,9 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Monaco",
 					competition: "Emirates Cup",
+					HomeTeamScore: 1,
+					AwayTeamScore: 1,
+					winnerOnPenalties: "Arsenal",
 				},
 				{
 					MatchNumber: 1,
@@ -78,6 +81,9 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Man City",
 					competition: "FA Community Shield",
+					HomeTeamScore: 1,
+					AwayTeamScore: 1,
+					winnerOnPenalties: "Arsenal",
 					rsvpLink:
 						"https://www.eventbrite.com/e/arsenal-vs-man-city-watch-party-with-the-miami-gooners-tickets-690106897307?aff=oddtdtcreator",
 				},
@@ -87,7 +93,19 @@ export default async function handler(req: any, res: any) {
 				throw new Error("error fetching match details");
 			}
 
-			const response = response22.data.concat(response23.data);
+			const season23Additions: Partial<EventType>[] = [
+				{
+					MatchNumber: 2,
+					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-nottingham-forest-watch-party-with-the-miami-gooners-tickets-694262145767?aff=oddtdtcreator'
+				}
+			]
+
+			const updatedResponse23Data = response23.data.map((match: EventType) => {
+				const addition = season23Additions.find((addition) => addition.MatchNumber === match.MatchNumber);
+				return addition ? { ...match, ...addition } : match;
+			});
+
+			const response = response22.data.concat(updatedResponse23Data);
 
 			const responseWithPreseason = response.concat(preseason23);
 
