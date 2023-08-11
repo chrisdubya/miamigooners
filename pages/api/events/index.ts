@@ -69,18 +69,23 @@ export default async function handler(req: any, res: any) {
 					HomeTeam: "Arsenal",
 					AwayTeam: "Monaco",
 					competition: "Emirates Cup",
+					HomeTeamScore: 1,
+					AwayTeamScore: 1,
+					winnerOnPenalties: "Arsenal",
 				},
 				{
 					MatchNumber: 1,
 					RoundNumber: 1,
 					DateUtc: "2023-08-06 15:00:00Z",
-					Location: "Emirates Stadium",
+					Location: "Wembley Stadium",
 					HomeTeam: "Arsenal",
 					AwayTeam: "Man City",
 					competition: "FA Community Shield",
 					HomeTeamScore: 1,
 					AwayTeamScore: 1,
 					winnerOnPenalties: "Arsenal",
+					rsvpLink:
+						"https://www.eventbrite.com/e/arsenal-vs-man-city-watch-party-with-the-miami-gooners-tickets-690106897307?aff=oddtdtcreator",
 				},
 			];
 
