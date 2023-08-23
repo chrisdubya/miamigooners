@@ -101,6 +101,10 @@ export default async function handler(req: any, res: any) {
 				{
 					MatchNumber: 12,
 					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-crystal-palace-watch-party-with-the-miami-gooners-tickets-698722075537?aff=oddtdtcreator'
+				},
+				{
+					MatchNumber: 21,
+					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-fulham-watch-party-with-the-miami-gooners-tickets-705598894287?aff=oddtdtcreator'
 				}
 			]
 
