@@ -92,7 +92,6 @@ export default async function handler(req: any, res: any) {
 			if (response22.status !== 200 || response23.status !== 200) {
 				throw new Error("error fetching match details");
 			}
-
 			const season23Additions: Partial<EventType>[] = [
 				{
 					MatchNumber: 2,
@@ -105,6 +104,10 @@ export default async function handler(req: any, res: any) {
 				{
 					MatchNumber: 21,
 					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-fulham-watch-party-with-the-miami-gooners-tickets-705598894287?aff=oddtdtcreator'
+				},
+				{
+					MatchNumber: 31,
+					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-man-utd-watch-party-with-the-miami-gooners-tickets-708565076217?aff=oddtdtcreator'
 				}
 			]
 

@@ -102,7 +102,20 @@ export const Event = ({ index, event, past }: EventProps) => {
 							disabled={past}
 							href={event.rsvpLink}
 							size='large'
-							variant='outlined' sx={{ color: getTeamColor(event, "primary") === 'rgba(221,0,0,1)' ? '#fff' : null, borderColor: getTeamColor(event, "primary") === 'rgba(221,0,0,1)' ? '#fff' : null}}>
+							variant='outlined' sx={{ 
+								color: 
+									getTeamColor(event, "primary") === 'rgba(221,0,0,1)' 
+									? '#fff' 
+									: getTeamColor(event, "primary") === 'rgba(218,41,28,1)' 
+									? '#fff' 
+									: null, 
+								borderColor: 
+									getTeamColor(event, "primary") === 'rgba(221,0,0,1)' 
+									? '#fff' 
+									: getTeamColor(event, "primary") === 'rgba(218,41,28,1)' 
+									? '#fff' 
+									: null
+						}}>
 							RSVP
 						</Button>
 					</CardActions>
