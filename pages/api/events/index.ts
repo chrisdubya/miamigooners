@@ -12,6 +12,19 @@ export default async function handler(req: any, res: any) {
 				"https://fixturedownload.com/feed/json/epl-2023/arsenal"
 			);
 
+			const responseUCL23 = await axios.get(
+				"https://fixturedownload.com/feed/json/champions-league-2023/arsenal"
+			)
+
+			// map over events and add competition type
+			const responsePL23Data = response23.data.map((match: EventType) => {
+				return { ...match, competition: "Premier League" };
+			});
+
+			const responseUCL23Data = responseUCL23.data.map((match: EventType) => {
+				return { ...match, competition: "UEFA Champions League" };
+			});
+
 			const preseason23: EventType[] = [
 				{
 					MatchNumber: 1,
@@ -89,9 +102,10 @@ export default async function handler(req: any, res: any) {
 				},
 			];
 
-			if (response22.status !== 200 || response23.status !== 200) {
+			if (response22.status !== 200 || response23.status !== 200 || responseUCL23.status !== 200) {
 				throw new Error("error fetching match details");
 			}
+
 			const season23Additions: Partial<EventType>[] = [
 				{
 					MatchNumber: 2,
@@ -111,16 +125,18 @@ export default async function handler(req: any, res: any) {
 				}
 			]
 
-			const updatedResponse23Data = response23.data.map((match: EventType) => {
+			const updatedResponse23PLData = responsePL23Data.map((match: EventType) => {
 				const addition = season23Additions.find((addition) => addition.MatchNumber === match.MatchNumber);
 				return addition ? { ...match, ...addition } : match;
 			});
 
-			const response = response22.data.concat(updatedResponse23Data);
+			const response = response22.data.concat(updatedResponse23PLData);
 
 			const responseWithPreseason = response.concat(preseason23);
 
-			res.status(200).json(responseWithPreseason);
+			const responseWithUCL = responseWithPreseason.concat(responseUCL23Data);
+
+			res.status(200).json(responseWithUCL);
 		} catch (e) {
 			console.error(e);
 			res.status(500).json({ error: "Error fetching match details" });
