@@ -9,7 +9,7 @@ export interface EventType {
 	HomeTeamScore?: number;
 	AwayTeamScore?: number;
 	image?: string;
-	competition?: string;
+	competition?: "Pre-season Friendly" | "Emirates Cup" | "Premier League" | "FA Cup" | "Carabao Cup" | "Europa League" | "UEFA Champions League" | "FA Community Shield" | "Other";
 	rsvpLink?: string;
 	winnerOnPenalties?: string;
 }

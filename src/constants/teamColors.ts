@@ -120,4 +120,19 @@ export const teamColors: TeamColors[] = [
 		secondary: "rgb(255, 255, 255)",
 		team: "Monaco",
 	},
+	{
+		primary: "rgb(240, 0, 0)",
+		secondary: "rgb(168, 134, 45)",
+		team: "PSV",
+	},
+	{
+		primary: "rgb(236, 28, 36)",
+		secondary: "rgb(255, 242, 0)",
+		team: "Lens",
+	},
+	{
+		primary: "rgb(244, 51, 51)",
+		secondary: "rgb(199, 145, 0)",
+		team: "Sevilla",
+	},
 ];
