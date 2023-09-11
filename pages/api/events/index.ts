@@ -122,10 +122,21 @@ export default async function handler(req: any, res: any) {
 				{
 					MatchNumber: 31,
 					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-man-utd-watch-party-with-the-miami-gooners-tickets-708565076217?aff=oddtdtcreator'
+				},
+				{
+					MatchNumber: 43,
+					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-everton-watch-party-with-the-miami-gooners-tickets-717500241537?aff=oddtdtcreator'
+				},
+				{
+					MatchNumber: 13,
+					rsvpLink: 'https://www.eventbrite.com/e/arsenal-vs-psv-watch-party-with-the-miami-gooners-tickets-717503882427?aff=oddtdtcreator'
 				}
 			]
 
-			const updatedResponse23PLData = responsePL23Data.map((match: EventType) => {
+
+			const responseWithUCL = responsePL23Data.concat(responseUCL23Data);
+
+			const updatedResponse23PLData = responseWithUCL.map((match: EventType) => {
 				const addition = season23Additions.find((addition) => addition.MatchNumber === match.MatchNumber);
 				return addition ? { ...match, ...addition } : match;
 			});
@@ -134,9 +145,7 @@ export default async function handler(req: any, res: any) {
 
 			const responseWithPreseason = response.concat(preseason23);
 
-			const responseWithUCL = responseWithPreseason.concat(responseUCL23Data);
-
-			res.status(200).json(responseWithUCL);
+			res.status(200).json(responseWithPreseason);
 		} catch (e) {
 			console.error(e);
 			res.status(500).json({ error: "Error fetching match details" });

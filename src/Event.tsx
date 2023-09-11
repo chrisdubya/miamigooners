@@ -107,13 +107,17 @@ export const Event = ({ index, event, past }: EventProps) => {
 									getTeamColor(event, "primary") === 'rgba(221,0,0,1)' 
 									? '#fff' 
 									: getTeamColor(event, "primary") === 'rgba(218,41,28,1)' 
-									? '#fff' 
-									: null, 
+									? '#fff'
+									: getTeamColor(event, "primary") === 'rgb(240, 0, 0)'
+									? '#fff'
+									: null,
 								borderColor: 
 									getTeamColor(event, "primary") === 'rgba(221,0,0,1)' 
 									? '#fff' 
 									: getTeamColor(event, "primary") === 'rgba(218,41,28,1)' 
-									? '#fff' 
+									? '#fff'
+									: getTeamColor(event, "primary") === 'rgb(240, 0, 0)'
+									? '#fff'
 									: null
 						}}>
 							RSVP

@@ -78,7 +78,7 @@ export const AllEvents = () => {
 				) {
 					event = {
 						...event,
-						DateUtc: "2023-09-16 16:30:00Z",
+						DateUtc: "2023-09-17 15:30:00Z",
 					};
 				}
 
