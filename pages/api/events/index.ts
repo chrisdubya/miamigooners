@@ -146,6 +146,11 @@ export default async function handler(req: any, res: any) {
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-spurs-watch-party-with-the-miami-gooners-tickets-723357962137?aff=oddtdtcreator',
         },
+        {
+          MatchNumber: 62,
+          rsvpLink:
+            'https://www.eventbrite.com/e/arsenal-vs-bournemouth-watch-party-with-the-miami-gooners-tickets-728298469327?aff=oddtdtcreator',
+        },
       ]
 
       const responseWithUCL = responsePL23Data.concat(responseUCL23Data)
