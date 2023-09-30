@@ -115,54 +115,74 @@ export default async function handler(req: any, res: any) {
           MatchNumber: 2,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-nottingham-forest-watch-party-with-the-miami-gooners-tickets-694262145767?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 12,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-crystal-palace-watch-party-with-the-miami-gooners-tickets-698722075537?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 21,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-fulham-watch-party-with-the-miami-gooners-tickets-705598894287?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 31,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-man-utd-watch-party-with-the-miami-gooners-tickets-708565076217?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 43,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-everton-watch-party-with-the-miami-gooners-tickets-717500241537?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 13,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-psv-watch-party-with-the-miami-gooners-tickets-717503882427?aff=oddtdtcreator',
+          competition: 'UEFA Champions League'
         },
         {
           MatchNumber: 51,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-spurs-watch-party-with-the-miami-gooners-tickets-723357962137?aff=oddtdtcreator',
+          competition: 'Premier League'
         },
         {
           MatchNumber: 62,
           rsvpLink:
             'https://www.eventbrite.com/e/arsenal-vs-bournemouth-watch-party-with-the-miami-gooners-tickets-728298469327?aff=oddtdtcreator',
+          competition: 'Premier League'
+        },
+        {
+          MatchNumber: 71,
+          rsvpLink:
+            'https://www.eventbrite.com/e/arsenal-vs-man-city-watch-party-with-the-miami-gooners-tickets-729364116707?aff=oddtdtcreator',
+          competition: 'Premier League'
+        },
+        {
+          MatchNumber: 21,
+          rsvpLink:
+            'https://www.eventbrite.com/e/arsenal-vs-lens-watch-party-with-the-miami-gooners-tickets-729363203977?aff=oddtdtcreator',
+          competition: 'UEFA Champions League'
         },
       ]
 
       const responseWithUCL = responsePL23Data.concat(responseUCL23Data)
 
-      const updatedResponse23PLData = responseWithUCL.map(
-        (match: EventType) => {
-          const addition = season23Additions.find(
-            (addition) => addition.MatchNumber === match.MatchNumber
-          )
-          return addition ? {...match, ...addition} : match
-        }
-      )
+      const updatedResponse23PLData = responseWithUCL.map((match: EventType) => {
+        const addition = season23Additions.find(
+          (addition) => 
+            addition.MatchNumber === match.MatchNumber &&
+            addition.competition === match.competition
+        );
+        return addition ? { ...match, ...addition } : match;
+      });
 
       const response = response22.data.concat(updatedResponse23PLData)
 
