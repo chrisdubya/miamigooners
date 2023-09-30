@@ -112,6 +112,8 @@ export const Event = ({ index, event, past }: EventProps) => {
 									? '#fff'
 									: getTeamColor(event, "primary") === 'rgba(181,14,18,1)'
 									? '#fff'
+									: getTeamColor(event, "primary") === 'rgb(236, 28, 36)'
+									? '#fff'
 									: null,
 								borderColor: 
 									getTeamColor(event, "primary") === 'rgba(221,0,0,1)' 
@@ -121,6 +123,8 @@ export const Event = ({ index, event, past }: EventProps) => {
 									: getTeamColor(event, "primary") === 'rgb(240, 0, 0)'
 									? '#fff'
 									: getTeamColor(event, "primary") === 'rgba(181,14,18,1)'
+									? '#fff'
+									: getTeamColor(event, "primary") === 'rgb(236, 28, 36)'
 									? '#fff'
 									: null
 						}}>
