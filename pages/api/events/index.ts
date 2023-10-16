@@ -171,6 +171,18 @@ export default async function handler(req: any, res: any) {
             'https://www.eventbrite.com/e/arsenal-vs-lens-watch-party-with-the-miami-gooners-tickets-729363203977?aff=oddtdtcreator',
           competition: 'UEFA Champions League'
         },
+        {
+          MatchNumber: 84,
+          rsvpLink:
+            'https://www.eventbrite.com/e/arsenal-vs-chelsea-watch-party-with-the-miami-gooners-tickets-739689359787?aff=oddtdtcreator',
+          competition: 'Premier League'
+        },
+        {
+          MatchNumber: 36,
+          rsvpLink:
+            'https://www.eventbrite.com/e/arsenal-vs-sevilla-watch-party-with-the-miami-gooners-tickets-739693552327?aff=oddtdtcreator',
+          competition: 'UEFA Champions League'
+        },
       ]
 
       const responseWithUCL = responsePL23Data.concat(responseUCL23Data)
