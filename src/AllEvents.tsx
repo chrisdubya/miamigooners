@@ -16,6 +16,18 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
     <Container>
       <div className="flex flex-col gap-4 pt-8">
         <h1 className="text-2xl md:text-4xl font-bold">
+          The{' '}
+          <a
+            className="italic text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            href={'https://www.arsenalamerica.com/branches/'}
+          >
+            official
+          </a>{' '}
+          Arsenal Supporters Branch in Miami, FL
+        </h1>
+        <p className="text-xl font-bold">
           We watch all matches at{' '}
           <a
             className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
@@ -32,8 +44,15 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
           >
             instagram
           </a>{' '}
+          or{' '}
+          <a
+            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            href={`https://twitter.com/miamigooners`}
+          >
+            twitter/x
+          </a>{' '}
           for the latest info. Come join us!
-        </h1>
+        </p>
         <Accordion
           defaultExpanded={true}
           sx={{
@@ -48,9 +67,9 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography variant="h3" gutterBottom color={'primary'} mt={4}>
-              Upcoming Events
-            </Typography>
+            <h3 className="text-xl md:text-3xl font-bold text-gooner-red">
+              Upcoming Matches
+            </h3>
           </AccordionSummary>
 
           <AccordionDetails sx={{padding: 0}}>
