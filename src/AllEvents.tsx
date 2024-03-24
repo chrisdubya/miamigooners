@@ -68,7 +68,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             id="panel1a-header"
           >
             <Typography variant="h3" gutterBottom color={'primary'} mt={4}>
-              Upcoming Events
+              Upcoming Matches
             </Typography>
           </AccordionSummary>
 
