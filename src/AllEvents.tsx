@@ -18,7 +18,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
         <h1 className="text-2xl md:text-4xl font-bold">
           The{' '}
           <a
-            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            className="italic text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
             target={'_blank'}
             rel={'noopener noreferrer'}
             href={'https://www.arsenalamerica.com/branches/'}
@@ -27,7 +27,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
           </a>{' '}
           Arsenal Supporters Branch in Miami, FL
         </h1>
-        <h2 className="text-xl md:text-3xl font-bold">
+        <p className="text-xl font-bold">
           We watch all matches at{' '}
           <a
             className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
@@ -52,7 +52,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             twitter/x
           </a>{' '}
           for the latest info. Come join us!
-        </h2>
+        </p>
         <Accordion
           defaultExpanded={true}
           sx={{
@@ -67,9 +67,9 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography variant="h3" gutterBottom color={'primary'} mt={4}>
+            <h3 className="text-xl md:text-3xl font-bold text-gooner-red">
               Upcoming Matches
-            </Typography>
+            </h3>
           </AccordionSummary>
 
           <AccordionDetails sx={{padding: 0}}>
