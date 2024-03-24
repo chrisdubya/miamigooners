@@ -20,6 +20,7 @@
 		"@react-three/fiber": "^8.11.5",
 		"luxon": "^3.2.1",
 		"next": "latest",
+		"next-axiom": "^1.1.1",
 		"react": "latest",
 		"react-dom": "latest",
 		"three": "^0.150.0"
