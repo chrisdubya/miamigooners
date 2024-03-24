@@ -10,8 +10,6 @@ import {getBaseUrl} from '../src/utils/env'
 import {Logger} from 'next-axiom'
 
 export const getServerSideProps = (async () => {
-  const log = new Logger()
-  log.info('getting base url', {baseUrl: getBaseUrl()})
   try {
     const res = await fetch(`${getBaseUrl()}/api/events`)
     const events: EventType[] = await res.json()
@@ -91,11 +89,8 @@ export const getServerSideProps = (async () => {
 
       return event
     })
-    await log.flush()
     return {props: {events: updatedEvents}}
   } catch (error) {
-    log.error('error fetching events', {error})
-    await log.flush()
     return {props: {events: []}}
   }
 }) satisfies GetServerSideProps<{events: EventType[]}>
