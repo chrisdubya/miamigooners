@@ -102,7 +102,7 @@ export default function Home({events}: {events: EventType[]}) {
 
         <Scene />
 
-        <div className="flex flex-col gap-4 absolute top-8 right-8 bg-black/75 p-4 rounded-lg border border-gooner-red">
+        <div className="flex flex-col gap-4 absolute top-4 right-4 md:top-8 md:right-8 bg-black/75 p-4 rounded-lg border border-gooner-red">
           <Link href="https://www.instagram.com/miamigooners">
             <Instagram
               color="primary"
