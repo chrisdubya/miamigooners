@@ -7,7 +7,6 @@ import {EventType} from '../types'
 import {images} from '../src/constants/images'
 import {DateTime} from 'luxon'
 import {getBaseUrl} from '../src/utils/env'
-import {Logger} from 'next-axiom'
 
 export const getServerSideProps = (async () => {
   try {
