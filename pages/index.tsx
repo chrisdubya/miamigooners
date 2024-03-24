@@ -1,6 +1,6 @@
 import {Scene} from '../src/Scene'
 import {Container, Box, Link} from '@mui/material'
-import {Twitter, Instagram} from '@mui/icons-material'
+import {X, Instagram, WhatsApp} from '@mui/icons-material'
 import {AllEvents} from '../src/AllEvents'
 import {GetServerSideProps} from 'next'
 import {EventType} from '../types'
@@ -112,23 +112,41 @@ export default function Home({events}: {events: EventType[]}) {
 
         <Scene />
 
-        <Box
-          component="div"
-          sx={{
-            display: 'flex',
-            gap: '0.5rem',
-            position: 'absolute',
-            top: '2rem',
-            right: '2rem',
-          }}
-        >
+        <div className="flex flex-col gap-4 absolute top-8 right-8 bg-black/75 p-4 rounded-lg border border-gooner-red">
           <Link href="https://www.instagram.com/miamigooners">
-            <Instagram color="primary" fontSize="large" />
+            <Instagram
+              color="primary"
+              fontSize="large"
+              sx={{
+                '&:hover': {
+                  color: 'primary.dark',
+                },
+              }}
+            />
           </Link>
           <Link href="https://twitter.com/miamigooners">
-            <Twitter color="primary" fontSize="large" />
+            <X
+              color="primary"
+              fontSize="large"
+              sx={{
+                '&:hover': {
+                  color: 'primary.dark',
+                },
+              }}
+            />
           </Link>
-        </Box>
+          <Link href="https://chat.whatsapp.com/L0k0g8cgYgQHegpTA8Pe7L">
+            <WhatsApp
+              color="primary"
+              fontSize="large"
+              sx={{
+                '&:hover': {
+                  color: 'primary.dark',
+                },
+              }}
+            />
+          </Link>
+        </div>
       </Box>
 
       <Box component="div">

@@ -1,6 +1,5 @@
 import {
   Container,
-  Box,
   Typography,
   Accordion,
   AccordionSummary,
@@ -15,7 +14,26 @@ import {EventType} from '../types'
 export const AllEvents = ({events}: {events: EventType[]}) => {
   return (
     <Container>
-      <Box component="div" mb={8}>
+      <div className="flex flex-col gap-4 pt-8">
+        <h1 className="text-4xl font-bold">
+          We watch all matches at{' '}
+          <a
+            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            href={`https://www.instagram.com/thebargables`}
+          >
+            the Bar
+          </a>{' '}
+          in Coral Gables. Follow our{' '}
+          <a
+            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            href={`https://www.instagram.com/miamigooners/`}
+          >
+            instagram
+          </a>{' '}
+          for the latest info. Come join us!
+        </h1>
         <Accordion
           defaultExpanded={true}
           sx={{
@@ -25,6 +43,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
           }}
         >
           <AccordionSummary
+            sx={{padding: 0}}
             expandIcon={<ExpandMoreIcon color="primary" />}
             aria-controls="panel1a-content"
             id="panel1a-header"
@@ -34,7 +53,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             </Typography>
           </AccordionSummary>
 
-          <AccordionDetails>
+          <AccordionDetails sx={{padding: 0}}>
             <Grid container spacing={2} mt={2}>
               {events?.length ? (
                 events
@@ -81,73 +100,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             </Grid>
           </AccordionDetails>
         </Accordion>
-
-        <Accordion
-          sx={{
-            bgcolor: 'transparent',
-            backgroundImage: 'none',
-            boxShadow: 'none',
-          }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon color="primary" />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography variant="h3" gutterBottom color={'primary'} mt={4}>
-              Past Events
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={2} mt={2}>
-              {events?.length ? (
-                events
-                  .filter(
-                    (val) =>
-                      DateTime.fromFormat(
-                        val.DateUtc,
-                        "yyyy-MM-dd HH:mm:ss'Z'",
-                        {
-                          zone: 'utc',
-                        }
-                      )
-                        .setZone('America/New_York')
-                        .toISODate() < DateTime.now().toISODate()
-                  )
-                  .sort((a, b) => {
-                    const dateA = DateTime.fromFormat(
-                      a.DateUtc,
-                      "yyyy-MM-dd HH:mm:ss'Z'",
-                      {
-                        zone: 'utc',
-                      }
-                    )
-                    const dateB = DateTime.fromFormat(
-                      b.DateUtc,
-                      "yyyy-MM-dd HH:mm:ss'Z'",
-                      {
-                        zone: 'utc',
-                      }
-                    )
-                    return dateB.toMillis() - dateA.toMillis()
-                  })
-                  .map((event, index) => (
-                    <Event
-                      key={index}
-                      index={index}
-                      event={event}
-                      past={true}
-                    />
-                  ))
-              ) : (
-                <Typography variant="h5" gutterBottom color={'#fff'} ml={1}>
-                  loading...
-                </Typography>
-              )}
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </Box>
+      </div>
     </Container>
   )
 }

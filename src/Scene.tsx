@@ -1,10 +1,10 @@
 import {Suspense, useRef} from 'react'
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
-import {Environment, OrbitControls} from '@react-three/drei'
+import {OrbitControls} from '@react-three/drei'
 
 const Model = () => {
-  const gltf = useLoader(GLTFLoader, '/untitled.glb')
+  const gltf = useLoader(GLTFLoader, '/gooners-inter-logo.glb')
   const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef()
 
   useFrame(() => {
@@ -18,6 +18,7 @@ const Model = () => {
         scale={15}
         rotation-x={Math.PI * 0.5}
         ref={modelRef}
+        position={[0, -1, 0]}
       />
     </>
   )
@@ -25,12 +26,23 @@ const Model = () => {
 
 export const Scene = () => {
   return (
-    <div style={{position: 'absolute', height: '80vh', inset: 0, zIndex: 0}}>
+    <div
+      style={{
+        position: 'absolute',
+        height: '70vh',
+        inset: 0,
+        zIndex: 0,
+      }}
+    >
       <Canvas>
         <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <directionalLight
+            intensity={1}
+            position={[0, 0, 5]} // Adjust position to control the direction of the light
+          />
           <Model />
           <OrbitControls enableZoom={false} />
-          <Environment background={false} preset="sunset" />
         </Suspense>
       </Canvas>
     </div>
