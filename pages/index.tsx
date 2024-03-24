@@ -97,18 +97,8 @@ export const getServerSideProps = (async () => {
 export default function Home({events}: {events: EventType[]}) {
   return (
     <Container sx={{paddingRight: 0, paddingLeft: 0}}>
-      <Box component="div" sx={{height: '70vh'}}>
-        <Box
-          component="div"
-          sx={{
-            position: 'absolute',
-            height: '70vh',
-            zIndex: '-1',
-            inset: 0,
-            background: 'url(/background.jpeg) no-repeat center center fixed',
-            backgroundSize: 'cover',
-          }}
-        />
+      <Box component="div" sx={{height: '70vh', position: 'relative'}}>
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-0 bg-[url(/background.jpeg)] bg-no-repeat bg-center bg-cover"></div>
 
         <Scene />
 

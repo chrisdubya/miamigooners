@@ -15,7 +15,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
   return (
     <Container>
       <div className="flex flex-col gap-4 pt-8">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl md:text-4xl font-bold">
           We watch all matches at{' '}
           <a
             className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
