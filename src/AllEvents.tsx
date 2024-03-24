@@ -67,9 +67,9 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <h3 className="text-xl md:text-3xl font-bold text-gooner-red">
+            <h2 className="text-xl md:text-3xl font-bold text-gooner-red">
               Upcoming Matches
-            </h3>
+            </h2>
           </AccordionSummary>
 
           <AccordionDetails sx={{padding: 0}}>
