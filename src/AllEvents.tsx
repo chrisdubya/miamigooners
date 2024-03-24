@@ -16,6 +16,18 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
     <Container>
       <div className="flex flex-col gap-4 pt-8">
         <h1 className="text-2xl md:text-4xl font-bold">
+          The{' '}
+          <a
+            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            href={'https://www.arsenalamerica.com/branches/'}
+          >
+            official
+          </a>{' '}
+          Arsenal Supporters Branch in Miami, FL
+        </h1>
+        <h2 className="text-xl md:text-3xl font-bold">
           We watch all matches at{' '}
           <a
             className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
@@ -32,8 +44,15 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
           >
             instagram
           </a>{' '}
+          or{' '}
+          <a
+            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            href={`https://twitter.com/miamigooners`}
+          >
+            twitter/x
+          </a>{' '}
           for the latest info. Come join us!
-        </h1>
+        </h2>
         <Accordion
           defaultExpanded={true}
           sx={{

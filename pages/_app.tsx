@@ -23,15 +23,16 @@ export default function MyApp(props: MyAppProps) {
       <Head>
         {/* Primary Meta Tags */}
         <title>
-          Arsenal Football Supporters Club in Miami, FL - Miami Gooners
+          The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami
+          Gooners
         </title>
         <meta
           name="title"
-          content="Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
+          content="The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
         />
         <meta
           name="description"
-          content="Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners."
+          content="Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners."
         />
 
         {/* Open Graph / Facebook */}
@@ -39,11 +40,11 @@ export default function MyApp(props: MyAppProps) {
         <meta property="og:url" content="https://miamigooners.com/" />
         <meta
           property="og:title"
-          content="Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
+          content="The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
         />
         <meta
           property="og:description"
-          content="Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners."
+          content="Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners."
         />
         <meta
           property="og:image"
@@ -55,11 +56,11 @@ export default function MyApp(props: MyAppProps) {
         <meta property="twitter:url" content="https://miamigooners.com/" />
         <meta
           property="twitter:title"
-          content="Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
+          content="The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners"
         />
         <meta
           property="twitter:description"
-          content="Miami Gooners: Arsenal FC Supporters Club.  Follow us on instagram and twitter @miamigooners."
+          content="Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners."
         />
         <meta
           property="twitter:image"
