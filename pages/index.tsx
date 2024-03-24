@@ -6,9 +6,10 @@ import {GetServerSideProps} from 'next'
 import {EventType} from '../types'
 import {images} from '../src/constants/images'
 import {DateTime} from 'luxon'
+import {getBaseUrl} from '../src/utils/env'
 
 export const getServerSideProps = (async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events`)
+  const res = await fetch(`${getBaseUrl()}/api/events`)
   const events: EventType[] = await res.json()
 
   const updatedEvents = events.map((event: EventType) => {
