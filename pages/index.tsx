@@ -7,88 +7,14 @@ import {EventType} from '../types'
 import {images} from '../src/constants/images'
 import {DateTime} from 'luxon'
 import {getBaseUrl} from '../src/utils/env'
+import Image from 'next/image'
 
 export const getServerSideProps = (async () => {
   try {
     const res = await fetch(`${getBaseUrl()}/api/events`)
     const events: EventType[] = await res.json()
 
-    const updatedEvents = events.map((event: EventType) => {
-      const homeTeamImage = event.HomeTeam.toLowerCase().replace(/\s/g, '-')
-      const awayTeamImage = event.AwayTeam.toLowerCase().replace(/\s/g, '-')
-
-      if (images.includes(`${awayTeamImage}-home`)) {
-        event = {
-          ...event,
-          image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${awayTeamImage}-home.jpg`,
-        }
-      }
-
-      if (images.includes(`${homeTeamImage}-away`)) {
-        event = {
-          ...event,
-          image: `${process.env.NEXT_PUBLIC_CDN_URL}/images/matchday-photos/${homeTeamImage}-away.jpg`,
-        }
-      }
-
-      // schedule updates July 8th (until API updates)
-      if (
-        DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-          zone: 'utc',
-        }).year === 2023
-      ) {
-        if (
-          event.HomeTeam === 'Crystal Palace' &&
-          DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-            zone: 'utc',
-          }).month === 8
-        ) {
-          event = {
-            ...event,
-            DateUtc: '2023-08-21 19:00:00Z',
-          }
-        }
-
-        if (
-          event.AwayTeam === 'Man Utd' &&
-          DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-            zone: 'utc',
-          }).month === 9
-        ) {
-          event = {
-            ...event,
-            DateUtc: '2023-09-03 15:30:00Z',
-          }
-        }
-
-        if (
-          event.HomeTeam === 'Everton' &&
-          DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-            zone: 'utc',
-          }).month === 9
-        ) {
-          event = {
-            ...event,
-            DateUtc: '2023-09-17 15:30:00Z',
-          }
-        }
-
-        if (
-          event.AwayTeam === 'Spurs' &&
-          DateTime.fromFormat(event.DateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
-            zone: 'utc',
-          }).month === 9
-        ) {
-          event = {
-            ...event,
-            DateUtc: '2023-09-24 13:00:00Z',
-          }
-        }
-      }
-
-      return event
-    })
-    return {props: {events: updatedEvents}}
+    return {props: {events: events}}
   } catch (error) {
     return {props: {events: []}}
   }
@@ -98,7 +24,9 @@ export default function Home({events}: {events: EventType[]}) {
   return (
     <>
       <div className="h-[70vh] relative">
-        <div className="absolute top-0 left-0 right-0 bottom-0 z-0 bg-[url(/background.jpeg)] bg-no-repeat bg-center bg-cover"></div>
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-0">
+          <Image src="/background.jpeg" layout="fill" objectFit="cover" alt={'group photo'} priority />
+        </div>
 
         <Scene />
 
