@@ -1,11 +1,9 @@
 import {Scene} from '../src/Scene'
-import {Container, Box, Link} from '@mui/material'
+import {Box, Link} from '@mui/material'
 import {X, Instagram, WhatsApp} from '@mui/icons-material'
 import {AllEvents} from '../src/AllEvents'
 import {GetServerSideProps} from 'next'
 import {EventType} from '../types'
-import {images} from '../src/constants/images'
-import {DateTime} from 'luxon'
 import {getBaseUrl} from '../src/utils/env'
 import Image from 'next/image'
 
@@ -25,7 +23,7 @@ export default function Home({events}: {events: EventType[]}) {
     <>
       <div className="h-[70vh] relative">
         <div className="absolute top-0 left-0 right-0 bottom-0 z-0">
-          <Image src="/background.jpeg" layout="fill" objectFit="cover" alt={'group photo'} priority />
+          <Image src="/background.jpeg" fill className='object-fill' alt={'group photo'} priority />
         </div>
 
         <Scene />
