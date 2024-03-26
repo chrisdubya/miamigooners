@@ -23,7 +23,7 @@ export default function Home({events}: {events: EventType[]}) {
     <>
       <div className="h-[70vh] relative">
         <div className="absolute top-0 left-0 right-0 bottom-0 z-0">
-          <Image src="/background.jpeg" fill className='object-fill' alt={'group photo'} priority />
+          <Image src="/background.jpeg" fill className='object-cover' alt={'group photo'} priority />
         </div>
 
         <Scene />
