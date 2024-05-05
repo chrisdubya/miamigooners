@@ -18,6 +18,7 @@
 		"@mui/material": "^5.11.11",
 		"@react-three/drei": "^9.74.15",
 		"@react-three/fiber": "^8.11.5",
+		"@walletpass/pass-js": "^6.9.1",
 		"color": "^4.2.3",
 		"luxon": "^3.2.1",
 		"next": "latest",
