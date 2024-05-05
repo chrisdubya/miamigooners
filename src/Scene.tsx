@@ -4,7 +4,7 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OrbitControls} from '@react-three/drei'
 
 const Model = () => {
-  const gltf = useLoader(GLTFLoader, '/gooners-inter-logo.glb')
+  const gltf = useLoader(GLTFLoader, '/images/logos/gooners-inter-logo.glb')
   const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef()
 
   useFrame(() => {
