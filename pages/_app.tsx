@@ -8,6 +8,7 @@ import theme from '../src/theme'
 import createEmotionCache from '../src/utils/createEmotionCache'
 import Script from 'next/script'
 import '../styles/globals.css'
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -108,7 +109,9 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
       </ThemeProvider>
     </CacheProvider>
   )
