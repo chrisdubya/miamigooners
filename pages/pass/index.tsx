@@ -9,7 +9,7 @@ export default function Pass() {
     const [loading, setLoading] = useState<boolean>(false);
     const [memberName, setMemberName] = useState<string>('');
     const [membershipNumber, setMembershipNumber] = useState<string>('');
-    const { user, error, isLoading } = useUser();
+    const { user } = useUser();
 
     const handleCreatePass = async (e: any) => {
         e.preventDefault();
@@ -45,62 +45,83 @@ export default function Pass() {
             <div className="mx-auto max-w-screen-2xl flex items-center h-[calc(100vh-2rem)] flex-col gap-12 mt-8">
                 <Image src={goonerIcon} alt="Gooner Icon" width={250} height={250} />
 
-                <div className="flex flex-col gap-4 justify-center items-center max-w-80">
+                <div className="flex flex-col gap-4 justify-between items-center max-w-80 h-full mb-4">
+                    <div className="flex flex-col gap-4">
+                        {!downloadUrl && (
+                            <>
+                                <h1 className="text-center text-xl md:text-3xl">Create Membership Pass</h1>
+                                <form className="w-full" onSubmit={handleCreatePass}>
+                                    <div className="flex flex-col gap-4">
+                                        <input
+                                            required
+                                            type="text" 
+                                            id="memberName" 
+                                            name="memberName"
+                                            value={memberName}
+                                            onChange={e => setMemberName(e.target.value)}
+                                            className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
+                                            placeholder="Member Name" 
+                                        />
 
-                    {!downloadUrl && (
-                        <>
-                            <h1 className="text-center text-xl md:text-3xl">Create Membership Pass</h1>
-                            <form className="w-full" onSubmit={handleCreatePass}>
-                                <div className="flex flex-col gap-4">
-                                    <input
-                                        required
-                                        type="text" 
-                                        id="memberName" 
-                                        name="memberName"
-                                        value={memberName}
-                                        onChange={e => setMemberName(e.target.value)}
-                                        className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
-                                        placeholder="Member Name" 
-                                    />
+                                        <input 
+                                            required
+                                            type="text" 
+                                            id="membershipNumber" 
+                                            name="membershipNumber"
+                                            value={membershipNumber}
+                                            onChange={e => setMembershipNumber(e.target.value)}
+                                            className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
+                                            placeholder="Member No." 
+                                        />
 
-                                    <input 
-                                        required
-                                        type="text" 
-                                        id="membershipNumber" 
-                                        name="membershipNumber"
-                                        value={membershipNumber}
-                                        onChange={e => setMembershipNumber(e.target.value)}
-                                        className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
-                                        placeholder="Member No." 
-                                    />
+                                        {!downloadUrl && (
+                                            <button
+                                                disabled={loading}
+                                                className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
+                                                type="submit"
+                                            >
+                                                {loading ? 'Generating...' : 'Create'}
+                                            </button>
+                                        )}
+                                    </div>
+                                </form>
+                            </>
+                        )}
 
-                                    {!downloadUrl && (
-                                        <button
-                                            disabled={loading}
-                                            className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
-                                            type="submit"
-                                        >
-                                            {loading ? 'Generating...' : 'Create'}
-                                        </button>
-                                    )}
-                                </div>
-                            </form>
-                        </>
-                    )}
+                        {downloadUrl && (
+                            <a 
+                                href={downloadUrl} 
+                                download="membership_pass.pkpass" 
+                                className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500"
+                            >
+                                Download
+                            </a>
+                        )}
+                    </div>
 
-                    {downloadUrl && (
-                        <a 
-                            href={downloadUrl} 
-                            download="membership_pass.pkpass" 
-                            className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500"
-                        >
-                            Download
-                        </a>
-                    )}
+                    <a
+                        className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
+                        href="/api/auth/logout"
+                    >
+                        Logout
+                    </a>
                 </div>
             </div>
         );
     }
 
-    return <a href="/api/auth/login">Login</a>;
+    return (
+        <div className="mx-auto max-w-screen-2xl flex items-center h-[calc(100vh-2rem)] flex-col gap-12 mt-8">
+            <Image src={goonerIcon} alt="Gooner Icon" width={250} height={250} />
+            <div className="flex flex-col gap-4 justify-center items-center max-w-80">
+                <a 
+                    className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
+                    href="/api/auth/login?returnTo=/pass"
+                    
+                >
+                    Login
+                </a>
+            </div>
+        </div>
+    );
 }
