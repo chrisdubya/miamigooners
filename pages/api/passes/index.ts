@@ -57,12 +57,16 @@ export default async function handler(req: any, res: any) {
         await generatePassImage('gooners-wallet-logo@2x.png', 'logo', template, '2x');
         await generatePassImage('gooners-wallet-logo@3x.png', 'logo', template, '3x');
 
-        const pemPath = path.join(process.cwd(), 'private/passes', 'signerCert.pem');
+        if (!process.env.CERT_PEM) {
+            throw new Error('Certificate not found');
+        }
 
-        await template.loadCertificate(pemPath, process.env.CERT_PASS);
+        template.setCertificate(process.env.CERT_PEM, process.env.CERT_PASS);
+
         
         const pass = template.createPass({
             serialNumber: "123456",
+            description: "Miami Gooners Membership Pass",
         });
 
         await pass.asBuffer().then((buffer) => {

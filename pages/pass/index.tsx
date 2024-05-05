@@ -43,44 +43,47 @@ export default function Pass() {
             <Image src={goonerIcon} alt="Gooner Icon" width={250} height={250} />
 
             <div className="flex flex-col gap-4 justify-center items-center max-w-80">
-                <h1 className="text-center text-xl md:text-3xl">Create Membership Pass</h1>
 
-                <form className="w-full" onSubmit={handleCreatePass}>
-                    <div className="flex flex-col gap-4">
-                        <input
-                            required
-                            type="text" 
-                            id="memberName" 
-                            name="memberName"
-                            value={memberName}
-                            onChange={e => setMemberName(e.target.value)}
-                            className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
-                            placeholder="Member Name" 
-                        />
+                {!downloadUrl && (
+                    <>
+                        <h1 className="text-center text-xl md:text-3xl">Create Membership Pass</h1>
+                        <form className="w-full" onSubmit={handleCreatePass}>
+                            <div className="flex flex-col gap-4">
+                                <input
+                                    required
+                                    type="text" 
+                                    id="memberName" 
+                                    name="memberName"
+                                    value={memberName}
+                                    onChange={e => setMemberName(e.target.value)}
+                                    className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
+                                    placeholder="Member Name" 
+                                />
 
-                        <input 
-                            required
-                            type="text" 
-                            id="membershipNumber" 
-                            name="membershipNumber"
-                            value={membershipNumber}
-                            onChange={e => setMembershipNumber(e.target.value)}
-                            className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
-                            placeholder="Member No." 
-                        />
+                                <input 
+                                    required
+                                    type="text" 
+                                    id="membershipNumber" 
+                                    name="membershipNumber"
+                                    value={membershipNumber}
+                                    onChange={e => setMembershipNumber(e.target.value)}
+                                    className="w-full border border-white rounded-xl p-2 md:p-4 text-black" 
+                                    placeholder="Member No." 
+                                />
 
-                        {!downloadUrl && (
-                            <button
-                                disabled={loading}
-                                className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
-                                type="submit"
-                            >
-                                {loading ? 'Generating...' : 'Create'}
-                            </button>
-                        )}
-                    </div>
-
-                </form>
+                                {!downloadUrl && (
+                                    <button
+                                        disabled={loading}
+                                        className="w-full uppercase font-bold flex justify-center items-center border border-white rounded-xl p-2 md:p-4 hover:border-gooner-red hover:text-gooner-red transition-colors duration-500" 
+                                        type="submit"
+                                    >
+                                        {loading ? 'Generating...' : 'Create'}
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </>
+                )}
 
                 {downloadUrl && (
                     <a 
