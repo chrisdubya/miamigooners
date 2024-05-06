@@ -52,12 +52,12 @@ export default function Pass() {
                 <div className="mx-auto max-w-screen-2xl flex items-center h-[calc(100vh-2rem)] flex-col gap-12 mt-8">
                     <Image src={goonerIcon} alt="Gooner Icon" width={250} height={250} />
 
-                    <div className="w-full flex flex-col gap-8 justify-between items-center max-w-80 mb-4">
-                        <div className="flex flex-col gap-4">
+                    <div className="w-full flex flex-col gap-12 justify-between items-center max-w-80 mb-4">
+                        <div className="w-full flex flex-col gap-4">
                             {!downloadUrl && (
                                 <>
                                     <h1 className="text-center text-xl md:text-3xl">Create Membership Pass</h1>
-                                    <form className="w-full" onSubmit={handleCreatePass}>
+                                    <form onSubmit={handleCreatePass}>
                                         <div className="flex flex-col gap-4">
                                             <input
                                                 required
