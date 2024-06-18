@@ -20,6 +20,7 @@
 		"@react-three/drei": "^9.74.15",
 		"@react-three/fiber": "^8.11.5",
 		"@walletpass/pass-js": "^6.9.1",
+		"axios": "^1.7.2",
 		"color": "^4.2.3",
 		"luxon": "^3.2.1",
 		"next": "latest",
