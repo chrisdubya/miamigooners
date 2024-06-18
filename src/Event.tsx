@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react'
+import {useMemo} from 'react'
 import {
   Box,
   Button,
@@ -101,40 +101,11 @@ export const Event = ({index, event, past}: EventProps) => {
         {event.rsvpLink && !past && (
           <CardActions sx={{position: 'absolute', zIndex: 1}}>
             <Button
-              disabled={past}
+              size="small"
               href={event.rsvpLink}
-              size="large"
-              variant="outlined"
-              sx={{
-                color:
-                  getTeamColor(event, 'primary') === 'rgba(221,0,0,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgba(218,41,28,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(240, 0, 0)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgba(181,14,18,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(236, 28, 36)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(244, 51, 51)'
-                    ? '#fff'
-                    : null,
-                borderColor:
-                  getTeamColor(event, 'primary') === 'rgba(221,0,0,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgba(218,41,28,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(240, 0, 0)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgba(181,14,18,1)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(236, 28, 36)'
-                    ? '#fff'
-                    : getTeamColor(event, 'primary') === 'rgb(244, 51, 51)'
-                    ? '#fff'
-                    : null,
-              }}
+              target="_blank"
+              rel="noopener noreferrer"
+              color="primary"
             >
               RSVP
             </Button>
