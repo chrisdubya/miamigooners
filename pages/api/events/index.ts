@@ -3,7 +3,7 @@ import {EventType} from '../../../types'
 export default async function handler(req: any, res: any) {
   if (req.method === 'GET') {
     try {
-      const preseason24: EventType[] = [
+      const preSeason24: EventType[] = [
         {
           MatchNumber: 1,
           RoundNumber: 1,
@@ -24,18 +24,24 @@ export default async function handler(req: any, res: any) {
         },
       ]
 
-      const season24 = await fetch(
+      const plSeason24Response = await fetch(
         'https://fixturedownload.com/feed/json/epl-2024/arsenal'
       )
 
-      if (!season24.ok) {
+      if (!plSeason24Response.ok) {
         throw new Error('Error fetching match details')
       }
 
-      const season24Json: EventType[] = await season24.json()
-      const season24WithPreseason = season24Json.concat(preseason24)
+      const plSeason24: EventType[] = await plSeason24Response.json()
+        .then((seasonArray) => {
+          return seasonArray.map((event: EventType) => {
+            return {competition: 'Premier League', ...event}
+          })
+        })
 
-      res.status(200).json(season24WithPreseason)
+      const fullSeason24 = plSeason24.concat(preSeason24)
+
+      res.status(200).json(fullSeason24)
     } catch (e) {
       console.error(e)
       res.status(500).json({error: 'Error fetching match details'})
