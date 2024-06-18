@@ -11,6 +11,11 @@ export const teamColors: TeamColors[] = [
     team: 'Nottingham Forest',
   },
   {
+    primary: 'rgba(221,0,0,1)',
+    secondary: '#fff',
+    team: "Nott'm Forest",
+  },
+  {
     primary: 'rgba(27,69,143,1)',
     secondary: 'rgba(196,18,46,1)',
     team: 'Crystal Palace',
@@ -134,5 +139,20 @@ export const teamColors: TeamColors[] = [
     primary: 'rgb(244, 51, 51)',
     secondary: 'rgb(199, 145, 0)',
     team: 'Sevilla',
+  },
+  {
+    primary: 'rgb(0,83,160)',
+    secondary: 'rgb(253,190,17)',
+    team: 'Leicester',
+  },
+  {
+    primary: 'rgb(222,44,55)',
+    secondary: '#fff',
+    team: 'Ipswich',
+  },
+  {
+    primary: 'rgb(215, 25, 32)',
+    secondary: 'rgb(19, 12, 14)',
+    team: 'Southampton',
   },
 ]
