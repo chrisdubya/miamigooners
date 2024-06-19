@@ -26,14 +26,7 @@ const Model = () => {
 
 export const Scene = () => {
   return (
-    <div
-      style={{
-        position: 'absolute',
-        height: '70vh',
-        inset: 0,
-        zIndex: 3,
-      }}
-    >
+    <div className="absolute h-[70vh] inset-0 z-10">
       <Canvas>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />
