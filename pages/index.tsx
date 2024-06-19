@@ -6,6 +6,7 @@ import {GetServerSideProps} from 'next'
 import {EventType} from '../types'
 import {getBaseUrl} from '../src/utils/env'
 import Image from 'next/image'
+import {Footer} from '../src/Footer'
 
 export const getServerSideProps = (async () => {
   try {
@@ -86,6 +87,8 @@ export default function Home({events}: {events: EventType[]}) {
 
       <Box component="div">
         <AllEvents events={events} />
+
+        <Footer />
       </Box>
     </>
   )
