@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export const Hero = () => {
   return (
-    <div className="h-[70vh] relative w-full overflow-x-hidden">
+    <div className="h-[70vh] relative w-full overflow-hidden">
       <Image
         src="/background-2.jpeg"
         fill
