@@ -17,7 +17,7 @@ export const teamColors: TeamColors[] = [
   },
   {
     primary: 'rgba(27,69,143,1)',
-    secondary: 'rgba(196,18,46,1)',
+    secondary: '#fff',
     team: 'Crystal Palace',
   },
   {
