@@ -31,7 +31,7 @@ export const Scene = () => {
         position: 'absolute',
         height: '70vh',
         inset: 0,
-        zIndex: 0,
+        zIndex: 3,
       }}
     >
       <Canvas>

@@ -21,9 +21,19 @@ export const getServerSideProps = (async () => {
 export default function Home({events}: {events: EventType[]}) {
   return (
     <>
-      <div className="h-[70vh] relative">
-        <div className="absolute top-0 left-0 right-0 bottom-0 z-0">
-          <Image src="/background.jpeg" fill className='object-cover' alt={'group photo'} priority />
+      <div className="h-[70vh] relative w-full">
+        <Image
+          src="/background-2.jpeg"
+          fill
+          className="object-cover"
+          alt={'group photo'}
+          priority
+        />
+
+        <div className="glitch__layers">
+          <div className="glitch__layer"></div>
+          <div className="glitch__layer"></div>
+          <div className="glitch__layer"></div>
         </div>
 
         <Scene />
