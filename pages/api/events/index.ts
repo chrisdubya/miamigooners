@@ -7,6 +7,15 @@ export default async function handler(req: any, res: any) {
         {
           MatchNumber: 1,
           RoundNumber: 1,
+          DateUtc: '2024-07-25 02:30:00Z',
+          Location: 'Dignity Health Sports Park',
+          HomeTeam: 'Arsenal',
+          AwayTeam: 'Bournemouth',
+          competition: 'Pre-season Friendly',
+        },
+        {
+          MatchNumber: 2,
+          RoundNumber: 1,
           DateUtc: '2024-07-28 00:00:00Z',
           Location: 'SoFi Stadium',
           HomeTeam: 'Arsenal',
@@ -14,7 +23,7 @@ export default async function handler(req: any, res: any) {
           competition: 'Pre-season Friendly',
         },
         {
-          MatchNumber: 2,
+          MatchNumber: 3,
           RoundNumber: 1,
           DateUtc: '2024-07-31 23:30:00Z',
           Location: 'Lincoln Financial Field',
