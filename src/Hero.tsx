@@ -52,7 +52,7 @@ export const Hero = () => {
           />
         </Link>
         <Link
-          href="https://chat.whatsapp.com/L0k0g8cgYgQHegpTA8Pe7L"
+          href="https://chat.whatsapp.com/EAd2KW1lMwZH7CnpraDzTK"
           aria-label="chat with us on whatsapp"
         >
           <WhatsApp
