@@ -41,14 +41,27 @@ export default async function handler(req: any, res: any) {
         throw new Error('Error fetching match details')
       }
 
-      const plSeason24: EventType[] = await plSeason24Response.json()
+      const championsLeagueResponse = await fetch(
+        'https://fixturedownload.com/feed/json/champions-league-2024/arsenal'
+      )
+
+      const plSeason24: EventType[] = await plSeason24Response
+        .json()
         .then((seasonArray) => {
           return seasonArray.map((event: EventType) => {
             return {competition: 'Premier League', ...event}
           })
         })
 
-      const fullSeason24 = plSeason24.concat(preSeason24)
+      const championsLeague: EventType[] = await championsLeagueResponse
+        .json()
+        .then((seasonArray) => {
+          return seasonArray.map((event: EventType) => {
+            return {competition: 'Champions League', ...event}
+          })
+        })
+
+      const fullSeason24 = plSeason24.concat(preSeason24, championsLeague)
 
       res.status(200).json(fullSeason24)
     } catch (e) {

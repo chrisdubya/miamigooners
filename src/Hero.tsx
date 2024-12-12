@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {X, Instagram, WhatsApp} from '@mui/icons-material'
+import {X, Instagram, WhatsApp, Mail} from '@mui/icons-material'
 import {Scene} from './Scene'
 import Link from 'next/link'
 
@@ -13,12 +13,6 @@ export const Hero = () => {
         alt={'group photo'}
         priority
       />
-
-      <div className="absolute z-10 left-0 right-0 top-0 bottom-0">
-        <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('/background-2.jpeg')] bg-no-repeat bg-center -translate-x-[5%] animate-glitch-anim-1"></div>
-        <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('/background-2.jpeg')] bg-no-repeat bg-center -translate-x-[15%] translate-y-[3%] animate-glitch-anim-2"></div>
-        <div className="absolute top-0 left-0 right-0 bottom-0 bg-[url('/background-2.jpeg')] bg-no-repeat bg-center translate-x-[10%] animate-glitch-anim-flash"></div>
-      </div>
 
       <Scene />
 
@@ -64,6 +58,9 @@ export const Hero = () => {
               },
             }}
           />
+        </Link>
+        <Link href="mailto:miamigooners@gmail.com" aria-label="email us">
+          <Mail color="primary" fontSize="large" />
         </Link>
       </div>
     </div>
