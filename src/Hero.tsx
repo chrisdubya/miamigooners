@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {X, Instagram, WhatsApp} from '@mui/icons-material'
+import {X, Instagram, WhatsApp, Mail} from '@mui/icons-material'
 import {Scene} from './Scene'
 import Link from 'next/link'
 
@@ -64,6 +64,9 @@ export const Hero = () => {
               },
             }}
           />
+        </Link>
+        <Link href="mailto:miamigooners@gmail.com" aria-label="email us">
+          <Mail color="primary" fontSize="large" />
         </Link>
       </div>
     </div>
