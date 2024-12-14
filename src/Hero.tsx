@@ -59,7 +59,7 @@ export const Hero = () => {
             }}
           />
         </Link>
-        <Link href="mailto:miamigooners@gmail.com" aria-label="email us">
+        <Link href="mailto:info@miamigooners.com" aria-label="email us">
           <Mail color="primary" fontSize="large" />
         </Link>
       </div>
