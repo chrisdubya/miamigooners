@@ -33,7 +33,7 @@ export default async function handler(req: any, res: any) {
         },
       ]
 
-      const faCup24 = [
+      const faCup24: EventType[] = [
         {
           MatchNumber: 1,
           RoundNumber: 3,
