@@ -33,6 +33,18 @@ export default async function handler(req: any, res: any) {
         },
       ]
 
+      const faCup24 = [
+        {
+          MatchNumber: 1,
+          RoundNumber: 3,
+          DateUtc: '2025-01-12 15:00:00Z',
+          Location: 'Emirates Stadium',
+          HomeTeam: 'Arsenal',
+          AwayTeam: 'Man Utd',
+          competition: 'FA Cup',
+        },
+      ]
+
       const plSeason24Response = await fetch(
         'https://fixturedownload.com/feed/json/epl-2024/arsenal'
       )
@@ -61,7 +73,11 @@ export default async function handler(req: any, res: any) {
           })
         })
 
-      const fullSeason24 = plSeason24.concat(preSeason24, championsLeague)
+      const fullSeason24 = plSeason24.concat(
+        preSeason24,
+        faCup24,
+        championsLeague
+      )
 
       res.status(200).json(fullSeason24)
     } catch (e) {
