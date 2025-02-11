@@ -45,20 +45,6 @@ export const Hero = () => {
             }}
           />
         </Link>
-        <Link
-          href="https://chat.whatsapp.com/EAd2KW1lMwZH7CnpraDzTK"
-          aria-label="chat with us on whatsapp"
-        >
-          <WhatsApp
-            color="primary"
-            fontSize="large"
-            sx={{
-              '&:hover': {
-                color: 'primary.dark',
-              },
-            }}
-          />
-        </Link>
         <Link href="mailto:info@miamigooners.com" aria-label="email us">
           <Mail color="primary" fontSize="large" />
         </Link>
