@@ -18,7 +18,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
         <h1 className="text-2xl md:text-4xl font-bold">
           The{' '}
           <a
-            className="italic text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            className="italic text-gooner-red hover:text-white transition-colors duration-300"
             target={'_blank'}
             rel={'noopener noreferrer'}
             href={'https://www.arsenalamerica.com/branches/'}
@@ -30,7 +30,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
         <p className="text-xl font-bold">
           We watch all matches at{' '}
           <a
-            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            className="text-gooner-red hover:text-white transition-colors duration-300"
             target={'_blank'}
             rel={'noopener noreferrer'}
             href={`https://www.instagram.com/thebargables`}
@@ -39,17 +39,17 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
           </a>{' '}
           in Coral Gables. Follow our{' '}
           <a
-            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            className="text-gooner-red hover:text-white transition-colors duration-300"
             href={`https://www.instagram.com/miamigooners/`}
           >
             instagram
           </a>{' '}
           or{' '}
           <a
-            className="text-gooner-red hover:text-gooner-red-dark transition-colors duration-300"
+            className="text-gooner-red hover:text-white transition-colors duration-300"
             href={`https://twitter.com/miamigooners`}
           >
-            twitter/x
+            x
           </a>{' '}
           for the latest info. Come join us!
         </p>

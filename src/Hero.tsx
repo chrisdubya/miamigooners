@@ -26,7 +26,7 @@ export const Hero = () => {
             fontSize="large"
             sx={{
               '&:hover': {
-                color: 'primary.dark',
+                color: 'white',
               },
             }}
           />
@@ -40,13 +40,21 @@ export const Hero = () => {
             fontSize="large"
             sx={{
               '&:hover': {
-                color: 'primary.dark',
+                color: 'white',
               },
             }}
           />
         </Link>
         <Link href="mailto:info@miamigooners.com" aria-label="email us">
-          <Mail color="primary" fontSize="large" />
+          <Mail 
+            color="primary" 
+            fontSize="large" 
+            sx={{
+              '&:hover': {
+                color: 'white',
+              },
+            }}
+          />
         </Link>
       </div>
     </div>
