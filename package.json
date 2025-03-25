@@ -10,7 +10,7 @@
 		"post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
 	},
 	"dependencies": {
-		"@auth0/nextjs-auth0": "^3.5.0",
+		"@auth0/nextjs-auth0": "^3.7.0",
 		"@emotion/cache": "latest",
 		"@emotion/react": "latest",
 		"@emotion/server": "latest",
@@ -20,13 +20,14 @@
 		"@react-three/drei": "^9.74.15",
 		"@react-three/fiber": "^8.11.5",
 		"@walletpass/pass-js": "^6.9.1",
-		"axios": "^1.7.2",
+		"axios": "^1.8.4",
 		"color": "^4.2.3",
 		"luxon": "^3.2.1",
 		"next": "latest",
 		"next-axiom": "^1.1.1",
 		"react": "latest",
 		"react-dom": "latest",
+		"semver": "^7.7.1",
 		"three": "^0.150.0"
 	},
 	"devDependencies": {
