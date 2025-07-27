@@ -156,8 +156,8 @@ export const teamColors: TeamColors[] = [
     team: 'Southampton',
   },
   {
-    primary: 'rgb(238,37,35)',
-    secondary: '#fff',
+    primary: '#ee2523',
+    secondary: '#000',
     team: 'Athletic Club',
   },
   {
