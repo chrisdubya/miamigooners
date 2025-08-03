@@ -99,7 +99,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
               {product.variants.edges.length > 1 && (
                 <Box component="div" sx={{marginBottom: 2}}>
                   <FormControl fullWidth>
-                    <InputLabel>Variant</InputLabel>
+                    <InputLabel>Size</InputLabel>
                     <Select
                       value={selectedVariant?.id || ''}
                       label="Variant"
@@ -128,35 +128,6 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
                   </FormControl>
                 </Box>
               )}
-
-              {product.options.map((option) => (
-                <Box key={option.name} component="div" sx={{marginBottom: 2}}>
-                  <Typography variant="h6" gutterBottom>{option.name}</Typography>
-                  <Box component="div" sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
-                    {option.values.map((value) => {
-                      // Check if any variant with this option value is available
-                      const isAvailable = product.variants.edges.some(({node: variant}) => 
-                        variant.availableForSale && 
-                        variant.selectedOptions.some(opt => opt.name === option.name && opt.value === value)
-                      )
-                      
-                      return (
-                        <Chip 
-                          key={value} 
-                          label={value} 
-                          variant="outlined"
-                          sx={{
-                            textDecoration: !isAvailable ? 'line-through' : 'none',
-                            opacity: !isAvailable ? 0.6 : 1,
-                            color: !isAvailable ? 'text.disabled' : 'inherit'
-                          }}
-                        />
-                      )
-                    })}
-                  </Box>
-                </Box>
-              ))}
-
 
               {selectedVariant && !selectedVariant.availableForSale && (
                 <Box component="div" sx={{marginBottom: 2}}>

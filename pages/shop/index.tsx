@@ -1,4 +1,4 @@
-import {Box, Card, CardContent, CardMedia, Typography, Button, Container} from '@mui/material'
+import {Box, Card, CardContent, CardMedia, Typography, Button, Container, Chip} from '@mui/material'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -49,6 +49,34 @@ export default function Shop({products}: {products: ShopifyProduct[]}) {
                   <Typography variant="body2" color="text.secondary" marginBottom={2} flexGrow={1}>
                     {product.description}
                   </Typography>
+                  
+                  {product.options.map((option) => (
+                    <Box key={option.name} component="div" sx={{marginBottom: 2}}>
+                      <Box component="div" sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
+                        {option.values.map((value) => {
+                          // Check if any variant with this option value is available
+                          const isAvailable = product.variants.edges.some(({node: variant}) => 
+                            variant.availableForSale && 
+                            variant.selectedOptions.some(opt => opt.name === option.name && opt.value === value)
+                          )
+                          
+                          return (
+                            <Chip 
+                              key={value} 
+                              label={value} 
+                              variant="outlined"
+                              sx={{
+                                textDecoration: !isAvailable ? 'line-through' : 'none',
+                                opacity: !isAvailable ? 0.6 : 1,
+                                color: !isAvailable ? 'text.disabled' : 'inherit'
+                              }}
+                            />
+                          )
+                        })}
+                      </Box>
+                    </Box>
+                  ))}
+                  
                   <Box component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Typography variant="h6" color="primary" fontWeight="bold">
                       {formatPrice(price.amount, price.currencyCode)}
