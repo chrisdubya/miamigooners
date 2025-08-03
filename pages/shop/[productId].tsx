@@ -62,7 +62,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
   return (
     <>
       <Head>
-        <title>{product.title} - Miami Gooners Shop</title>
+        <title>{`${product.title} - Miami Gooners Shop`}</title>
         <meta name="description" content={product.description} />
       </Head>
       

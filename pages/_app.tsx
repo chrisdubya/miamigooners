@@ -68,17 +68,6 @@ export default function MyApp(props: MyAppProps) {
         ></meta>
 
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-							window.dataLayer = window.dataLayer || [];
-							function gtag(){dataLayer.push(arguments);}
-							gtag('js', new Date());
-						
-							gtag('config', 'G-1ZGEWQ7JLM');
-						`,
-          }}
-        />
         <link
           rel="icon"
           type="image/png"
@@ -99,6 +88,18 @@ export default function MyApp(props: MyAppProps) {
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-1ZGEWQ7JLM"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-1ZGEWQ7JLM');
+          `,
+        }}
       />
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
