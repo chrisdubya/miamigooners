@@ -2,6 +2,7 @@ import {Suspense, useRef} from 'react'
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OrbitControls} from '@react-three/drei'
+import * as THREE from 'three'
 
 const Model = () => {
   const gltf = useLoader(GLTFLoader, '/images/logos/gooners-inter-logo.glb')
