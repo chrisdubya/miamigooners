@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {X, Instagram, WhatsApp, Mail} from '@mui/icons-material'
+import {X, Instagram, WhatsApp, Mail, Store} from '@mui/icons-material'
 import {Scene} from './Scene'
 import Link from 'next/link'
 
@@ -47,6 +47,17 @@ export const Hero = () => {
         </Link>
         <Link href="mailto:info@miamigooners.com" aria-label="email us">
           <Mail 
+            color="primary" 
+            fontSize="large" 
+            sx={{
+              '&:hover': {
+                color: 'white',
+              },
+            }}
+          />
+        </Link>
+        <Link href="/store" aria-label="visit our store">
+          <Store 
             color="primary" 
             fontSize="large" 
             sx={{
