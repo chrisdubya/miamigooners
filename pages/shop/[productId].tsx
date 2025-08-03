@@ -3,6 +3,7 @@ import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 import {Footer} from '../../src/Footer'
+import {ShopHero} from '../../src/ShopHero'
 import {ArrowBack, ShoppingCart} from '@mui/icons-material'
 import {getProductByHandle, ShopifyProduct, formatPrice, createCart} from '../../src/utils/shopify'
 import {useState} from 'react'
@@ -21,7 +22,13 @@ export const getServerSideProps = (async (context) => {
 }) satisfies GetServerSideProps<{product: ShopifyProduct}>
 
 export default function ProductDetail({product}: {product: ShopifyProduct}) {
-  const [selectedVariant, setSelectedVariant] = useState(product.variants.edges[0]?.node)
+  // Find the first available variant, fallback to first variant if none available
+  const getFirstAvailableVariant = () => {
+    const availableVariant = product.variants.edges.find(({node}) => node.availableForSale)?.node
+    return availableVariant || product.variants.edges[0]?.node
+  }
+  
+  const [selectedVariant, setSelectedVariant] = useState(getFirstAvailableVariant())
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAddToCart = async () => {
@@ -54,15 +61,17 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
   return (
     <>
       <Head>
-        <title>{product.title} - Miami Gooners Store</title>
+        <title>{product.title} - Miami Gooners Shop</title>
         <meta name="description" content={product.description} />
       </Head>
       
+      <ShopHero />
+      
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
         <Box component="div" sx={{marginBottom: 3}}>
-          <Link href="/store" passHref>
+          <Link href="/shop" passHref>
             <Button startIcon={<ArrowBack />} variant="outlined">
-              Back to Store
+              Back to Shop
             </Button>
           </Link>
         </Box>
@@ -108,8 +117,17 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
                       }}
                     >
                       {product.variants.edges.map(({node: variant}) => (
-                        <MenuItem key={variant.id} value={variant.id}>
+                        <MenuItem 
+                          key={variant.id} 
+                          value={variant.id}
+                          disabled={!variant.availableForSale}
+                          sx={{
+                            textDecoration: !variant.availableForSale ? 'line-through' : 'none',
+                            opacity: !variant.availableForSale ? 0.6 : 1
+                          }}
+                        >
                           {variant.title} - {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                          {!variant.availableForSale && ' (Out of Stock)'}
                         </MenuItem>
                       ))}
                     </Select>
@@ -121,9 +139,26 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
                 <Box key={option.name} component="div" sx={{marginBottom: 2}}>
                   <Typography variant="h6" gutterBottom>{option.name}</Typography>
                   <Box component="div" sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
-                    {option.values.map((value) => (
-                      <Chip key={value} label={value} variant="outlined" />
-                    ))}
+                    {option.values.map((value) => {
+                      // Check if any variant with this option value is available
+                      const isAvailable = product.variants.edges.some(({node: variant}) => 
+                        variant.availableForSale && 
+                        variant.selectedOptions.some(opt => opt.name === option.name && opt.value === value)
+                      )
+                      
+                      return (
+                        <Chip 
+                          key={value} 
+                          label={value} 
+                          variant="outlined"
+                          sx={{
+                            textDecoration: !isAvailable ? 'line-through' : 'none',
+                            opacity: !isAvailable ? 0.6 : 1,
+                            color: !isAvailable ? 'text.disabled' : 'inherit'
+                          }}
+                        />
+                      )
+                    })}
                   </Box>
                 </Box>
               ))}

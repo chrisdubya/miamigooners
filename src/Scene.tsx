@@ -25,9 +25,9 @@ const Model = () => {
   )
 }
 
-export const Scene = () => {
+export const Scene = ({height}: {height: number}) => {
   return (
-    <div className="absolute h-[70vh] inset-0 z-10">
+    <div className={`absolute h-[${height}vh] inset-0 z-10`}>
       <Canvas>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />

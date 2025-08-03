@@ -3,6 +3,7 @@ import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 import {Footer} from '../../src/Footer'
+import {ShopHero} from '../../src/ShopHero'
 import {getProducts, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
 
 export const getServerSideProps = (async () => {
@@ -10,7 +11,7 @@ export const getServerSideProps = (async () => {
   return {props: {products}}
 }) satisfies GetServerSideProps<{products: ShopifyProduct[]}>
 
-export default function Store({products}: {products: ShopifyProduct[]}) {
+export default function Shop({products}: {products: ShopifyProduct[]}) {
   return (
     <>
       <Head>
@@ -18,10 +19,12 @@ export default function Store({products}: {products: ShopifyProduct[]}) {
         <meta name="description" content="Official Miami Gooners Shop" />
       </Head>
       
+      <ShopHero />
+      
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
         <Box component="div" sx={{marginBottom: 4}}>
           <Typography variant="h2" component="h1" gutterBottom color="#dc0714" fontWeight="bold">
-            Miami Gooners Shop
+            Shop
           </Typography>
         </Box>
 
@@ -50,7 +53,7 @@ export default function Store({products}: {products: ShopifyProduct[]}) {
                     <Typography variant="h6" color="primary" fontWeight="bold">
                       {formatPrice(price.amount, price.currencyCode)}
                     </Typography>
-                    <Link href={`/store/${product.handle}`} passHref>
+                    <Link href={`/shop/${product.handle}`} passHref>
                       <Button variant="contained" color="primary">
                         View Details
                       </Button>
