@@ -267,6 +267,36 @@ export async function createCart(variantId: string, quantity: number = 1): Promi
   }
 }
 
+export async function createCartWithMultipleItems(items: Array<{merchandiseId: string, quantity: number}>): Promise<ShopifyCart | null> {
+  try {
+    console.log('Creating cart with multiple items:', items)
+    
+    const {data, errors} = await client.request(CREATE_CART_MUTATION, {
+      variables: {
+        input: {
+          lines: items
+        }
+      }
+    })
+    
+    if (errors) {
+      console.error('GraphQL errors:', errors)
+      return null
+    }
+    
+    if (data.cartCreate.userErrors.length > 0) {
+      console.error('Cart user errors:', data.cartCreate.userErrors)
+      return null
+    }
+    
+    console.log('Cart created successfully:', data.cartCreate.cart)
+    return data.cartCreate.cart
+  } catch (error) {
+    console.error('Error creating cart:', error)
+    return null
+  }
+}
+
 export function formatPrice(amount: string, currencyCode: string = 'USD'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

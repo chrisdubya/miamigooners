@@ -5,9 +5,11 @@ import Head from 'next/head'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
 import {ProductImageGallery} from '../../src/ProductImageGallery'
+import {CartButton} from '../../src/CartButton'
 import {ArrowBack, ShoppingCart} from '@mui/icons-material'
-import {getProductByHandle, ShopifyProduct, formatPrice, createCart} from '../../src/utils/shopify'
+import {getProductByHandle, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
 import {useState} from 'react'
+import {useCart} from '../../src/context/CartContext'
 
 export const getServerSideProps = (async (context) => {
   const {productId} = context.params!
@@ -23,6 +25,8 @@ export const getServerSideProps = (async (context) => {
 }) satisfies GetServerSideProps<{product: ShopifyProduct}>
 
 export default function ProductDetail({product}: {product: ShopifyProduct}) {
+  const { addItem } = useCart()
+  
   // Find the first available variant, fallback to first variant if none available
   const getFirstAvailableVariant = () => {
     const availableVariant = product.variants.edges.find(({node}) => node.availableForSale)?.node
@@ -31,8 +35,9 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
   
   const [selectedVariant, setSelectedVariant] = useState(getFirstAvailableVariant())
   const [isLoading, setIsLoading] = useState(false)
+  const [isAdded, setIsAdded] = useState(false)
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = () => {
     if (!selectedVariant) {
       alert('Please select a variant')
       return
@@ -40,20 +45,29 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
     
     setIsLoading(true)
     
-    try {
-      const cart = await createCart(selectedVariant.id)
-      setIsLoading(false)
-      
-      if (cart) {
-        window.location.href = cart.checkoutUrl
-      } else {
-        alert('Error creating cart. Please check the browser console for details.')
-      }
-    } catch (error) {
-      setIsLoading(false)
-      console.error('Add to cart error:', error)
-      alert('Error adding to cart. Please check the browser console for details.')
+    const productImage = product.images.edges[0]?.node
+    
+    const cartItem = {
+      variantId: selectedVariant.id,
+      productId: product.id,
+      productTitle: product.title,
+      variantTitle: selectedVariant.title,
+      price: selectedVariant.price,
+      image: productImage ? {
+        url: productImage.url,
+        altText: productImage.altText || product.title
+      } : undefined,
+      availableForSale: selectedVariant.availableForSale
     }
+    
+    addItem(cartItem)
+    setIsLoading(false)
+    setIsAdded(true)
+    
+    // Reset the "Added!" state after 2 seconds
+    setTimeout(() => {
+      setIsAdded(false)
+    }, 2000)
   }
 
   const productImages = product.images.edges.map(edge => edge.node)
@@ -69,12 +83,13 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
       <ShopHero />
       
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
-        <Box component="div" sx={{marginBottom: 3}}>
+        <Box component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3}}>
           <Link href="/shop" passHref>
             <Button startIcon={<ArrowBack />} variant="outlined">
               Back to Shop
             </Button>
           </Link>
+          <CartButton />
         </Box>
 
         <Grid container spacing={4}>
@@ -139,14 +154,14 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
 
               <Button 
                 variant="contained" 
-                color="primary" 
+                color={isAdded ? "success" : "primary"}
                 size="large" 
                 startIcon={<ShoppingCart />}
                 onClick={handleAddToCart}
-                disabled={!selectedVariant?.availableForSale || isLoading}
+                disabled={!selectedVariant?.availableForSale || isLoading || isAdded}
                 style={{marginTop: 16}}
               >
-                {isLoading ? 'Adding to Cart...' : 'Add to Cart'}
+                {isLoading ? 'Adding to Cart...' : isAdded ? 'Added!' : 'Add to Cart'}
               </Button>
             </Box>
           </Grid>

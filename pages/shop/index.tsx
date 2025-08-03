@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
+import {CartButton} from '../../src/CartButton'
 import {getProducts, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
 
 export const getServerSideProps = (async () => {
@@ -22,10 +23,11 @@ export default function Shop({products}: {products: ShopifyProduct[]}) {
       <ShopHero />
       
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
-        <Box component="div" sx={{marginBottom: 4}}>
-          <Typography variant="h2" component="h1" gutterBottom color="#dc0714" fontWeight="bold">
+        <Box component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4}}>
+          <Typography variant="h2" component="h1" color="#dc0714" fontWeight="bold">
             Shop
           </Typography>
+          <CartButton />
         </Box>
 
         <Box component="div" sx={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3}}>
