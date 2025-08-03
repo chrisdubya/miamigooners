@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
+import {ProductImageGallery} from '../../src/ProductImageGallery'
 import {ArrowBack, ShoppingCart} from '@mui/icons-material'
 import {getProductByHandle, ShopifyProduct, formatPrice, createCart} from '../../src/utils/shopify'
 import {useState} from 'react'
@@ -55,7 +56,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
     }
   }
 
-  const primaryImage = product.images.edges[0]?.node
+  const productImages = product.images.edges.map(edge => edge.node)
   const price = selectedVariant?.price || product.priceRange.minVariantPrice
 
   return (
@@ -78,14 +79,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
 
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
-            <Card>
-              <CardMedia
-                component="img"
-                image={primaryImage?.url || '/images/placeholder-tshirt.svg'}
-                alt={primaryImage?.altText || product.title}
-                style={{width: '100%', height: 'auto', maxHeight: 500, objectFit: 'cover'}}
-              />
-            </Card>
+            <ProductImageGallery images={productImages} productTitle={product.title} />
           </Grid>
           
           <Grid item xs={12} md={6}>
