@@ -2,6 +2,7 @@ import {Suspense, useRef} from 'react'
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {OrbitControls} from '@react-three/drei'
+import * as THREE from 'three'
 
 const Model = () => {
   const gltf = useLoader(GLTFLoader, '/images/logos/gooners-inter-logo.glb')
@@ -24,9 +25,9 @@ const Model = () => {
   )
 }
 
-export const Scene = () => {
+export const Scene = ({height}: {height: number}) => {
   return (
-    <div className="absolute h-[70vh] inset-0 z-10">
+    <div className={`absolute h-[${height}vh] inset-0 z-10`}>
       <Canvas>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />

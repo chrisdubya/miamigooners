@@ -87,7 +87,8 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
 
                     const today = DateTime.now().setZone('America/New_York')
 
-                    return eventDate.toISODate() >= today.toISODate()
+                    return eventDate.toISODate() && today.toISODate() && 
+                           eventDate.toISODate()! >= today.toISODate()!
                   })
                   .sort((a, b) => {
                     const dateA = DateTime.fromFormat(

@@ -2,6 +2,9 @@
 	"name": "miami-gooners",
 	"version": "5.0.0",
 	"private": true,
+	"engines": {
+		"node": ">=20.0.0"
+	},
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
@@ -19,23 +22,24 @@
 		"@mui/material": "^5.11.11",
 		"@react-three/drei": "^9.74.15",
 		"@react-three/fiber": "^8.11.5",
+		"@shopify/storefront-api-client": "^1.0.9",
 		"@walletpass/pass-js": "^6.9.1",
 		"axios": "^1.8.4",
 		"color": "^4.2.3",
 		"luxon": "^3.2.1",
-		"next": "latest",
+		"next": "^15.2.4",
 		"next-axiom": "^1.1.1",
-		"react": "latest",
-		"react-dom": "latest",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"semver": "^7.7.1",
-		"three": "^0.150.0"
+		"three": "^0.170.0"
 	},
 	"devDependencies": {
 		"@types/color": "^3.0.6",
 		"@types/luxon": "^3.2.0",
-		"@types/node": "latest",
-		"@types/react": "latest",
-		"@types/three": "^0.149.0",
+		"@types/node": "^20.19.4",
+		"@types/react": "^18.3.1",
+		"@types/three": "^0.170.0",
 		"autoprefixer": "^10.4.19",
 		"eslint": "latest",
 		"eslint-config-next": "latest",
