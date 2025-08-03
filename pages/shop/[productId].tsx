@@ -45,7 +45,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
       setIsLoading(false)
       
       if (cart) {
-        window.open(cart.checkoutUrl, '_blank')
+        window.location.href = cart.checkoutUrl
       } else {
         alert('Error creating cart. Please check the browser console for details.')
       }
