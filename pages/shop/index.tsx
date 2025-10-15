@@ -1,4 +1,13 @@
-import {Box, Card, CardContent, CardMedia, Typography, Button, Container, Chip} from '@mui/material'
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Container,
+  Chip,
+} from '@mui/material'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -19,87 +28,163 @@ export default function Shop({products}: {products: ShopifyProduct[]}) {
         <title>Shop - Miami Gooners</title>
         <meta name="description" content="Official Miami Gooners Shop" />
       </Head>
-      
+
       <ShopHero />
-      
+
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
-        <Box component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4}}>
-          <Typography variant="h2" component="h1" color="#dc0714" fontWeight="bold">
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 4,
+          }}
+        >
+          <Typography
+            variant="h2"
+            component="h1"
+            color="#dc0714"
+            fontWeight="bold"
+          >
             Shop
           </Typography>
           <CartButton />
         </Box>
 
-        <Box component="div" sx={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3}}>
-          {products.map((product) => {
-            const primaryImage = product.images.edges[0]?.node
-            const price = product.priceRange.minVariantPrice
-            
-            return (
-              <Card key={product.id} style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-                <CardMedia
-                  component="img"
-                  height="300"
-                  image={primaryImage?.url || '/images/placeholder-tshirt.svg'}
-                  alt={primaryImage?.altText || product.title}
-                  style={{objectFit: 'cover'}}
-                />
-                <CardContent style={{flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {product.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" marginBottom={2} flexGrow={1}>
-                    {product.description}
-                  </Typography>
-                  
-                  {product.options.map((option) => (
-                    <Box key={option.name} component="div" sx={{marginBottom: 2}}>
-                      <Box component="div" sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
-                        {option.values.map((value) => {
-                          // Check if any variant with this option value is available
-                          const isAvailable = product.variants.edges.some(({node: variant}) => 
-                            variant.availableForSale && 
-                            variant.selectedOptions.some(opt => opt.name === option.name && opt.value === value)
-                          )
-                          
-                          return (
-                            <Chip 
-                              key={value} 
-                              label={value} 
-                              variant="outlined"
-                              sx={{
-                                textDecoration: !isAvailable ? 'line-through' : 'none',
-                                opacity: !isAvailable ? 0.6 : 1,
-                                color: !isAvailable ? 'text.disabled' : 'inherit'
-                              }}
-                            />
-                          )
-                        })}
-                      </Box>
-                    </Box>
-                  ))}
-                  
-                  <Box component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <Typography variant="h6" color="primary" fontWeight="bold">
-                      {formatPrice(price.amount, price.currencyCode)}
+        {products.length === 0 ? (
+          <Box component="div" sx={{textAlign: 'center', padding: 8}}>
+            <Typography variant="h4" color="text.secondary" gutterBottom>
+              No items available
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Check back soon for new merchandise!
+            </Typography>
+          </Box>
+        ) : (
+          <Box
+            component="div"
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: 3,
+            }}
+          >
+            {products.map((product) => {
+              const primaryImage = product.images.edges[0]?.node
+              const price = product.priceRange.minVariantPrice
+
+              return (
+                <Card
+                  key={product.id}
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={
+                      primaryImage?.url || '/images/placeholder-tshirt.svg'
+                    }
+                    alt={primaryImage?.altText || product.title}
+                    style={{objectFit: 'cover'}}
+                  />
+                  <CardContent
+                    style={{
+                      flexGrow: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {product.title}
                     </Typography>
-                    <Link href={`/shop/${product.handle}`} passHref>
-                      <Button variant="contained" color="primary">
-                        View Details
-                      </Button>
-                    </Link>
-                  </Box>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </Box>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      marginBottom={2}
+                      flexGrow={1}
+                    >
+                      {product.description}
+                    </Typography>
+
+                    {product.options.map((option) => (
+                      <Box
+                        key={option.name}
+                        component="div"
+                        sx={{marginBottom: 2}}
+                      >
+                        <Box
+                          component="div"
+                          sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}
+                        >
+                          {option.values.map((value) => {
+                            // Check if any variant with this option value is available
+                            const isAvailable = product.variants.edges.some(
+                              ({node: variant}) =>
+                                variant.availableForSale &&
+                                variant.selectedOptions.some(
+                                  (opt) =>
+                                    opt.name === option.name &&
+                                    opt.value === value
+                                )
+                            )
+
+                            return (
+                              <Chip
+                                key={value}
+                                label={value}
+                                variant="outlined"
+                                sx={{
+                                  textDecoration: !isAvailable
+                                    ? 'line-through'
+                                    : 'none',
+                                  opacity: !isAvailable ? 0.6 : 1,
+                                  color: !isAvailable
+                                    ? 'text.disabled'
+                                    : 'inherit',
+                                }}
+                              />
+                            )
+                          })}
+                        </Box>
+                      </Box>
+                    ))}
+
+                    <Box
+                      component="div"
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        color="primary"
+                        fontWeight="bold"
+                      >
+                        {formatPrice(price.amount, price.currencyCode)}
+                      </Typography>
+                      <Link href={`/shop/${product.handle}`} passHref>
+                        <Button variant="contained" color="primary">
+                          View Details
+                        </Button>
+                      </Link>
+                    </Box>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </Box>
+        )}
 
         <Box component="div" sx={{marginTop: 6, textAlign: 'center'}}>
           <Link href="/" passHref>
-            <Button variant="outlined">
-              Back to Home
-            </Button>
+            <Button variant="outlined">Back to Home</Button>
           </Link>
         </Box>
       </Container>
