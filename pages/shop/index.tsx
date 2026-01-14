@@ -51,7 +51,7 @@ export default function Shop({products}: {products: ShopifyProduct[]}) {
           <Typography
             variant="h2"
             component="h1"
-            color="#dc0714"
+            color="primary"
             fontWeight="bold"
           >
             Shop

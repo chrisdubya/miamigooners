@@ -112,7 +112,7 @@ export default function Cart() {
           </Link>
         </Box>
 
-        <Typography variant="h3" component="h1" gutterBottom color="#dc0714" fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom color="primary" fontWeight="bold">
           Shopping Cart ({state.totalQuantity} items)
         </Typography>
 
@@ -178,9 +178,9 @@ export default function Cart() {
                           <Add />
                         </IconButton>
                         
-                        <IconButton 
+                        <IconButton
                           onClick={() => removeItem(item.variantId)}
-                          sx={{marginLeft: 2, color: '#dc0714'}}
+                          sx={{marginLeft: 2, color: 'primary.main'}}
                         >
                           <Delete />
                         </IconButton>
@@ -243,12 +243,19 @@ export default function Cart() {
                   {isLoading ? 'Processing...' : 'Proceed to Checkout'}
                 </Button>
                 
-                <Button 
-                  variant="outlined" 
-                  size="small" 
+                <Button
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onClick={clearCart}
-                  sx={{color: '#dc0714', borderColor: '#dc0714', '&:hover': {borderColor: '#dc0714', backgroundColor: 'rgba(220, 7, 20, 0.04)'}}}
+                  sx={{
+                    color: 'primary.main',
+                    borderColor: 'primary.main',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      backgroundColor: 'rgba(255, 0, 0, 0.04)',
+                    },
+                  }}
                 >
                   Clear Cart
                 </Button>

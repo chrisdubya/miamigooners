@@ -121,9 +121,11 @@ export const ProductImageGallery = ({images, productTitle}: ProductImageGalleryP
                 minWidth: 80,
                 height: 80,
                 cursor: 'pointer',
-                border: currentImageIndex === index ? '2px solid #dc0714' : '2px solid transparent',
+                border: currentImageIndex === index ? '2px solid' : '2px solid transparent',
+                borderColor: currentImageIndex === index ? 'primary.main' : 'transparent',
                 '&:hover': {
-                  border: '2px solid #dc0714',
+                  border: '2px solid',
+                  borderColor: 'primary.main',
                 }
               }}
             >

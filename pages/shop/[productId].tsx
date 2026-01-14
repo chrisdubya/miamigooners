@@ -1,4 +1,4 @@
-import {Box, Card, CardContent, CardMedia, Typography, Button, Container, Grid, Chip, Select, MenuItem, FormControl, InputLabel} from '@mui/material'
+import {Box, Typography, Button, Container, Grid, Select, MenuItem, FormControl, InputLabel} from '@mui/material'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import {Footer} from '../../src/Footer'
@@ -123,7 +123,7 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
           
           <Grid item xs={12} md={6}>
             <Box component="div" sx={{paddingLeft: {md: 2}}}>
-              <Typography variant="h3" component="h1" gutterBottom color="#dc0714" fontWeight="bold">
+              <Typography variant="h3" component="h1" gutterBottom color="primary" fontWeight="bold">
                 {product.title}
               </Typography>
               
