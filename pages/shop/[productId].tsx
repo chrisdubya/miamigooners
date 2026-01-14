@@ -127,9 +127,14 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
                 {product.title}
               </Typography>
               
-              <Typography variant="h4" color="primary" marginBottom={3} fontWeight="bold">
-                {formatPrice(price.amount, price.currencyCode)}
-              </Typography>
+              <Box component="div" sx={{display: 'flex', alignItems: 'baseline', gap: 1, marginBottom: 3}}>
+                <Typography variant="h4" color="primary" fontWeight="bold">
+                  {formatPrice(price.amount, price.currencyCode)}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  + shipping
+                </Typography>
+              </Box>
 
               <Typography variant="body1" paragraph>
                 {product.description}
