@@ -85,6 +85,35 @@ export default function MyApp(props: MyAppProps) {
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ff0000"></meta>
+
+        {/* Organization Schema (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SportsClub',
+              name: 'Miami Gooners',
+              url: 'https://miamigooners.com',
+              logo: 'https://miamigooners.com/og-image.jpg',
+              description: 'Official Arsenal FC Supporters Club in Miami, FL',
+              sameAs: [
+                'https://instagram.com/miamigooners',
+                'https://twitter.com/miamigooners',
+              ],
+              location: {
+                '@type': 'Place',
+                name: 'The Bar Gables',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressLocality: 'Miami',
+                  addressRegion: 'FL',
+                  addressCountry: 'US',
+                },
+              },
+            }),
+          }}
+        />
       </Head>
       <Script
         strategy="afterInteractive"

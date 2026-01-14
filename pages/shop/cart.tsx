@@ -1,5 +1,4 @@
 import {Box, Card, CardContent, CardMedia, Typography, Button, Container, IconButton, TextField, Divider} from '@mui/material'
-import Head from 'next/head'
 import Link from 'next/link'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
@@ -7,6 +6,7 @@ import {ArrowBack, Delete, ShoppingCart, Remove, Add} from '@mui/icons-material'
 import {useCart} from '../../src/context/CartContext'
 import {formatPrice, createCartWithMultipleItems} from '../../src/utils/shopify'
 import {useState} from 'react'
+import {SEO} from '../../src/SEO'
 
 export default function Cart() {
   const { state, removeItem, updateQuantity, clearCart } = useCart()
@@ -56,10 +56,13 @@ export default function Cart() {
   if (state.items.length === 0) {
     return (
       <>
-        <Head>
-          <title>Shopping Cart - Miami Gooners Shop</title>
-        </Head>
-        
+        <SEO
+          title="Shopping Cart - Miami Gooners Shop"
+          description="Your shopping cart at Miami Gooners Shop"
+          url="/shop/cart"
+          noindex={true}
+        />
+
         <ShopHero />
         
         <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32, minHeight: '60vh'}}>
@@ -91,10 +94,13 @@ export default function Cart() {
 
   return (
     <>
-      <Head>
-        <title>Shopping Cart ({state.totalQuantity}) - Miami Gooners Shop</title>
-      </Head>
-      
+      <SEO
+        title={`Shopping Cart (${state.totalQuantity}) - Miami Gooners Shop`}
+        description="Your shopping cart at Miami Gooners Shop"
+        url="/shop/cart"
+        noindex={true}
+      />
+
       <ShopHero />
       
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>

@@ -10,11 +10,11 @@ import {
 } from '@mui/material'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
-import Head from 'next/head'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
 import {CartButton} from '../../src/CartButton'
 import {getProducts, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
+import {SEO, generateBreadcrumbSchema} from '../../src/SEO'
 
 export const getServerSideProps = (async () => {
   const products = await getProducts()
@@ -22,12 +22,19 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{products: ShopifyProduct[]}>
 
 export default function Shop({products}: {products: ShopifyProduct[]}) {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Shop', url: '/shop' },
+  ])
+
   return (
     <>
-      <Head>
-        <title>Shop - Miami Gooners</title>
-        <meta name="description" content="Official Miami Gooners Shop" />
-      </Head>
+      <SEO
+        title="Shop Official Merchandise - Miami Gooners"
+        description="Shop official Miami Gooners merchandise. Support the official Arsenal FC supporters club in Miami, FL with authentic gear, apparel, and accessories."
+        url="/shop"
+        jsonLd={breadcrumbSchema}
+      />
 
       <ShopHero />
 

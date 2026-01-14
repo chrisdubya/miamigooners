@@ -1,7 +1,6 @@
 import {Box, Card, CardContent, CardMedia, Typography, Button, Container, Grid, Chip, Select, MenuItem, FormControl, InputLabel} from '@mui/material'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
-import Head from 'next/head'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
 import {ProductImageGallery} from '../../src/ProductImageGallery'
@@ -10,6 +9,7 @@ import {ArrowBack, ShoppingCart} from '@mui/icons-material'
 import {getProductByHandle, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
 import {useState} from 'react'
 import {useCart} from '../../src/context/CartContext'
+import {SEO, generateProductSchema, generateBreadcrumbSchema} from '../../src/SEO'
 
 export const getServerSideProps = (async (context) => {
   const {productId} = context.params!
@@ -73,13 +73,37 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
   const productImages = product.images.edges.map(edge => edge.node)
   const price = selectedVariant?.price || product.priceRange.minVariantPrice
 
+  const productImage = product.images.edges[0]?.node.url || 'https://miamigooners.com/og-image.jpg'
+  const canonicalUrl = `/shop/${product.handle}`
+
+  const productSchema = generateProductSchema({
+    name: product.title,
+    description: product.description || `${product.title} - Official Miami Gooners merchandise`,
+    image: productImage,
+    price: product.priceRange.minVariantPrice.amount,
+    currency: product.priceRange.minVariantPrice.currencyCode,
+    availability: product.variants.edges.some(({node}) => node.availableForSale),
+    url: `https://miamigooners.com${canonicalUrl}`,
+    sku: product.handle,
+  })
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Shop', url: '/shop' },
+    { name: product.title, url: canonicalUrl },
+  ])
+
   return (
     <>
-      <Head>
-        <title>{`${product.title} - Miami Gooners Shop`}</title>
-        <meta name="description" content={product.description} />
-      </Head>
-      
+      <SEO
+        title={`${product.title} - Miami Gooners Shop`}
+        description={product.description || `Shop ${product.title} - Official Miami Gooners merchandise`}
+        image={productImage}
+        url={canonicalUrl}
+        type="product"
+        jsonLd={[productSchema, breadcrumbSchema]}
+      />
+
       <ShopHero />
       
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
