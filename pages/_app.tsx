@@ -1,4 +1,6 @@
+import {useState, useEffect} from 'react'
 import Head from 'next/head'
+import {useRouter} from 'next/router'
 import {AppProps} from 'next/app'
 import {ThemeProvider} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -9,6 +11,7 @@ import Script from 'next/script'
 import '../styles/globals.css'
 import {UserProvider} from '@auth0/nextjs-auth0/client'
 import {CartProvider} from '../src/context/CartContext'
+import {LoadingOverlay} from '../src/LoadingOverlay'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -19,6 +22,24 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const handleStart = () => setIsLoading(true)
+    const handleComplete = () => setIsLoading(false)
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleComplete)
+    router.events.on('routeChangeError', handleComplete)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleComplete)
+      router.events.off('routeChangeError', handleComplete)
+    }
+  }, [router])
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -134,6 +155,7 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <LoadingOverlay open={isLoading} />
         <UserProvider>
           <CartProvider>
             <Component {...pageProps} />
