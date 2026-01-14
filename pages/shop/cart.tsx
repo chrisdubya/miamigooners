@@ -1,5 +1,4 @@
 import {Box, Card, CardContent, CardMedia, Typography, Button, Container, IconButton, TextField, Divider} from '@mui/material'
-import Head from 'next/head'
 import Link from 'next/link'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
@@ -7,6 +6,7 @@ import {ArrowBack, Delete, ShoppingCart, Remove, Add} from '@mui/icons-material'
 import {useCart} from '../../src/context/CartContext'
 import {formatPrice, createCartWithMultipleItems} from '../../src/utils/shopify'
 import {useState} from 'react'
+import {SEO} from '../../src/SEO'
 
 export default function Cart() {
   const { state, removeItem, updateQuantity, clearCart } = useCart()
@@ -56,10 +56,13 @@ export default function Cart() {
   if (state.items.length === 0) {
     return (
       <>
-        <Head>
-          <title>Shopping Cart - Miami Gooners Shop</title>
-        </Head>
-        
+        <SEO
+          title="Shopping Cart - Miami Gooners Shop"
+          description="Your shopping cart at Miami Gooners Shop"
+          url="/shop/cart"
+          noindex={true}
+        />
+
         <ShopHero />
         
         <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32, minHeight: '60vh'}}>
@@ -91,10 +94,13 @@ export default function Cart() {
 
   return (
     <>
-      <Head>
-        <title>Shopping Cart ({state.totalQuantity}) - Miami Gooners Shop</title>
-      </Head>
-      
+      <SEO
+        title={`Shopping Cart (${state.totalQuantity}) - Miami Gooners Shop`}
+        description="Your shopping cart at Miami Gooners Shop"
+        url="/shop/cart"
+        noindex={true}
+      />
+
       <ShopHero />
       
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
@@ -106,7 +112,7 @@ export default function Cart() {
           </Link>
         </Box>
 
-        <Typography variant="h3" component="h1" gutterBottom color="#dc0714" fontWeight="bold">
+        <Typography variant="h3" component="h1" gutterBottom color="primary" fontWeight="bold">
           Shopping Cart ({state.totalQuantity} items)
         </Typography>
 
@@ -172,9 +178,9 @@ export default function Cart() {
                           <Add />
                         </IconButton>
                         
-                        <IconButton 
+                        <IconButton
                           onClick={() => removeItem(item.variantId)}
-                          sx={{marginLeft: 2, color: '#dc0714'}}
+                          sx={{marginLeft: 2, color: 'primary.main'}}
                         >
                           <Delete />
                         </IconButton>
@@ -237,12 +243,19 @@ export default function Cart() {
                   {isLoading ? 'Processing...' : 'Proceed to Checkout'}
                 </Button>
                 
-                <Button 
-                  variant="outlined" 
-                  size="small" 
+                <Button
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onClick={clearCart}
-                  sx={{color: '#dc0714', borderColor: '#dc0714', '&:hover': {borderColor: '#dc0714', backgroundColor: 'rgba(220, 7, 20, 0.04)'}}}
+                  sx={{
+                    color: 'primary.main',
+                    borderColor: 'primary.main',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      backgroundColor: 'rgba(255, 0, 0, 0.04)',
+                    },
+                  }}
                 >
                   Clear Cart
                 </Button>
