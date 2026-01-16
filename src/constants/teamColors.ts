@@ -170,4 +170,9 @@ export const teamColors: TeamColors[] = [
     secondary: '#000',
     team: 'Sunderland',
   },
+  {
+    primary: '#1d4289',
+    secondary: '#fff',
+    team: 'Wigan Athletic',
+  },
 ]
