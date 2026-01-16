@@ -105,24 +105,61 @@ export function generateEventSchema(event: {
   }
   image?: string
   url?: string
+  homeTeam: string
+  awayTeam: string
+  rsvpLink?: string
+  eventStatus?: 'EventScheduled' | 'EventCancelled' | 'EventPostponed' | 'EventRescheduled'
 }) {
+  // Calculate endDate (football matches are ~2 hours including halftime and stoppage time)
+  const startDateObj = new Date(event.startDate)
+  const endDateObj = new Date(startDateObj.getTime() + 2 * 60 * 60 * 1000) // Add 2 hours
+  const endDate = endDateObj.toISOString()
+
   return {
     '@context': 'https://schema.org',
     '@type': 'SportsEvent',
     name: event.name,
     description: event.description,
     startDate: event.startDate,
+    endDate: endDate,
+    eventStatus: `https://schema.org/${event.eventStatus || 'EventScheduled'}`,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
       name: event.location.name,
-      address: event.location.address,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '318 Miracle Mile',
+        addressLocality: 'Coral Gables',
+        addressRegion: 'FL',
+        postalCode: '33134',
+        addressCountry: 'US',
+      },
     },
     image: event.image || DEFAULT_IMAGE,
     url: event.url || BASE_URL,
+    performer: [
+      {
+        '@type': 'SportsTeam',
+        name: event.homeTeam,
+      },
+      {
+        '@type': 'SportsTeam',
+        name: event.awayTeam,
+      },
+    ],
     organizer: {
       '@type': 'SportsClub',
       name: SITE_NAME,
       url: BASE_URL,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: event.rsvpLink || BASE_URL,
+      validFrom: new Date().toISOString(),
     },
   }
 }

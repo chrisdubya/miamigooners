@@ -34,8 +34,11 @@ export default function Home({events}: {events: EventType[]}) {
       startDate: event.DateUtc,
       location: {
         name: 'The Bar Gables',
-        address: 'Miami, FL',
+        address: 'Coral Gables, FL',
       },
+      homeTeam: event.HomeTeam,
+      awayTeam: event.AwayTeam,
+      rsvpLink: event.rsvpLink,
     })
   )
 
