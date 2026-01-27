@@ -175,4 +175,10 @@ export const teamColors: TeamColors[] = [
     secondary: '#fff',
     team: 'Wigan Athletic',
   },
+  {
+    // FC Kairat Almaty
+    primary: '#F9D100',
+    secondary: '#000',
+    team: 'Kairat Almaty',
+  },
 ]
