@@ -11,6 +11,8 @@ export interface ShopifyProduct {
   handle: string
   title: string
   description: string
+  descriptionHtml: string
+  tags: string[]
   images: {
     edges: Array<{
       node: {
@@ -29,6 +31,7 @@ export interface ShopifyProduct {
           currencyCode: string
         }
         availableForSale: boolean
+        requiresShipping: boolean
         selectedOptions: Array<{
           name: string
           value: string
@@ -83,6 +86,8 @@ const PRODUCTS_QUERY = `
           handle
           title
           description
+          descriptionHtml
+          tags
           images(first: 5) {
             edges {
               node {
@@ -101,6 +106,7 @@ const PRODUCTS_QUERY = `
                   currencyCode
                 }
                 availableForSale
+                requiresShipping
                 selectedOptions {
                   name
                   value
@@ -131,6 +137,8 @@ const PRODUCT_BY_HANDLE_QUERY = `
       handle
       title
       description
+      descriptionHtml
+      tags
       images(first: 10) {
         edges {
           node {
@@ -149,6 +157,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
               currencyCode
             }
             availableForSale
+            requiresShipping
             selectedOptions {
               name
               value

@@ -131,14 +131,16 @@ export default function ProductDetail({product}: {product: ShopifyProduct}) {
                 <Typography variant="h4" color="primary" fontWeight="bold">
                   {formatPrice(price.amount, price.currencyCode)}
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  + shipping
-                </Typography>
+                {!product.tags.includes('local-pickup') && (
+                  <Typography variant="body1" color="text.secondary">
+                    + shipping
+                  </Typography>
+                )}
               </Box>
 
-              <Typography variant="body1" paragraph>
-                {product.description}
-              </Typography>
+              <Typography variant="body1" paragraph component="div"
+                dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+              />
 
               {product.variants.edges.length > 1 && (
                 <Box component="div" sx={{marginBottom: 2}}>
