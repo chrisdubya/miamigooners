@@ -32,11 +32,9 @@ export const Scene = ({height}: {height: number}) => {
     <div className="absolute inset-0 z-10" style={{height: `${height}vh`}}>
       <Canvas dpr={[1, 2]}>
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <directionalLight
-            intensity={1}
-            position={[0, 0, 5]} // Adjust position to control the direction of the light
-          />
+          <ambientLight intensity={1.5} />
+          <directionalLight intensity={2} position={[0, 0, 5]} />
+          <directionalLight intensity={1} position={[0, 0, -5]} />
           <Model />
           <OrbitControls enableZoom={false} />
         </Suspense>
