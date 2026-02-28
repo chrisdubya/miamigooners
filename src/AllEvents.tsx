@@ -1,3 +1,4 @@
+'use client'
 import {
   Container,
   Typography,
@@ -5,7 +6,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material'
-import Grid from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import {Event} from './Event'
 import {DateTime} from 'luxon'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -67,9 +68,12 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <h2 className="text-xl md:text-3xl font-bold text-gooner-red">
+            <Typography
+              className="text-xl md:text-3xl font-bold text-gooner-red"
+              component="span"
+            >
               Upcoming Matches
-            </h2>
+            </Typography>
           </AccordionSummary>
 
           <AccordionDetails sx={{padding: 0}}>
@@ -113,7 +117,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
                     <Event key={index} index={index} event={event} />
                   ))
               ) : (
-                <Typography variant="h5" gutterBottom color={'#fff'} ml={1}>
+                <Typography variant="h5" gutterBottom color="text.primary" ml={1}>
                   loading...
                 </Typography>
               )}

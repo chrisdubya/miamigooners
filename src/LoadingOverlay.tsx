@@ -1,3 +1,4 @@
+'use client'
 import {Backdrop, LinearProgress} from '@mui/material'
 
 interface LoadingOverlayProps {

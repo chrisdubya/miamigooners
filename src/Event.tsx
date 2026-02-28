@@ -1,3 +1,4 @@
+'use client'
 import {useMemo} from 'react'
 import {
   Box,
@@ -9,7 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 import {EventType} from '../types'
-import Grid from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import {DateTime} from 'luxon'
 import {teamColors} from './constants/teamColors'
 
@@ -97,7 +98,7 @@ export const Event = ({index, event, past}: EventProps) => {
   }
 
   return (
-    <Grid xs={12} md={6}>
+    <Grid size={{xs: 12, md: 6}}>
       <Card sx={{minWidth: 275, position: 'relative'}}>
         {event.rsvpLink && !past && (
           <CardActions sx={{position: 'absolute', zIndex: 1}}>

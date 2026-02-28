@@ -1,3 +1,4 @@
+'use client'
 import {Button, Badge} from '@mui/material'
 import {ShoppingCart} from '@mui/icons-material'
 import Link from 'next/link'
@@ -7,7 +8,7 @@ export const CartButton = () => {
   const { state } = useCart()
 
   return (
-    <Link href="/shop/cart" passHref>
+    <Link href="/shop/cart">
       <Button startIcon={
         <Badge badgeContent={state.totalQuantity} color="error" max={99}>
           <ShoppingCart />
