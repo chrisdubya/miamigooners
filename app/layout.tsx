@@ -4,6 +4,7 @@ import NavigationLoader from './NavigationLoader'
 import Providers from './Providers'
 import {roboto} from '../src/font'
 import '../styles/globals.css'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title:
@@ -96,7 +97,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
         <ThemeRegistry>
           <NavigationLoader />
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <SpeedInsights />
+          </Providers>
         </ThemeRegistry>
       </body>
     </html>
