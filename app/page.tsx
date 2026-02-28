@@ -1,5 +1,6 @@
-import {AllEvents} from '../src/AllEvents'
-import {getAllEvents} from '../src/utils/events'
+import {Suspense} from 'react'
+import {EventsSection} from './EventsSection'
+import {EventsSkeleton} from '../src/EventsSkeleton'
 import {Footer} from '../src/Footer'
 import {Hero} from '../src/Hero'
 import type {Metadata} from 'next'
@@ -13,14 +14,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function Home() {
-  const events = await getAllEvents().catch(() => [])
-
+export default function Home() {
   return (
     <>
       <Hero />
       <div>
-        <AllEvents events={events} />
+        <Suspense fallback={<EventsSkeleton />}>
+          <EventsSection />
+        </Suspense>
         <Footer />
       </div>
     </>
