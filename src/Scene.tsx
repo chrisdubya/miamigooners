@@ -1,13 +1,14 @@
 'use client'
 import {Suspense, useRef} from 'react'
-import {Canvas, useFrame, useLoader} from '@react-three/fiber'
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js'
-import {OrbitControls} from '@react-three/drei'
+import {Canvas, useFrame} from '@react-three/fiber'
+import {useGLTF, OrbitControls} from '@react-three/drei'
 import * as THREE from 'three'
 
+const MODEL_PATH = '/images/logos/gooners-inter-logo.glb'
+
 const Model = () => {
-  const gltf = useLoader(GLTFLoader, '/images/logos/gooners-inter-logo.glb')
-  const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef(undefined)
+  const {scene} = useGLTF(MODEL_PATH)
+  const modelRef = useRef<THREE.Object3D>(null)
 
   useFrame(() => {
     if (modelRef.current) modelRef.current.rotation.z += -0.01
@@ -16,7 +17,7 @@ const Model = () => {
   return (
     <>
       <primitive
-        object={gltf.scene}
+        object={scene}
         scale={15}
         rotation-x={Math.PI * 0.5}
         ref={modelRef}
@@ -28,8 +29,8 @@ const Model = () => {
 
 export const Scene = ({height}: {height: number}) => {
   return (
-    <div className={`absolute h-[${height}vh] inset-0 z-10`}>
-      <Canvas>
+    <div className="absolute inset-0 z-10" style={{height: `${height}vh`}}>
+      <Canvas dpr={[1, 2]}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />
           <directionalLight

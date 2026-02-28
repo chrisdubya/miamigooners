@@ -8,7 +8,7 @@ export const CartButton = () => {
   const { state } = useCart()
 
   return (
-    <Link href="/shop/cart" passHref>
+    <Link href="/shop/cart">
       <Button startIcon={
         <Badge badgeContent={state.totalQuantity} color="error" max={99}>
           <ShoppingCart />

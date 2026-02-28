@@ -83,7 +83,7 @@ export default function Cart() {
           style={{paddingTop: 32, paddingBottom: 32, minHeight: '60vh'}}
         >
           <Box component="div" sx={{marginBottom: 3}}>
-            <Link href="/shop" passHref>
+            <Link href="/shop">
               <Button startIcon={<ArrowBack />} variant="outlined">
                 Back to Shop
               </Button>
@@ -97,7 +97,7 @@ export default function Cart() {
             <Typography variant="h4" component="h1" gutterBottom>
               Your cart is empty
             </Typography>
-            <Link href="/shop" passHref>
+            <Link href="/shop">
               <Button variant="contained" color="primary" size="large">
                 Continue Shopping
               </Button>
@@ -116,7 +116,7 @@ export default function Cart() {
 
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
         <Box component="div" sx={{marginBottom: 3}}>
-          <Link href="/shop" passHref>
+          <Link href="/shop">
             <Button startIcon={<ArrowBack />} variant="outlined">
               Back to Shop
             </Button>

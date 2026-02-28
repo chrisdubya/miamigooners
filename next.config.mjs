@@ -3,6 +3,14 @@ import {withAxiom} from 'next-axiom'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+      },
+    ],
+  },
   transpilePackages: [
     '@emotion/react',
     '@emotion/styled',

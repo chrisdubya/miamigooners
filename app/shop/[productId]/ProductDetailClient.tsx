@@ -4,7 +4,6 @@ import {
   Typography,
   Button,
   Container,
-  Grid,
   Select,
   MenuItem,
   FormControl,
@@ -15,6 +14,7 @@ import {Footer} from '../../../src/Footer'
 import {ShopHero} from '../../../src/ShopHero'
 import {ProductImageGallery} from '../../../src/ProductImageGallery'
 import {CartButton} from '../../../src/CartButton'
+import Grid from '@mui/material/Grid2'
 import {ArrowBack, ShoppingCart} from '@mui/icons-material'
 import {ShopifyProduct, formatPrice} from '../../../src/utils/shopify'
 import {useState} from 'react'
@@ -82,7 +82,7 @@ export default function ProductDetailClient({
     <>
       <ShopHero />
 
-      <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
+      <Container maxWidth="lg" sx={{pt: 4, pb: 4}}>
         <Box
           component="div"
           sx={{
@@ -92,7 +92,7 @@ export default function ProductDetailClient({
             marginBottom: 3,
           }}
         >
-          <Link href="/shop" passHref>
+          <Link href="/shop">
             <Button startIcon={<ArrowBack />} variant="outlined">
               Back to Shop
             </Button>
@@ -101,14 +101,14 @@ export default function ProductDetailClient({
         </Box>
 
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{xs: 12, md: 6}}>
             <ProductImageGallery
               images={productImages}
               productTitle={product.title}
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{xs: 12, md: 6}}>
             <Box component="div" sx={{paddingLeft: {md: 2}}}>
               <Typography
                 variant="h3"
@@ -204,7 +204,7 @@ export default function ProductDetailClient({
                 disabled={
                   !selectedVariant?.availableForSale || isLoading || isAdded
                 }
-                style={{marginTop: 16}}
+                sx={{mt: 2}}
               >
                 {isLoading
                   ? 'Adding to Cart...'

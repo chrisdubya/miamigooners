@@ -117,7 +117,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
                     <Event key={index} index={index} event={event} />
                   ))
               ) : (
-                <Typography variant="h5" gutterBottom color={'#fff'} ml={1}>
+                <Typography variant="h5" gutterBottom color="text.primary" ml={1}>
                   loading...
                 </Typography>
               )}

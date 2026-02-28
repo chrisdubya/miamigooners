@@ -157,7 +157,7 @@ export default function ShopContent({products}: {products: ShopifyProduct[]}) {
                       >
                         {formatPrice(price.amount, price.currencyCode)}
                       </Typography>
-                      <Link href={`/shop/${product.handle}`} passHref>
+                      <Link href={`/shop/${product.handle}`}>
                         <Button variant="contained" color="primary">
                           View Details
                         </Button>
@@ -171,7 +171,7 @@ export default function ShopContent({products}: {products: ShopifyProduct[]}) {
         )}
 
         <Box component="div" sx={{marginTop: 6, textAlign: 'center'}}>
-          <Link href="/" passHref>
+          <Link href="/">
             <Button variant="outlined">Back to Home</Button>
           </Link>
         </Box>

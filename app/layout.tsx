@@ -50,6 +50,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <meta name="emotion-insertion-point" content="" />
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',

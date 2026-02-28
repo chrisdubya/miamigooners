@@ -59,12 +59,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
-    {
-      url: `${baseUrl}/pass`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
     ...productHandles.map((handle) => ({
       url: `${baseUrl}/shop/${handle}`,
       lastModified: new Date(),
