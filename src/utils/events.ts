@@ -2,6 +2,10 @@ import {EventType} from '../../types'
 import fs from 'fs'
 import path from 'path'
 
+const EPL_URL = 'https://fixturedownload.com/feed/json/epl-2025/arsenal'
+const UCL_URL =
+  'https://fixturedownload.com/feed/json/champions-league-2025/arsenal'
+
 const preSeason25: EventType[] = [
   {
     MatchNumber: 1,
@@ -15,18 +19,6 @@ const preSeason25: EventType[] = [
 ]
 
 export async function getAllEvents(): Promise<EventType[]> {
-  const eplFixturesPath = path.join(
-    process.cwd(),
-    'public',
-    'fixtures',
-    'premier-league-25-26.json'
-  )
-  const uclFixturesPath = path.join(
-    process.cwd(),
-    'public',
-    'fixtures',
-    'ucl-25-26.json'
-  )
   const carabaoCupFixturesPath = path.join(
     process.cwd(),
     'public',
@@ -40,23 +32,26 @@ export async function getAllEvents(): Promise<EventType[]> {
     'fa-cup-25-26.json'
   )
 
-  const eplFixturesData = fs.readFileSync(eplFixturesPath, 'utf8')
-  const uclFixturesData = fs.readFileSync(uclFixturesPath, 'utf8')
-  const carabaoCupFixturesData = fs.readFileSync(carabaoCupFixturesPath, 'utf8')
-  const faCupFixturesData = fs.readFileSync(faCupFixturesPath, 'utf8')
+  const [plResult, uclResult] = await Promise.allSettled([
+    fetch(EPL_URL, {next: {revalidate: 3600}}).then((r) => r.json()),
+    fetch(UCL_URL, {next: {revalidate: 3600}}).then((r) => r.json()),
+  ])
 
-  const plSeason25: EventType[] = JSON.parse(eplFixturesData).map(
-    (event: EventType) => ({competition: 'Premier League', ...event})
-  )
-  const uclSeason25: EventType[] = JSON.parse(uclFixturesData).map(
-    (event: EventType) => ({competition: 'UEFA Champions League', ...event})
-  )
+  const plSeason25: EventType[] = (
+    plResult.status === 'fulfilled' ? plResult.value : []
+  ).map((event: EventType) => ({competition: 'Premier League', ...event}))
+
+  const uclSeason25: EventType[] = (
+    uclResult.status === 'fulfilled' ? uclResult.value : []
+  ).map((event: EventType) => ({competition: 'UEFA Champions League', ...event}))
+
   const carabaoCupSeason25: EventType[] = JSON.parse(
-    carabaoCupFixturesData
+    fs.readFileSync(carabaoCupFixturesPath, 'utf8')
   ).map((event: EventType) => ({competition: 'Carabao Cup', ...event}))
-  const faCupSeason25: EventType[] = JSON.parse(faCupFixturesData).map(
-    (event: EventType) => ({competition: 'FA Cup', ...event})
-  )
+
+  const faCupSeason25: EventType[] = JSON.parse(
+    fs.readFileSync(faCupFixturesPath, 'utf8')
+  ).map((event: EventType) => ({competition: 'FA Cup', ...event}))
 
   return [
     ...preSeason25,

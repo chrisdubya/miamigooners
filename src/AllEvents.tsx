@@ -118,7 +118,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
                   ))
               ) : (
                 <Typography variant="h5" gutterBottom color="text.primary" ml={1}>
-                  loading...
+                  No upcoming matches
                 </Typography>
               )}
             </Grid>
