@@ -186,4 +186,9 @@ export const teamColors: TeamColors[] = [
     secondary: '#000',
     team: 'Leverkusen',
   },
+  {
+    primary: '#F5A800',
+    secondary: '#003087',
+    team: 'Mansfield Town',
+  },
 ]
