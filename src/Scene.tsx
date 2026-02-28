@@ -1,12 +1,13 @@
+'use client'
 import {Suspense, useRef} from 'react'
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js'
 import {OrbitControls} from '@react-three/drei'
 import * as THREE from 'three'
 
 const Model = () => {
   const gltf = useLoader(GLTFLoader, '/images/logos/gooners-inter-logo.glb')
-  const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef()
+  const modelRef: React.MutableRefObject<THREE.Object3D | undefined> = useRef(undefined)
 
   useFrame(() => {
     if (modelRef.current) modelRef.current.rotation.z += -0.01

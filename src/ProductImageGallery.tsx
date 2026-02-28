@@ -1,3 +1,4 @@
+'use client'
 import {useState} from 'react'
 import {Card, CardMedia, IconButton} from '@mui/material'
 import {ArrowBack, ArrowForward} from '@mui/icons-material'

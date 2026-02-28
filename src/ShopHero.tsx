@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import {X, Instagram, WhatsApp, Mail, Store, Home} from '@mui/icons-material'
 import {Tooltip} from '@mui/material'

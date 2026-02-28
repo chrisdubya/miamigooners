@@ -39,3 +39,6 @@ next-env.d.ts
 
 # passkeys
 /private/
+
+# AI
+.claude

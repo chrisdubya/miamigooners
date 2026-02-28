@@ -1,3 +1,4 @@
+'use client'
 import {Button, Badge} from '@mui/material'
 import {ShoppingCart} from '@mui/icons-material'
 import Link from 'next/link'

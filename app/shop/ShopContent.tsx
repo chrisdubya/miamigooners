@@ -1,3 +1,4 @@
+'use client'
 import {
   Box,
   Card,
@@ -8,34 +9,15 @@ import {
   Container,
   Chip,
 } from '@mui/material'
-import {GetServerSideProps} from 'next'
 import Link from 'next/link'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
 import {CartButton} from '../../src/CartButton'
-import {getProducts, ShopifyProduct, formatPrice} from '../../src/utils/shopify'
-import {SEO, generateBreadcrumbSchema} from '../../src/SEO'
+import {ShopifyProduct, formatPrice} from '../../src/utils/shopify'
 
-export const getServerSideProps = (async () => {
-  const products = await getProducts()
-  return {props: {products}}
-}) satisfies GetServerSideProps<{products: ShopifyProduct[]}>
-
-export default function Shop({products}: {products: ShopifyProduct[]}) {
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Shop', url: '/shop' },
-  ])
-
+export default function ShopContent({products}: {products: ShopifyProduct[]}) {
   return (
     <>
-      <SEO
-        title="Shop Official Merchandise - Miami Gooners"
-        description="Shop official Miami Gooners merchandise. Support the official Arsenal FC supporters club in Miami, FL with authentic gear, apparel, and accessories."
-        url="/shop"
-        jsonLd={breadcrumbSchema}
-      />
-
       <ShopHero />
 
       <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
@@ -129,7 +111,6 @@ export default function Shop({products}: {products: ShopifyProduct[]}) {
                           sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}
                         >
                           {option.values.map((value) => {
-                            // Check if any variant with this option value is available
                             const isAvailable = product.variants.edges.some(
                               ({node: variant}) =>
                                 variant.availableForSale &&
