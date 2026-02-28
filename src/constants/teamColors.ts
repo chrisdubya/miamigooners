@@ -181,4 +181,9 @@ export const teamColors: TeamColors[] = [
     secondary: '#000',
     team: 'Kairat Almaty',
   },
+  {
+    primary: '#E32221',
+    secondary: '#000',
+    team: 'Leverkusen',
+  },
 ]
