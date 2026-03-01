@@ -5,42 +5,21 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Button,
   Container,
-  Chip,
 } from '@mui/material'
 import Link from 'next/link'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
-import {CartButton} from '../../src/CartButton'
 import {ShopifyProduct, formatPrice} from '../../src/utils/shopify'
+import {doppler} from '../../src/font'
+import {ArrowForward} from '@mui/icons-material'
 
 export default function ShopContent({products}: {products: ShopifyProduct[]}) {
   return (
     <>
       <ShopHero />
 
-      <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
-        <Box
-          component="div"
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 4,
-          }}
-        >
-          <Typography
-            variant="h2"
-            component="h1"
-            color="primary"
-            fontWeight="bold"
-          >
-            Shop
-          </Typography>
-          <CartButton />
-        </Box>
-
+      <Container maxWidth="lg" sx={{pt: 4, pb: 4}}>
         {products.length === 0 ? (
           <Box component="div" sx={{textAlign: 'center', padding: 8}}>
             <Typography variant="h4" color="text.secondary" gutterBottom>
@@ -55,7 +34,7 @@ export default function ShopContent({products}: {products: ShopifyProduct[]}) {
             component="div"
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
               gap: 3,
             }}
           >
@@ -64,117 +43,148 @@ export default function ShopContent({products}: {products: ShopifyProduct[]}) {
               const price = product.priceRange.minVariantPrice
 
               return (
-                <Card
+                <Link
                   key={product.id}
-                  style={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
+                  href={`/shop/${product.handle}`}
+                  style={{textDecoration: 'none'}}
                 >
-                  <CardMedia
-                    component="img"
-                    height="300"
-                    image={
-                      primaryImage?.url || '/images/placeholder-tshirt.svg'
-                    }
-                    alt={primaryImage?.altText || product.title}
-                    style={{objectFit: 'cover'}}
-                  />
-                  <CardContent
-                    style={{
-                      flexGrow: 1,
+                  <Card
+                    sx={{
+                      height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      '& .product-image': {
+                        transition: 'transform 400ms ease',
+                      },
+                      '&:hover .product-image': {
+                        transform: 'scale(1.05)',
+                      },
+                      '&:hover .product-overlay': {
+                        opacity: 1,
+                      },
                     }}
                   >
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {product.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      marginBottom={2}
-                      flexGrow={1}
-                    >
-                      {product.description}
-                    </Typography>
-
-                    {product.options.map((option) => (
+                    <Box sx={{position: 'relative', overflow: 'hidden'}}>
+                      <CardMedia
+                        component="img"
+                        className="product-image"
+                        image={
+                          primaryImage?.url ||
+                          '/images/placeholder-tshirt.svg'
+                        }
+                        alt={primaryImage?.altText || product.title}
+                        sx={{
+                          aspectRatio: '4 / 5',
+                          objectFit: 'cover',
+                          backgroundColor: '#1A1A1E',
+                        }}
+                      />
                       <Box
-                        key={option.name}
-                        component="div"
-                        sx={{marginBottom: 2}}
+                        className="product-overlay"
+                        sx={{
+                          position: 'absolute',
+                          inset: 0,
+                          bgcolor: 'rgba(0,0,0,0.5)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          opacity: 0,
+                          transition: 'opacity 0.3s ease',
+                        }}
                       >
-                        <Box
-                          component="div"
-                          sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}
+                        <Typography
+                          variant="button"
+                          sx={{color: 'white', letterSpacing: '0.1em'}}
                         >
-                          {option.values.map((value) => {
-                            const isAvailable = product.variants.edges.some(
-                              ({node: variant}) =>
-                                variant.availableForSale &&
-                                variant.selectedOptions.some(
-                                  (opt) =>
-                                    opt.name === option.name &&
-                                    opt.value === value
-                                )
-                            )
-
-                            return (
-                              <Chip
-                                key={value}
-                                label={value}
-                                variant="outlined"
-                                sx={{
-                                  textDecoration: !isAvailable
-                                    ? 'line-through'
-                                    : 'none',
-                                  opacity: !isAvailable ? 0.6 : 1,
-                                  color: !isAvailable
-                                    ? 'text.disabled'
-                                    : 'inherit',
-                                }}
-                              />
-                            )
-                          })}
-                        </Box>
+                          View Details
+                        </Typography>
                       </Box>
-                    ))}
+                    </Box>
 
-                    <Box
-                      component="div"
+                    <CardContent
                       sx={{
+                        flexGrow: 1,
                         display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
+                        flexDirection: 'column',
+                        p: 3,
                       }}
                     >
                       <Typography
-                        variant="h6"
-                        color="primary"
-                        fontWeight="bold"
+                        gutterBottom
+                        component="h2"
+                        sx={{
+                          fontFamily: doppler.style.fontFamily,
+                          fontWeight: 600,
+                          fontSize: '1.25rem',
+                          color: 'text.primary',
+                          textTransform: 'lowercase',
+                        }}
                       >
-                        {formatPrice(price.amount, price.currencyCode)}
+                        {product.title}
                       </Typography>
-                      <Link href={`/shop/${product.handle}`}>
-                        <Button variant="contained" color="primary">
-                          View Details
-                        </Button>
-                      </Link>
-                    </Box>
-                  </CardContent>
-                </Card>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          mb: 2,
+                          flexGrow: 1,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {product.description}
+                      </Typography>
+
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          pt: 2,
+                          borderTop: '1px solid #2E2E38',
+                          mt: 'auto',
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            fontFamily: doppler.style.fontFamily,
+                            fontWeight: 600,
+                            fontSize: '1.125rem',
+                            color: '#DB0007',
+                            textTransform: 'lowercase',
+                          }}
+                        >
+                          {formatPrice(price.amount, price.currencyCode)}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.5,
+                            color: 'text.secondary',
+                            fontSize: '0.75rem',
+                            fontWeight: 500,
+                            letterSpacing: '0.1em',
+                            textTransform: 'uppercase',
+                            '&:hover': {color: 'text.primary'},
+                            transition: 'color 200ms ease',
+                          }}
+                        >
+                          VIEW
+                          <ArrowForward sx={{fontSize: 14}} />
+                        </Box>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Link>
               )
             })}
           </Box>
         )}
-
-        <Box component="div" sx={{marginTop: 6, textAlign: 'center'}}>
-          <Link href="/">
-            <Button variant="outlined">Back to Home</Button>
-          </Link>
-        </Box>
       </Container>
 
       <Footer />

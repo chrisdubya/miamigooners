@@ -1,10 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gooner-red: #ff0000;
-  --color-gooner-red-dark: rgb(127, 0, 0);
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Colors - New design system */
+  --color-arsenal-red: #DB0007;
+  --color-arsenal-red-light: #FF1A22;
+  --color-arsenal-red-dark: #A30005;
+  --color-cannon-gold: #D4A843;
+  --color-cannon-gold-light: #E8C96A;
+  --color-cannon-gold-dark: #B08A2E;
+  --color-bg-primary: #0A0A0B;
+  --color-bg-elevated: #111113;
+  --color-bg-surface: #1A1A1E;
+  --color-bg-surface-hover: #222228;
+  --color-bg-overlay: #2A2A32;
+  --color-border-subtle: #2E2E38;
+  --color-border-default: #3A3A46;
+  --color-border-strong: #4A4A58;
+  --color-text-primary: #F5F5F7;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #71717A;
 
+  /* Keep old token as alias during migration */
+  --color-gooner-red: #DB0007;
+  --color-gooner-red-dark: #A30005;
+
+  /* Fonts */
+  --font-heading: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+  /* Existing glitch animations */
   --animate-glitch-anim-1: glitch-anim-1 2s infinite linear alternate;
   --animate-glitch-anim-2: glitch-anim-2 2.3s -0.8s infinite linear alternate;
   --animate-glitch-anim-flash: glitch-anim-flash 1s infinite linear;
@@ -40,5 +65,62 @@
   @keyframes glitch-anim-flash {
     0% { opacity: 0.2; }
     30%, 100% { opacity: 0; }
+  }
+}
+
+/* New animation keyframes */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heroChevronBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(219, 0, 7, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(219, 0, 7, 0); }
+}
+
+@keyframes matchday-pulse {
+  0%, 100% { text-shadow: 0 0 4px rgba(219, 0, 7, 0.3); }
+  50% { text-shadow: 0 0 16px rgba(219, 0, 7, 0.8), 0 0 32px rgba(219, 0, 7, 0.3); }
+}
+
+/* Scroll padding for fixed navbar */
+html {
+  scroll-padding-top: 64px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

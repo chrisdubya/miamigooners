@@ -2,9 +2,10 @@ import type {Metadata} from 'next'
 import ThemeRegistry from './ThemeRegistry'
 import NavigationLoader from './NavigationLoader'
 import Providers from './Providers'
-import {roboto} from '../src/font'
+import {inter} from '../src/font'
 import '../styles/globals.css'
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import {SpeedInsights} from '@vercel/speed-insights/next'
+import {Navbar} from '../src/Navbar'
 
 export const metadata: Metadata = {
   title:
@@ -40,13 +41,13 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
   other: {
     'msapplication-TileColor': '#da532c',
-    'theme-color': '#ff0000',
+    'theme-color': '#DB0007',
   },
 }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={inter.className}>
       <head>
         <meta name="emotion-insertion-point" content="" />
         <script
@@ -98,6 +99,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <ThemeRegistry>
           <NavigationLoader />
           <Providers>
+            <Navbar />
             {children}
             <SpeedInsights />
           </Providers>

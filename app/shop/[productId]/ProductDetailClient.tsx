@@ -152,7 +152,7 @@ export default function ProductDetailClient({
                     <InputLabel>Size</InputLabel>
                     <Select
                       value={selectedVariant?.id || ''}
-                      label="Variant"
+                      label="Size"
                       onChange={(e) => {
                         const variant = product.variants.edges.find(
                           (edge) => edge.node.id === e.target.value
