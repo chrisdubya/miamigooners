@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import {Footer} from '../../../src/Footer'
-import {ShopHero} from '../../../src/ShopHero'
 import {
   ArrowBack,
   Delete,
@@ -76,11 +75,9 @@ export default function Cart() {
   if (state.items.length === 0) {
     return (
       <>
-        <ShopHero />
-
         <Container
           maxWidth="lg"
-          style={{paddingTop: 32, paddingBottom: 32, minHeight: '60vh'}}
+          sx={{pt: 12, pb: 4, minHeight: '60vh'}}
         >
           <Box component="div" sx={{marginBottom: 3}}>
             <Link href="/shop">
@@ -112,9 +109,7 @@ export default function Cart() {
 
   return (
     <>
-      <ShopHero />
-
-      <Container maxWidth="lg" style={{paddingTop: 32, paddingBottom: 32}}>
+      <Container maxWidth="lg" sx={{pt: 12, pb: 4}}>
         <Box component="div" sx={{marginBottom: 3}}>
           <Link href="/shop">
             <Button startIcon={<ArrowBack />} variant="outlined">
@@ -354,7 +349,7 @@ export default function Cart() {
                     borderColor: 'primary.main',
                     '&:hover': {
                       borderColor: 'primary.main',
-                      backgroundColor: 'rgba(255, 0, 0, 0.04)',
+                      backgroundColor: 'rgba(219, 0, 7, 0.04)',
                     },
                   }}
                 >

@@ -1,96 +1,77 @@
 'use client'
 import Image from 'next/image'
-import {X, Instagram, Mail, Store, Home} from '@mui/icons-material'
-import {Tooltip} from '@mui/material'
+import {Box, Typography, Container} from '@mui/material'
 import {Scene} from './Scene'
-import Link from 'next/link'
+import {doppler} from './font'
 
 export const ShopHero = () => {
   return (
-    <div className="h-[40vh] relative w-full overflow-hidden">
+    <Box
+      component="section"
+      sx={{
+        position: 'relative',
+        width: '100%',
+        height: {xs: '40vh', md: '50vh'},
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Image
         src="/background-2.jpeg"
         fill
         className="object-cover"
-        alt={'group photo'}
+        alt="Miami Gooners supporters gathered at The Bar for a match day"
         priority
       />
 
-      <Scene height={40} />
+      <Scene height={50} />
 
-      <div className="z-20 flex flex-col gap-4 absolute top-4 right-4 md:top-8 md:right-8 bg-black/75 p-4 rounded-lg border border-gooner-red">
-        <Tooltip title="Home" placement="left" componentsProps={{tooltip: {sx: {fontSize: '14px'}}}}>
-          <Link href="/" aria-label="go to home page">
-            <Home 
-              color="primary" 
-              fontSize="large" 
-              sx={{
-                '&:hover': {
-                  color: 'white',
-                },
-              }}
-            />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Follow us on Instagram" placement="left" componentsProps={{tooltip: {sx: {fontSize: '14px'}}}}>
-          <Link
-            href="https://www.instagram.com/miamigooners"
-            aria-label="follow us on instagram"
-          >
-            <Instagram
-              color="primary"
-              fontSize="large"
-              sx={{
-                '&:hover': {
-                  color: 'white',
-                },
-              }}
-            />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Follow us on X/Twitter" placement="left" componentsProps={{tooltip: {sx: {fontSize: '14px'}}}}>
-          <Link
-            href="https://twitter.com/miamigooners"
-            aria-label="follow us on twitter"
-          >
-            <X
-              color="primary"
-              fontSize="large"
-              sx={{
-                '&:hover': {
-                  color: 'white',
-                },
-              }}
-            />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Email us" placement="left" componentsProps={{tooltip: {sx: {fontSize: '14px'}}}}>
-          <Link href="mailto:info@miamigooners.com" aria-label="email us">
-            <Mail 
-              color="primary" 
-              fontSize="large" 
-              sx={{
-                '&:hover': {
-                  color: 'white',
-                },
-              }}
-            />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Online Shop" placement="left" componentsProps={{tooltip: {sx: {fontSize: '14px'}}}}>
-          <Link href="/shop" aria-label="visit our shop">
-            <Store 
-              color="primary" 
-              fontSize="large" 
-              sx={{
-                '&:hover': {
-                  color: 'white',
-                },
-              }}
-            />
-          </Link>
-        </Tooltip>
-      </div>
-    </div>
+      {/* Dark gradient overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(180deg, transparent 0%, rgba(10,10,11,0.4) 40%, rgba(10,10,11,0.95) 100%)',
+          zIndex: 5,
+        }}
+      />
+
+      <Container
+        maxWidth="lg"
+        sx={{
+          position: 'relative',
+          zIndex: 20,
+          textAlign: 'center',
+        }}
+      >
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: doppler.style.fontFamily,
+            fontWeight: 700,
+            fontSize: {xs: '2.5rem', md: '4rem'},
+            lineHeight: 1.05,
+            letterSpacing: '0.02em',
+            textTransform: 'lowercase',
+            color: 'text.primary',
+          }}
+        >
+          SHOP
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: {xs: '1rem', md: '1.125rem'},
+            lineHeight: 1.6,
+            color: 'text.secondary',
+            mt: 2,
+          }}
+        >
+          Official Miami Gooners Merchandise
+        </Typography>
+      </Container>
+    </Box>
   )
 }

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Miami Gooners is a Next.js website for the Miami Gooners Arsenal supporters club. The site displays Arsenal match fixtures, allows event RSVPs, provides Apple Wallet passes for match events, and features an integrated Shopify e-commerce store for official merchandise.
+Miami Gooners is a Next.js website for the Miami Gooners Arsenal supporters club. The site displays Arsenal match fixtures, allows event RSVPs, and features an integrated Shopify e-commerce store for official merchandise.
 
 ## Development Commands
 
@@ -25,118 +25,141 @@ npm run lint
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Next.js 15+ with TypeScript
-- **UI**: Material-UI (@mui/material) with Emotion for styling
-- **3D Graphics**: Three.js with React Three Fiber
-- **Authentication**: Auth0 (@auth0/nextjs-auth0)
-- **E-commerce**: Shopify Storefront API (@shopify/storefront-api-client)
+- **Framework**: Next.js 16 (App Router, Turbopack) with TypeScript
+- **UI**: Material-UI v6 (@mui/material) with Emotion for styling
+- **Particle Animation**: Three.js with React Three Fiber (@react-three/fiber 9.x) + Drei (@react-three/drei 10.x) — particles only, no 3D models
+- **Authentication**: Auth0 v4 (@auth0/nextjs-auth0)
+- **E-commerce**: Shopify Storefront API 2026-01 (@shopify/storefront-api-client)
 - **Date Handling**: Luxon for timezone-aware date formatting
-- **Styling**: Tailwind CSS + Emotion CSS-in-JS
+- **Styling**: Tailwind CSS 4 + Emotion CSS-in-JS
 
 ### Project Structure
 
 ```
+app/
+├── layout.tsx              # Root layout (Server Component) — imports Navbar
+├── page.tsx                # Home page (Server Component)
+├── not-found.tsx           # 404 page
+├── ThemeRegistry.tsx       # 'use client' — Emotion cache + MUI ThemeProvider
+├── NavigationLoader.tsx    # 'use client' — loading overlay on navigation
+├── Providers.tsx           # 'use client' — Auth0Provider + CartProvider
+├── shop/
+│   ├── page.tsx            # Server Component (fetches products)
+│   ├── ShopContent.tsx     # 'use client' — MUI rendering for shop listing
+│   ├── cart/page.tsx       # 'use client' — Cart page (no hero, task-focused)
+│   └── [productId]/
+│       ├── page.tsx        # Server Component
+│       └── ProductDetailClient.tsx  # 'use client'
+└── api/
+    ├── events/route.ts     # Events API
+    └── passes/route.ts     # Apple Wallet pass generation
+
 src/
-├── AllEvents.tsx        # Main events listing component
-├── Event.tsx           # Individual event card component
-├── Hero.tsx            # Landing page hero section (70vh)
-├── ShopHero.tsx        # Shop page hero section (40vh)
-├── Scene.tsx           # Three.js 3D scene component (parameterized height)
+├── Navbar.tsx              # 'use client' — Fixed navbar (always opaque)
+├── Hero.tsx                # 'use client' — Home hero section (100vh)
+├── ShopHero.tsx            # 'use client' — Shop hero section (50vh)
+├── Scene.tsx               # 'use client' — Three.js particle animation (no 3D model)
+├── AllEvents.tsx           # 'use client' — Events listing with competition filter chips
+├── Event.tsx               # 'use client' — Individual event card (editorial design)
+├── Footer.tsx              # 'use client' — 3-column footer
+├── EventsSkeleton.tsx      # 'use client' — Loading skeleton for events
+├── LoadingOverlay.tsx      # 'use client' — Navigation loading backdrop
+├── CartButton.tsx          # 'use client' — Cart icon with badge
+├── ProductImageGallery.tsx # 'use client' — Product image carousel
+├── PolicyModal.tsx         # 'use client' — Privacy/Return policy modal
+├── font.ts                 # Font definitions (Inter, Doppler local, JetBrains Mono)
+├── theme.ts                # MUI dark theme (#DB0007 red, #D4A843 gold)
+├── context/
+│   └── CartContext.tsx     # Cart state provider
 ├── constants/
-│   ├── teamColors.ts   # Premier League team color definitions
-│   └── images.ts       # Image asset constants
+│   ├── teamColors.ts       # Premier League + cup team color definitions
+│   └── images.ts           # Image asset constants
 └── utils/
-    ├── createEmotionCache.ts  # Emotion cache configuration
-    └── shopify.ts            # Shopify API client and utilities
+    ├── events.ts           # Shared event data loading (used by API route and server page)
+    └── shopify.ts          # Shopify Storefront API client
 
-pages/
-├── api/
-│   ├── events/index.ts    # Events API endpoint
-│   ├── passes/index.ts    # Apple Wallet pass generation
-│   └── shop/              # Shopify API routes (server-side)
-│       ├── cart.ts        # Cart creation endpoint
-│       ├── products.ts    # Products list endpoint
-│       └── product/[handle].ts  # Individual product endpoint
-├── shop/                  # E-commerce store pages
-│   ├── index.tsx          # Shop homepage (/shop)
-│   └── [productId].tsx    # Product detail pages (/shop/[handle])
-├── index.tsx              # Home page
-└── pass/index.tsx         # Apple Wallet pass page
+lib/
+└── auth0.ts                # Auth0Client singleton
 
-public/
-├── fixtures/
-│   └── premier-league-25-26.json  # Premier League fixture data
-└── images/                        # Static assets
-    └── placeholder-tshirt.svg     # Shop placeholder image
+proxy.ts                    # Auth0 middleware (replaces middleware.ts)
+styles/globals.css          # Tailwind @theme tokens, CSS animations, global styles
+public/fixtures/
+└── premier-league-25-26.json  # Premier League fixture data
 ```
+
+### Key Architecture Rules
+
+1. **App Router only** — no `pages/` directory
+2. **Client boundaries** — all `src/*.tsx` files using MUI/hooks have `'use client'` directive
+3. **Server Components must not import MUI** — `app/shop/page.tsx` delegates rendering to `ShopContent.tsx`
+4. **Emotion SSR** — `app/ThemeRegistry.tsx` manually implements `useServerInsertedHTML` emotion cache
+5. **`jsxImportSource: "@emotion/react"` must NOT be in tsconfig.json** — causes Server Components to crash
+6. **Events data** — `src/utils/events.ts` is imported directly by server pages (avoids SSR self-fetch)
+
+### Design System
+
+**Colors:**
+- Primary red: `#DB0007` (Arsenal red)
+- Cannon gold: `#D4A843` (secondary accent)
+- Background: `#0A0A0B`
+- Surface: `#111113`
+
+**Typography:**
+- Headings: Doppler (`doppler` from `src/font.ts`) — self-hosted webfont at `public/fonts/doppler-regular-webfont.woff2/.woff`. Licensed from Creative Market (webfont license). **Always `textTransform: 'lowercase'`** — apply this explicitly on any `sx` prop that sets `fontFamily: doppler.style.fontFamily`, since `sx` overrides bypass the theme default.
+- Body: Inter (`inter` from `src/font.ts`)
+- Scores/countdowns: JetBrains Mono (`jetbrainsMono` from `src/font.ts`)
+
+**Doppler font rule:** The MUI theme sets `textTransform: 'lowercase'` on h1–h4 variants. However, any component that sets `fontFamily: doppler.style.fontFamily` directly via `sx` prop must also explicitly set `textTransform: 'lowercase'` — the theme variant default is overridden by `sx`.
+
+**Navigation:** Fixed `Navbar` component — always opaque (`rgba(10,10,11,0.9)` + blur), never transparent. "miami gooners" wordmark in Doppler (lowercase), MATCHES/SHOP text links in Inter uppercase, social icons on right.
 
 ### Key Components
 
-**Event.tsx**: Displays individual match cards with:
-- Dynamic team colors from teamColors.ts
-- Timezone conversion (UTC → America/New_York)
-- Win/Loss/Draw result display
-- RSVP button integration
-- Past/future event styling
+**Navbar.tsx**: Always-dark fixed navbar. "miami gooners" wordmark (Doppler, lowercase), MATCHES/SHOP nav links (Inter, uppercase), social icons, cart badge (shop pages only). Mobile hamburger drawer. No scroll-based style changes.
 
-**Events API** (pages/api/events/index.ts):
-- Combines pre-season friendlies with Premier League fixtures
-- Reads fixture data from public/fixtures/premier-league-25-26.json
-- Returns unified event structure with competition labels
+**Hero.tsx**: 100vh hero with background photo, dark gradient overlay, floating particle Scene, left-aligned editorial headline ("miami / gooners" in Doppler), bold subtitle, CTA buttons (Next Match, Visit Shop), bouncing scroll indicator. Scroll indicator uses two nested Boxes — outer for `translateX(-50%)` centering, inner for the bounce animation — to prevent the animation from overriding the centering transform.
+
+**Scene.tsx**: Three.js canvas — floating red ember particles only (no 3D model). 200 particles, rendered on all devices. Skips rendering when `prefers-reduced-motion` is set. Desktop DPR [1, 1.5].
+
+**AllEvents.tsx**: Competition filter chips (All / Premier League / UEFA Champions League / FA Cup / Carabao Cup). Upcoming matches section + Recent Results accordion (only shown for PL and UCL, collapsed by default). Bottom padding `pb: {xs: 8, md: 12}` for spacing above footer.
+
+**Event.tsx**: Editorial card — opponent-color top band, Doppler opponent name (lowercase), JetBrains Mono score/countdown, competition chip (gold), W/D/L result badge, RSVP button with pulse glow.
+
+**Events data flow**: `src/utils/events.ts` → imported by `app/api/events/route.ts` AND directly by server pages. Combines pre-season friendlies with PL fixtures from `public/fixtures/premier-league-25-26.json`.
 
 ### E-commerce Shop System
 
-**Shop Pages** (/shop):
-- **Shop Index** (`/shop`): Product grid with ShopHero, displays all Shopify products
-- **Product Detail** (`/shop/[productId]`): Individual product pages with variants, stock status, and checkout integration
-- **Navigation**: Hero components include tooltips for Instagram, X/Twitter, Email, Shop, and Home links
-
-**Shopify Integration** (src/utils/shopify.ts):
-- **Storefront API Client**: Connects to Shopify using GraphQL queries
-- **Product Management**: Fetches products, variants, pricing, and inventory
-- **Cart Creation**: Server-side cart creation with checkout URL generation
-- **Stock Handling**: Visual indicators for out-of-stock variants and options
-- **Price Formatting**: Locale-aware currency formatting
-
-**Shop Features**:
-- **Smart Variant Selection**: Auto-selects first available variant
-- **Stock Indicators**: Crossed-out unavailable sizes and disabled dropdown options
-- **Responsive Design**: Grid layout with product cards and detailed product views
-- **Secure Checkout**: Redirects to Shopify's secure checkout process
+- `/shop` — Product grid (ShopContent.tsx client component)
+- `/shop/[productId]` — Product detail with ShopHero, size selector, add to cart
+- `/shop/cart` — Cart page (no hero, task-focused). pt-12 for navbar clearance.
+- All Shopify API calls are server-side (no client-side tokens)
+- Cart state in `src/context/CartContext.tsx` (localStorage persistence)
 
 ### Team Colors System
 
-The teamColors.ts file maps team names to primary/secondary colors for dynamic styling. When adding new teams, ensure both primary and secondary colors are defined. The Event component has special handling for light colors (#fff, rgba(255,255,255,1), rgba(108,171,221,1), rgba(253,185,19,1), #FFCD00) to ensure text contrast.
+`src/constants/teamColors.ts` maps team names to `{primary, secondary}` colors. Event.tsx has special handling for light colors to ensure text contrast. When adding new teams, define both primary and secondary.
 
 ### Date & Time Handling
 
-All match dates are stored in UTC format ("yyyy-MM-dd HH:mm:ss'Z'") and converted to America/New_York timezone for display using Luxon. The formatDuration function calculates days until match kickoff.
-
-### Apple Wallet Integration
-
-The site generates Apple Wallet passes for events using @walletpass/pass-js. Pass generation happens in pages/api/passes/index.ts.
+Match dates stored in UTC (`"yyyy-MM-dd HH:mm:ss'Z'"`) and converted to `America/New_York` timezone via Luxon.
 
 ## Environment Variables
 
-Set up these Auth0 variables for authentication:
-- AUTH0_SECRET
-- AUTH0_BASE_URL  
-- AUTH0_ISSUER_BASE_URL
-- AUTH0_CLIENT_ID
-- AUTH0_CLIENT_SECRET
+Auth0:
+- `AUTH0_SECRET`
+- `AUTH0_BASE_URL`
+- `AUTH0_ISSUER_BASE_URL`
+- `AUTH0_CLIENT_ID`
+- `AUTH0_CLIENT_SECRET`
 
-Set up these Shopify variables for e-commerce:
-- SHOPIFY_STORE_DOMAIN (your-store.myshopify.com)
-- SHOPIFY_STOREFRONT_ACCESS_TOKEN (Storefront API token)
+Shopify:
+- `SHOPIFY_STORE_DOMAIN` (your-store.myshopify.com)
+- `SHOPIFY_STOREFRONT_ACCESS_TOKEN` (Storefront API token)
 
 ## Development Notes
 
 - Use TypeScript strict mode (enabled in tsconfig.json)
-- Material-UI components use Emotion for CSS-in-JS styling
-- Three.js scenes are handled in Scene.tsx component with parameterized heights
-- Event images are stored in public/images/matchday-photos/
-- Fixture data updates happen by modifying the JSON file in public/fixtures/
-- Shop uses server-side Shopify API calls for security (no client-side tokens)
-- Product images should be uploaded to Shopify admin, placeholder SVG used for fallback
-- Cart creation redirects to Shopify's secure checkout system
-- Stock status automatically updates based on Shopify inventory data
+- Fixture data updates: modify `public/fixtures/premier-league-25-26.json`
+- Product images uploaded to Shopify admin; placeholder SVG at `public/images/placeholder-tshirt.svg`
+- Recent Results section only appears for Premier League and UEFA Champions League events
+- Apple Wallet pass feature is no longer linked from the UI (route still exists at `/pass`)
