@@ -24,6 +24,9 @@ const nextConfig = {
     NEXT_PUBLIC_VERCEL_ENV: process.env.VERCEL_ENV,
   },
   productionBrowserSourceMaps: true,
+  turbopack: {
+    root: process.cwd(),
+  },
 }
 
 export default withAxiom(nextConfig)

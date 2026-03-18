@@ -156,10 +156,46 @@ Shopify:
 - `SHOPIFY_STORE_DOMAIN` (your-store.myshopify.com)
 - `SHOPIFY_STOREFRONT_ACCESS_TOKEN` (Storefront API token)
 
+## Updating Fixtures
+
+Fixture files live in `public/fixtures/`. Each competition has its own JSON file:
+
+| File | Competition | Loaded by |
+|------|-------------|-----------|
+| `premier-league-25-26.json` | Premier League | `src/utils/events.ts` (local file read) |
+| `fa-cup-25-26.json` | FA Cup | `src/utils/events.ts` (local file read) |
+| `carabao-cup-25-26.json` | Carabao Cup | `src/utils/events.ts` (local file read) |
+| `ucl-25-26.json` | UEFA Champions League | fetched from fixturedownload.com (fallback only) |
+
+**Fixture object shape:**
+```json
+{
+  "MatchNumber": 3,
+  "RoundNumber": 6,
+  "DateUtc": "2026-04-04 19:00:00Z",
+  "Location": "Emirates Stadium",
+  "HomeTeam": "Arsenal",
+  "AwayTeam": "Southampton",
+  "HomeTeamScore": null,
+  "AwayTeamScore": null
+}
+```
+
+**Time convention:** Match times are given by the user in **ET (Eastern Time)**. Convert to UTC before storing:
+- EDT (Mar–Nov): ET + 4h → UTC (e.g. 3PM ET = 19:00 UTC)
+- EST (Nov–Mar): ET + 5h → UTC (e.g. 3PM ET = 20:00 UTC)
+
+**Adding a new match:**
+1. Open the relevant fixture JSON file.
+2. Append a new object. Increment `MatchNumber` sequentially. Set `RoundNumber` to the round (e.g. FA Cup R6 = Quarter-Final).
+3. Leave `HomeTeamScore`/`AwayTeamScore` as `null` for upcoming matches (omit entirely for cup fixtures if not present).
+4. If the opponent is new, add their colors to `src/constants/teamColors.ts`.
+
+**Entering a result:** Set `HomeTeamScore` and `AwayTeamScore` to integer values.
+
 ## Development Notes
 
 - Use TypeScript strict mode (enabled in tsconfig.json)
-- Fixture data updates: modify `public/fixtures/premier-league-25-26.json`
 - Product images uploaded to Shopify admin; placeholder SVG at `public/images/placeholder-tshirt.svg`
 - Recent Results section only appears for Premier League and UEFA Champions League events
 - Apple Wallet pass feature is no longer linked from the UI (route still exists at `/pass`)
