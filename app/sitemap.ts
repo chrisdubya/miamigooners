@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
       const client = createStorefrontApiClient({
         storeDomain: process.env.SHOPIFY_STORE_DOMAIN,
-        apiVersion: '2024-01',
+        apiVersion: '2026-01',
         publicAccessToken: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
       })
 
@@ -52,12 +52,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/shop/cart`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
     },
     ...productHandles.map((handle) => ({
       url: `${baseUrl}/shop/${handle}`,
