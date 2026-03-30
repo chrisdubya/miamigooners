@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /_next/
+Disallow: /api/
 
 Sitemap: https://miamigooners.com/sitemap.xml

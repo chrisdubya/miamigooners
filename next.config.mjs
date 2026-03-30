@@ -3,6 +3,15 @@ import {withAxiom} from 'next-axiom'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/&',
+        destination: '/',
+        permanent: false,
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {
