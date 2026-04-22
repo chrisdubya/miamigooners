@@ -12,11 +12,16 @@ interface PhotosContentProps {
 }
 
 export default function PhotosContent({data}: PhotosContentProps) {
+  const nonEmptyMatches = useMemo(
+    () => data.matches.filter((m) => m.files.length > 0),
+    [data.matches]
+  )
+
   const [filter, setFilter] = useState('all')
   const [openPhoto, setOpenPhoto] = useState<PhotoItem | null>(null)
 
   const photoItems: PhotoItem[] = useMemo(() => {
-    return data.matches.flatMap((match) =>
+    return nonEmptyMatches.flatMap((match) =>
       match.files.map((file) => ({
         ...file,
         matchId: match.id,
@@ -31,48 +36,41 @@ export default function PhotosContent({data}: PhotosContentProps) {
             : 1.5,
       }))
     )
-  }, [data.matches])
+  }, [nonEmptyMatches])
 
   const totals: Record<string, number> = useMemo(() => {
     const counts: Record<string, number> = {}
-    for (const match of data.matches) {
+    for (const match of nonEmptyMatches) {
       counts[match.id] = match.files.length
     }
     return counts
-  }, [data.matches])
+  }, [nonEmptyMatches])
 
   const visible: PhotoItem[] = useMemo(() => {
-    if (filter === 'all') {
-      return [...photoItems].sort(
-        (a, b) => new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
-      )
-    }
-    return photoItems
-      .filter((p) => p.matchId === filter)
-      .sort(
-        (a, b) => new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
-      )
+    const items =
+      filter === 'all'
+        ? photoItems
+        : photoItems.filter((p) => p.matchId === filter)
+    return [...items].sort(
+      (a, b) =>
+        new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
+    )
   }, [photoItems, filter])
 
   return (
     <>
       <PhotosHero stats={data.stats} sharedFolderLink={data.sharedFolderLink} />
       <PhotosFilterBar
-        matches={data.matches}
+        matches={nonEmptyMatches}
         activeFilter={filter}
         onFilterChange={setFilter}
         totals={totals}
       />
-      <PhotoGrid
-        photos={visible}
-        matches={data.matches}
-        filter={filter}
-        onOpen={setOpenPhoto}
-      />
+      <PhotoGrid photos={visible} onOpen={setOpenPhoto} />
       <PhotoLightbox
         photo={openPhoto}
         photos={visible}
-        matches={data.matches}
+        matches={nonEmptyMatches}
         onClose={() => setOpenPhoto(null)}
         onNavigate={setOpenPhoto}
       />

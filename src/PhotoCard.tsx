@@ -78,6 +78,7 @@ export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
         src={photo.thumbnailLink || ''}
         alt={photo.description || photo.name}
         loading="lazy"
+        decoding="async"
         sx={{
           width: '100%',
           height: '100%',

@@ -299,8 +299,9 @@ export const PhotoLightbox = ({
           ) : (
             <Box
               component="img"
-              src={photo.webContentLink || photo.thumbnailLink || ''}
+              src={`https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`}
               alt={photo.description || photo.name}
+              decoding="async"
               sx={{
                 maxWidth: '100%',
                 maxHeight: '90vh',
@@ -512,50 +513,6 @@ export const PhotoLightbox = ({
               gap: '12px',
             }}
           >
-            {photo.webContentLink && (
-              <Box
-                component="a"
-                href={photo.webContentLink}
-                download={photo.name}
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '8px 12px',
-                  borderRadius: '8px',
-                  background: '#1A1A1E',
-                  border: '1px solid #2E2E38',
-                  color: '#F5F5F7',
-                  textDecoration: 'none',
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase',
-                  transition: 'border-color 0.2s, background 0.2s',
-                  '&:hover': {
-                    background: '#222228',
-                    borderColor: '#3A3A46',
-                  },
-                }}
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download
-              </Box>
-            )}
             <Box sx={{flex: 1}} />
             <Box
               component="a"

@@ -10,13 +10,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "sync-photos": "node scripts/sync-thumbnails.mjs"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.0",
+    "@google-cloud/storage": "^7.19.0",
     "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.2.0",
     "@react-three/drei": "^10.7.7",

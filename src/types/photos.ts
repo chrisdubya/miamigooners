@@ -28,6 +28,7 @@ export interface MatchFolder {
   date: string
   teamColor: string
   result: string
+  coverThumbnail: string | null
   files: DriveFile[]
 }
 
