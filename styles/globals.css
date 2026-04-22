@@ -111,6 +111,11 @@
   50% { text-shadow: 0 0 16px rgba(219, 0, 7, 0.8), 0 0 32px rgba(219, 0, 7, 0.3); }
 }
 
+@keyframes emberFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-30px); opacity: 0.8; }
+}
+
 /* Scroll padding for fixed navbar */
 html {
   scroll-padding-top: 64px;
