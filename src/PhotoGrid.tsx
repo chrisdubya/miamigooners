@@ -189,8 +189,8 @@ export const PhotoGrid = ({photos, match, onOpen}: PhotoGridProps) => {
             columnGap: '16px',
           }}
         >
-          {photos.map((p) => (
-            <PhotoCard key={p.id} photo={p} onOpen={() => onOpen(p)} />
+          {photos.map((p, i) => (
+            <PhotoCard key={p.id} photo={p} onOpen={() => onOpen(p)} priority={i < 6} />
           ))}
         </Box>
       </Box>
