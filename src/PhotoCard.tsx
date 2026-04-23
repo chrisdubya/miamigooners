@@ -28,7 +28,6 @@ interface PhotoCardProps {
 export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
   const [hover, setHover] = useState(false)
 
-  const rowSpan = photo.aspect < 1 ? 40 : photo.aspect > 1.7 ? 18 : 28
   const isVideo = photo.mimeType?.startsWith('video/')
   const durationSec =
     isVideo && photo.videoMediaMetadata
@@ -45,7 +44,8 @@ export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
       sx={{
         m: 0,
         position: 'relative',
-        gridRow: `span ${rowSpan}`,
+        breakInside: 'avoid',
+        mb: 2,
         background: '#111113',
         border: '1px solid',
         borderColor: hover ? '#3A3A46' : '#2E2E38',

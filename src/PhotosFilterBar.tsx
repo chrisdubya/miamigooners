@@ -1,5 +1,5 @@
 'use client'
-import {Box, Typography} from '@mui/material'
+import {Box} from '@mui/material'
 import {jetbrainsMono} from './font'
 import type {MatchFolder} from './types/photos'
 
@@ -16,13 +16,6 @@ export const PhotosFilterBar = ({
   onFilterChange,
   totals,
 }: PhotosFilterBarProps) => {
-  const totalAll = Object.values(totals).reduce((s, n) => s + n, 0)
-
-  const allChips: Array<{id: string; label: string; teamColor: string | null}> = [
-    {id: 'all', label: 'ALL MATCHES', teamColor: null},
-    ...matches.map((m) => ({id: m.id, label: m.label, teamColor: m.teamColor})),
-  ]
-
   return (
     <Box
       sx={{
@@ -45,22 +38,18 @@ export const PhotosFilterBar = ({
           gap: 1,
           overflowX: 'auto',
           flexWrap: 'nowrap',
-          scrollbarWidth: 'thin',
-          '&::-webkit-scrollbar': {height: 4},
-          '&::-webkit-scrollbar-thumb': {
-            background: '#2E2E38',
-            borderRadius: 2,
-          },
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': {display: 'none'},
         }}
       >
-        {allChips.map((chip) => {
-          const isActive = activeFilter === chip.id
-          const count = chip.id === 'all' ? totalAll : totals[chip.id] || 0
+        {matches.map((match) => {
+          const isActive = activeFilter === match.id
+          const count = totals[match.id] || 0
           return (
             <Box
-              key={chip.id}
+              key={match.id}
               component="button"
-              onClick={() => onFilterChange(chip.id)}
+              onClick={() => onFilterChange(match.id)}
               sx={{
                 flex: '0 0 auto',
                 display: 'flex',
@@ -87,19 +76,17 @@ export const PhotosFilterBar = ({
                     },
               }}
             >
-              {chip.teamColor && (
-                <Box
-                  component="span"
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '2px',
-                    background: chip.teamColor,
-                    flex: '0 0 auto',
-                  }}
-                />
-              )}
-              <Box component="span">{chip.label}</Box>
+              <Box
+                component="span"
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '2px',
+                  background: match.teamColor,
+                  flex: '0 0 auto',
+                }}
+              />
+              <Box component="span">{match.label}</Box>
               <Box
                 component="span"
                 sx={{

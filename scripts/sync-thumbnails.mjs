@@ -15,8 +15,6 @@
  * Requires:
  *   - .env.local with GOOGLE_DRIVE_FOLDER_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL,
  *     GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
- *   - Service account key JSON at ~/Downloads/miami-gooners-*.json
- *     (or set GCS_KEY_PATH env var)
  */
 
 import {google} from 'googleapis'
@@ -56,71 +54,25 @@ const driveAuth = new google.auth.JWT({
 })
 const drive = google.drive({version: 'v3', auth: driveAuth})
 
-// ── GCS client ──
-const keyPath =
-  process.env.GCS_KEY_PATH ||
-  fs.readdirSync(path.join(process.env.HOME, 'Downloads'))
-    .filter((f) => f.startsWith('miami-gooners-') && f.endsWith('.json'))
-    .map((f) => path.join(process.env.HOME, 'Downloads', f))[0]
-
-if (!keyPath) {
-  console.error('Could not find service account key JSON in ~/Downloads/')
-  process.exit(1)
-}
-
-const storage = new Storage({keyFilename: keyPath})
+// ── GCS client (uses same service account credentials from .env.local) ──
+const storage = new Storage({
+  credentials: {
+    client_email: SERVICE_EMAIL,
+    private_key: privateKey,
+  },
+})
 const bucket = storage.bucket(BUCKET_NAME)
 
-// ── Team colors (mirrors src/constants/teamColors.ts) ──
-const teamColors = [
-  {primary: 'rgba(221,0,0,1)', team: 'Nottingham Forest'},
-  {primary: 'rgba(221,0,0,1)', team: "Nott'm Forest"},
-  {primary: 'rgba(27,69,143,1)', team: 'Crystal Palace'},
-  {primary: 'rgba(255,255,255,1)', team: 'Fulham'},
-  {primary: 'rgba(218,41,28,1)', team: 'Man Utd'},
-  {primary: 'rgba(0,51,153,1)', team: 'Everton'},
-  {primary: '#fff', team: 'Spurs'},
-  {primary: 'rgba(181,14,18,1)', team: 'Bournemouth'},
-  {primary: 'rgba(108,171,221,1)', team: 'Man City'},
-  {primary: 'rgba(3,70,148,1)', team: 'Chelsea'},
-  {primary: 'rgba(238,39,55,1)', team: 'Sheffield Utd'},
-  {primary: 'rgba(0,0,0,1)', team: 'Newcastle'},
-  {primary: 'rgba(108,29,69,1)', team: 'Burnley'},
-  {primary: 'rgba(215,25,33,1)', team: 'Brentford'},
-  {primary: 'rgba(253,185,19,1)', team: 'Wolves'},
-  {primary: 'rgba(0,0,0,1)', team: 'Luton'},
-  {primary: 'rgba(103,14,54,1)', team: 'Aston Villa'},
-  {primary: 'rgba(0,87,184,1)', team: 'Brighton'},
-  {primary: 'rgba(200,16,46,1)', team: 'Liverpool'},
-  {primary: 'rgba(122,38,58,1)', team: 'West Ham'},
-  {primary: 'rgb(128, 2, 2)', team: 'FC Nürnberg'},
-  {primary: 'rgb(164, 0, 71)', team: 'Barcelona'},
-  {primary: 'rgba(28, 15, 88, 1)', team: 'MLS All-Stars'},
-  {primary: 'rgba(229, 27, 34, 1)', team: 'Monaco'},
-  {primary: 'rgb(240, 0, 0)', team: 'PSV'},
-  {primary: 'rgb(236, 28, 36)', team: 'Lens'},
-  {primary: 'rgb(244, 51, 51)', team: 'Sevilla'},
-  {primary: 'rgb(0,83,160)', team: 'Leicester'},
-  {primary: 'rgb(222,44,55)', team: 'Ipswich'},
-  {primary: 'rgb(215, 25, 32)', team: 'Southampton'},
-  {primary: '#ee2523', team: 'Athletic Club'},
-  {primary: '#FFCD00', team: 'Leeds'},
-  {primary: '#eb172b', team: 'Sunderland'},
-  {primary: '#1d4289', team: 'Wigan Athletic'},
-  {primary: '#F9D100', team: 'Kairat Almaty'},
-  {primary: '#E32221', team: 'Leverkusen'},
-  {primary: '#F5A800', team: 'Mansfield Town'},
-  {primary: '#DC052D', team: 'Bayern Munich'},
-  {primary: '#FFFFFF', team: 'Real Madrid'},
-  {primary: '#004170', team: 'PSG'},
-  {primary: '#6CADDF', team: 'Portsmouth'},
-]
+// ── Team colors (parsed from src/constants/teamColors.ts at runtime) ──
+const teamColorsPath = path.resolve(process.cwd(), 'src/constants/teamColors.ts')
+const teamColorsSrc = fs.readFileSync(teamColorsPath, 'utf-8')
+const teamColors = [...teamColorsSrc.matchAll(/primary:\s*(['"])(.+?)\1\s*,\s*\n\s*secondary:\s*(['"]).+?\3\s*,\s*\n\s*team:\s*(['"])(.+?)\4/g)]
+  .map(([, , primary, , , team]) => ({primary, team}))
 
 // ── Folder parsing (mirrors src/utils/googleDrive.ts) ──
 const teamAliases = {
   'wigan': 'Wigan Athletic',
   'nottingham forest': 'Nottingham Forest',
-  'carabao cup final': 'Carabao Cup Final',
 }
 
 function parseFolderName(name) {
@@ -285,6 +237,8 @@ async function main() {
       date: parsed.date,
       teamColor: findTeamColor(parsed.opponent),
       result: '',
+      score: null,
+      isHome: null,
       coverThumbnail: files.length > 0 && files[0].id
         ? `${GCS_BASE}/${files[0].id}_w600.jpg`
         : null,

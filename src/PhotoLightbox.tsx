@@ -1,7 +1,6 @@
 'use client'
 import {useEffect, useCallback} from 'react'
-import {Box, Typography, IconButton} from '@mui/material'
-import {Close as CloseIcon} from '@mui/icons-material'
+import {Box, Typography} from '@mui/material'
 import {jetbrainsMono, inter} from './font'
 import type {PhotoItem, MatchFolder} from './types/photos'
 
@@ -92,6 +91,8 @@ export const PhotoLightbox = ({
       ? Math.round(parseInt(photo.videoMediaMetadata.durationMillis, 10) / 1000)
       : 0
   const fmtDur = `${Math.floor(durationSec / 60)}:${String(durationSec % 60).padStart(2, '0')}`
+
+  const downloadUrl = `https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`
 
   return (
     <Box
@@ -193,7 +194,7 @@ export const PhotoLightbox = ({
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
         sx={{
           display: 'grid',
-          gridTemplateColumns: {xs: '1fr', md: 'minmax(0, 1fr) 360px'},
+          gridTemplateColumns: {xs: '1fr', md: 'minmax(0, 1fr) 320px'},
           gap: 0,
           maxWidth: 1200,
           width: '100%',
@@ -279,28 +280,12 @@ export const PhotoLightbox = ({
                   <polygon points="6 4 20 12 6 20 6 4" />
                 </svg>
               </Box>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 16,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 11,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#A1A1AA',
-                  zIndex: 2,
-                }}
-              >
-                Play in Google Drive
-              </Box>
             </Box>
           ) : (
             <Box
               component="img"
               src={`https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`}
-              alt={photo.description || photo.name}
+              alt={photo.name}
               decoding="async"
               sx={{
                 maxWidth: '100%',
@@ -359,19 +344,6 @@ export const PhotoLightbox = ({
                 >
                   {ownerName}
                 </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: jetbrainsMono.style.fontFamily,
-                    fontSize: 11,
-                    color: '#71717A',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                  title={photo.name}
-                >
-                  {photo.name}
-                </Typography>
               </Box>
             </Box>
 
@@ -429,41 +401,10 @@ export const PhotoLightbox = ({
             </Box>
           </Box>
 
-          {/* Description + file meta */}
+          {/* File metadata */}
           <Box sx={{padding: '20px 24px', flex: 1, overflow: 'auto'}}>
-            {photo.description ? (
-              <Typography
-                sx={{
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 14,
-                  lineHeight: 1.55,
-                  color: '#F5F5F7',
-                  m: 0,
-                }}
-              >
-                {photo.description}
-              </Typography>
-            ) : (
-              <Typography
-                sx={{
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 13,
-                  lineHeight: 1.55,
-                  color: '#71717A',
-                  m: 0,
-                  fontStyle: 'italic',
-                }}
-              >
-                No description
-              </Typography>
-            )}
-
-            {/* File metadata grid */}
             <Box
               sx={{
-                mt: '20px',
-                pt: 2,
-                borderTop: '1px solid #2E2E38',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 gap: '10px 16px',
@@ -516,10 +457,12 @@ export const PhotoLightbox = ({
             <Box sx={{flex: 1}} />
             <Box
               component="a"
-              href={photo.webViewLink}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={downloadUrl}
+              download={photo.name}
               sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
                 padding: '8px 14px',
                 borderRadius: '8px',
                 background: '#DB0007',
@@ -536,7 +479,21 @@ export const PhotoLightbox = ({
                 },
               }}
             >
-              Open in Drive ↗
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download
             </Box>
           </Box>
         </Box>

@@ -1,5 +1,6 @@
 'use client'
-import {useState, useMemo} from 'react'
+import {useState, useMemo, useEffect, useRef} from 'react'
+import {useSearchParams} from 'next/navigation'
 import {PhotosHero} from '../../src/PhotosHero'
 import {PhotosFilterBar} from '../../src/PhotosFilterBar'
 import {PhotoGrid} from '../../src/PhotoGrid'
@@ -12,13 +13,31 @@ interface PhotosContentProps {
 }
 
 export default function PhotosContent({data}: PhotosContentProps) {
+  const searchParams = useSearchParams()
+  const queryMatchId = searchParams.get('match')
+
   const nonEmptyMatches = useMemo(
     () => data.matches.filter((m) => m.files.length > 0),
     [data.matches]
   )
 
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState(() => {
+    if (queryMatchId && nonEmptyMatches.some((m) => m.id === queryMatchId)) {
+      return queryMatchId
+    }
+    return nonEmptyMatches[0]?.id ?? ''
+  })
   const [openPhoto, setOpenPhoto] = useState<PhotoItem | null>(null)
+  const isFirstRender = useRef(true)
+
+  // Scroll to top when filter changes (but not on initial render)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }, [filter])
 
   const photoItems: PhotoItem[] = useMemo(() => {
     return nonEmptyMatches.flatMap((match) =>
@@ -47,26 +66,30 @@ export default function PhotosContent({data}: PhotosContentProps) {
   }, [nonEmptyMatches])
 
   const visible: PhotoItem[] = useMemo(() => {
-    const items =
-      filter === 'all'
-        ? photoItems
-        : photoItems.filter((p) => p.matchId === filter)
-    return [...items].sort(
-      (a, b) =>
-        new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
-    )
+    return photoItems
+      .filter((p) => p.matchId === filter)
+      .sort(
+        (a, b) =>
+          new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
+      )
   }, [photoItems, filter])
+
+  const activeMatch = nonEmptyMatches.find((m) => m.id === filter)
 
   return (
     <>
-      <PhotosHero stats={data.stats} sharedFolderLink={data.sharedFolderLink} />
+      <PhotosHero stats={data.stats} />
       <PhotosFilterBar
         matches={nonEmptyMatches}
         activeFilter={filter}
         onFilterChange={setFilter}
         totals={totals}
       />
-      <PhotoGrid photos={visible} onOpen={setOpenPhoto} />
+      <PhotoGrid
+        photos={visible}
+        match={activeMatch}
+        onOpen={setOpenPhoto}
+      />
       <PhotoLightbox
         photo={openPhoto}
         photos={visible}
