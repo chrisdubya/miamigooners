@@ -1,5 +1,6 @@
 'use client'
 import {useState} from 'react'
+import Image from 'next/image'
 import {Box, Typography} from '@mui/material'
 import {jetbrainsMono, inter} from './font'
 import type {PhotoItem} from './types/photos'
@@ -23,9 +24,10 @@ function fmtDuration(seconds: number): string {
 interface PhotoCardProps {
   photo: PhotoItem
   onOpen: () => void
+  priority?: boolean
 }
 
-export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
+export const PhotoCard = ({photo, onOpen, priority = false}: PhotoCardProps) => {
   const [hover, setHover] = useState(false)
 
   const isVideo = photo.mimeType?.startsWith('video/')
@@ -74,20 +76,26 @@ export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
 
       {/* Image */}
       <Box
-        component="img"
-        src={photo.thumbnailLink || ''}
-        alt={photo.description || `Miami Gooners watch party photo – ${photo.matchLabel}`}
-        loading="lazy"
-        decoding="async"
         sx={{
+          position: 'relative',
           width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          transform: hover ? 'scale(1.04)' : 'scale(1)',
-          transition: 'transform 0.4s ease',
+          aspectRatio: photo.aspect || 1.5,
+          overflow: 'hidden',
         }}
-      />
+      >
+        <Image
+          src={photo.thumbnailLink || ''}
+          alt={photo.description || `Miami Gooners watch party photo – ${photo.matchLabel}`}
+          fill
+          sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
+          priority={priority}
+          style={{
+            objectFit: 'cover',
+            transform: hover ? 'scale(1.04)' : 'scale(1)',
+            transition: 'transform 0.4s ease',
+          }}
+        />
+      </Box>
 
       {/* Video badge */}
       {isVideo && (

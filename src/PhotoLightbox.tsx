@@ -1,5 +1,6 @@
 'use client'
 import {useState, useEffect, useCallback} from 'react'
+import Image from 'next/image'
 import {Box, Typography} from '@mui/material'
 import {jetbrainsMono, inter} from './font'
 import type {PhotoItem, MatchFolder} from './types/photos'
@@ -312,17 +313,25 @@ export const PhotoLightbox = ({
             </Box>
           ) : (
             <Box
-              component="img"
-              src={`https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`}
-              alt={photo.description || `Miami Gooners watch party photo – ${match.label}`}
-              decoding="async"
               sx={{
-                maxWidth: '100%',
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                minHeight: {xs: 250, md: 400},
                 maxHeight: '90vh',
-                objectFit: 'contain',
-                display: 'block',
               }}
-            />
+            >
+              <Image
+                src={`https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`}
+                alt={photo.description || `Miami Gooners watch party photo – ${match.label}`}
+                fill
+                sizes="(max-width: 900px) 100vw, 60vw"
+                priority
+                style={{
+                  objectFit: 'contain',
+                }}
+              />
+            </Box>
           )}
         </Box>
 
