@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Miami Gooners is a Next.js website for the Miami Gooners Arsenal supporters club. The site displays Arsenal match fixtures, allows event RSVPs, and features an integrated Shopify e-commerce store for official merchandise.
+Miami Gooners is a Next.js website for the Miami Gooners Arsenal supporters club. The site displays Arsenal match fixtures, allows event RSVPs, features an integrated Shopify e-commerce store for official merchandise, and a matchday photos gallery synced from Google Drive via Google Cloud Storage.
 
 ## Development Commands
 
@@ -20,6 +20,9 @@ npm start
 
 # Run linter
 npm run lint
+
+# Sync matchday photos from Google Drive to GCS
+npm run sync-photos
 ```
 
 ## Architecture
@@ -31,6 +34,7 @@ npm run lint
 - **Authentication**: Auth0 v4 (@auth0/nextjs-auth0)
 - **E-commerce**: Shopify Storefront API 2026-01 (@shopify/storefront-api-client)
 - **Date Handling**: Luxon for timezone-aware date formatting
+- **Photos Storage**: Google Cloud Storage (thumbnails + manifest JSON)
 - **Styling**: Tailwind CSS 4 + Emotion CSS-in-JS
 
 ### Project Structure
@@ -43,6 +47,10 @@ app/
 ├── ThemeRegistry.tsx       # 'use client' — Emotion cache + MUI ThemeProvider
 ├── NavigationLoader.tsx    # 'use client' — loading overlay on navigation
 ├── Providers.tsx           # 'use client' — Auth0Provider + CartProvider
+├── matchday-photos/
+│   ├── page.tsx            # Server Component — fetches manifest + events, enriches matches
+│   └── PhotosContent.tsx   # 'use client' — filter bar, grid, lightbox orchestrator
+├── EventsSection.tsx       # Server Component — fetches events + photo manifest for cross-linking
 ├── shop/
 │   ├── page.tsx            # Server Component (fetches products)
 │   ├── ShopContent.tsx     # 'use client' — MUI rendering for shop listing
@@ -67,8 +75,15 @@ src/
 ├── CartButton.tsx          # 'use client' — Cart icon with badge
 ├── ProductImageGallery.tsx # 'use client' — Product image carousel
 ├── PolicyModal.tsx         # 'use client' — Privacy/Return policy modal
+├── PhotosHero.tsx          # 'use client' — Matchday photos page hero with stats
+├── PhotosFilterBar.tsx     # 'use client' — Horizontal scrolling match filter chips
+├── PhotoGrid.tsx           # 'use client' — CSS columns masonry grid with match header
+├── PhotoCard.tsx           # 'use client' — Individual photo thumbnail card
+├── PhotoLightbox.tsx       # 'use client' — Full-screen photo viewer with download
 ├── font.ts                 # Font definitions (Inter, Doppler local, JetBrains Mono)
 ├── theme.ts                # MUI dark theme (#DB0007 red, #D4A843 gold)
+├── types/
+│   └── photos.ts           # PhotosData, MatchFolder, PhotoItem types
 ├── context/
 │   └── CartContext.tsx     # Cart state provider
 ├── constants/
@@ -76,7 +91,11 @@ src/
 │   └── images.ts           # Image asset constants
 └── utils/
     ├── events.ts           # Shared event data loading (used by API route and server page)
+    ├── googleDrive.ts      # Fetches photo manifest from GCS (no Drive API calls)
     └── shopify.ts          # Shopify Storefront API client
+
+scripts/
+└── sync-thumbnails.mjs     # Syncs photos from Google Drive to GCS + generates manifest
 
 lib/
 └── auth0.ts                # Auth0Client singleton
@@ -111,19 +130,19 @@ public/fixtures/
 
 **Doppler font rule:** The MUI theme sets `textTransform: 'lowercase'` on h1–h4 variants. However, any component that sets `fontFamily: doppler.style.fontFamily` directly via `sx` prop must also explicitly set `textTransform: 'lowercase'` — the theme variant default is overridden by `sx`.
 
-**Navigation:** Fixed `Navbar` component — always opaque (`rgba(10,10,11,0.9)` + blur), never transparent. "miami gooners" wordmark in Doppler (lowercase), MATCHES/SHOP text links in Inter uppercase, social icons on right.
+**Navigation:** Fixed `Navbar` component — always opaque (`rgba(10,10,11,0.9)` + blur), never transparent. "miami gooners" wordmark in Doppler (lowercase), MATCHES/PHOTOS/SHOP text links in Inter uppercase, social icons on right.
 
 ### Key Components
 
-**Navbar.tsx**: Always-dark fixed navbar. "miami gooners" wordmark (Doppler, lowercase), MATCHES/SHOP nav links (Inter, uppercase), social icons, cart badge (shop pages only). Mobile hamburger drawer. No scroll-based style changes.
+**Navbar.tsx**: Always-dark fixed navbar. "miami gooners" wordmark (Doppler, lowercase), MATCHES/PHOTOS/SHOP nav links (Inter, uppercase), social icons, cart badge (shop pages only). Mobile hamburger drawer. No scroll-based style changes.
 
 **Hero.tsx**: 100vh hero with background photo, dark gradient overlay, floating particle Scene, left-aligned editorial headline ("miami / gooners" in Doppler), bold subtitle, CTA buttons (Next Match, Visit Shop), bouncing scroll indicator. Scroll indicator uses two nested Boxes — outer for `translateX(-50%)` centering, inner for the bounce animation — to prevent the animation from overriding the centering transform.
 
 **Scene.tsx**: Three.js canvas — floating red ember particles only (no 3D model). 200 particles, rendered on all devices. Skips rendering when `prefers-reduced-motion` is set. Desktop DPR [1, 1.5].
 
-**AllEvents.tsx**: Competition filter chips (All / Premier League / UEFA Champions League / FA Cup / Carabao Cup). Upcoming matches section + Recent Results accordion (only shown for PL and UCL, collapsed by default). Bottom padding `pb: {xs: 8, md: 12}` for spacing above footer.
+**AllEvents.tsx**: Competition filter chips (All / Premier League / UEFA Champions League / FA Cup / Carabao Cup). Upcoming matches section + Past Matches accordion (all competitions, defaultExpanded). Accepts `photoMatchMap` for cross-linking past matches to matchday photos. Bottom padding `pb: {xs: 8, md: 12}` for spacing above footer.
 
-**Event.tsx**: Editorial card — opponent-color top band, Doppler opponent name (lowercase), JetBrains Mono score/countdown, competition chip (gold), W/D/L result badge, RSVP button with pulse glow.
+**Event.tsx**: Editorial card — opponent-color top band, Doppler opponent name (lowercase), JetBrains Mono score/countdown, competition chip (gold), W/D/L result badge, RSVP button with pulse glow. Equal-height cards via flexbox + spacer. Past matches with photos show a "View Photos" button linking to `/matchday-photos?match={id}`.
 
 **Events data flow**: `src/utils/events.ts` → imported by `app/api/events/route.ts` AND directly by server pages. Combines pre-season friendlies with PL fixtures from `public/fixtures/premier-league-25-26.json`.
 
@@ -134,6 +153,37 @@ public/fixtures/
 - `/shop/cart` — Cart page (no hero, task-focused). pt-12 for navbar clearance.
 - All Shopify API calls are server-side (no client-side tokens)
 - Cart state in `src/context/CartContext.tsx` (localStorage persistence)
+
+### Matchday Photos System
+
+Photos from matchday events are stored in Google Drive (organized as subfolders named `"Opponent · YYYY-MM-DD"`) and served to users via Google Cloud Storage.
+
+**Architecture:**
+
+1. **Sync script** (`scripts/sync-thumbnails.mjs`) — run manually via `npm run sync-photos`
+   - Reads folder structure and file metadata from Google Drive API
+   - Downloads thumbnails at two sizes (w600 for grid, w1600 for lightbox) and uploads to GCS
+   - Skips thumbnails that already exist in GCS (idempotent)
+   - Parses folder names to extract opponent and date, resolves team aliases, looks up team colors from `src/constants/teamColors.ts` (parsed at runtime via regex)
+   - Generates and uploads `manifest.json` to GCS with the full `PhotosData` structure
+2. **GCS bucket** (`miami-gooners-photos`) — publicly readable, serves thumbnails and manifest
+   - Thumbnails at `thumbnails/{fileId}_w600.jpg` and `thumbnails/{fileId}_w1600.jpg`
+   - Manifest at `manifest.json` (cache: 60s)
+3. **App data fetching** (`src/utils/googleDrive.ts`) — fetches manifest from GCS with ISR (`revalidate: 300`). No Drive API calls at runtime.
+4. **Event cross-linking** — `app/matchday-photos/page.tsx` enriches photo matches with event data (score, competition, result, home/away) by matching `opponent + date` between the manifest and fixture data. `app/EventsSection.tsx` builds a reverse `photoMatchMap` so past event cards can link to their photo sets.
+
+**Page structure:**
+
+- `/matchday-photos` — PhotosHero (stats) + PhotosFilterBar (match chips) + PhotoGrid (CSS columns masonry with match metadata header) + PhotoLightbox (full-screen viewer with download)
+- Defaults to most recent match. Deep-linkable via `?match={folderId}` query param.
+- Filter bar scrolls horizontally with hidden scrollbar. Selecting a match scrolls page to top.
+
+**Adding photos to a new match:**
+
+1. Create a folder in Google Drive named `"Opponent · YYYY-MM-DD"` (e.g. `"Chelsea · 2026-03-15"`)
+2. Upload photos/videos to the folder
+3. Run `npm run sync-photos` to generate thumbnails and update the manifest
+4. If the opponent has a matching fixture in `public/fixtures/`, the match metadata (score, competition, result) will be populated automatically
 
 ### Team Colors System
 
@@ -155,6 +205,11 @@ Auth0:
 Shopify:
 - `SHOPIFY_STORE_DOMAIN` (your-store.myshopify.com)
 - `SHOPIFY_STOREFRONT_ACCESS_TOKEN` (Storefront API token)
+
+Google Drive / GCS (used by sync script only, not needed at runtime):
+- `GOOGLE_DRIVE_FOLDER_ID` (root photos folder in Google Drive)
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL` (service account with Drive read + GCS write access)
+- `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY` (PEM private key, `\n` escaped)
 
 ## Updating Fixtures
 
@@ -197,5 +252,5 @@ Fixture files live in `public/fixtures/`. Each competition has its own JSON file
 
 - Use TypeScript strict mode (enabled in tsconfig.json)
 - Product images uploaded to Shopify admin; placeholder SVG at `public/images/placeholder-tshirt.svg`
-- Recent Results section only appears for Premier League and UEFA Champions League events
 - Apple Wallet pass feature is no longer linked from the UI (route still exists at `/pass`)
+- Matchday photos are served from GCS — no Google Drive API calls at runtime

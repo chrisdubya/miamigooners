@@ -1,5 +1,5 @@
 'use client'
-import {useEffect, useCallback} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import {Box, Typography} from '@mui/material'
 import {jetbrainsMono, inter} from './font'
 import type {PhotoItem, MatchFolder} from './types/photos'
@@ -48,16 +48,19 @@ export const PhotoLightbox = ({
   onClose,
   onNavigate,
 }: PhotoLightboxProps) => {
+  const [videoPlaying, setVideoPlaying] = useState(false)
   const idx = photo ? photos.findIndex((p) => p.id === photo.id) : -1
   const match = photo ? matches.find((m) => m.id === photo.matchId) : null
 
   const prev = useCallback(() => {
     if (!photo || photos.length === 0) return
+    setVideoPlaying(false)
     onNavigate(photos[(idx - 1 + photos.length) % photos.length])
   }, [photo, photos, idx, onNavigate])
 
   const next = useCallback(() => {
     if (!photo || photos.length === 0) return
+    setVideoPlaying(false)
     onNavigate(photos[(idx + 1) % photos.length])
   }, [photo, photos, idx, onNavigate])
 
@@ -92,7 +95,9 @@ export const PhotoLightbox = ({
       : 0
   const fmtDur = `${Math.floor(durationSec / 60)}:${String(durationSec % 60).padStart(2, '0')}`
 
-  const downloadUrl = `https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`
+  const downloadUrl = isVideo
+    ? `https://drive.google.com/uc?export=download&id=${photo.id}`
+    : `https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`
 
   return (
     <Box
@@ -244,42 +249,66 @@ export const PhotoLightbox = ({
                 position: 'relative',
                 maxHeight: '90vh',
                 minHeight: 300,
-                backgroundImage: `url(${photo.thumbnailLink})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
               }}
             >
-              <Box
-                sx={{
-                  position: 'absolute',
-                  inset: 0,
-                  background:
-                    'linear-gradient(180deg, rgba(10,10,11,0.2), rgba(10,10,11,0.6))',
-                }}
-              />
-              <Box
-                component="button"
-                onClick={() => window.open(photo.webViewLink, '_blank')}
-                sx={{
-                  position: 'relative',
-                  zIndex: 2,
-                  width: 72,
-                  height: 72,
-                  borderRadius: '50%',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  background: 'rgba(219,0,7,0.9)',
-                  color: '#fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  boxShadow: '0 0 32px rgba(219,0,7,0.5)',
-                }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="6 4 20 12 6 20 6 4" />
-                </svg>
-              </Box>
+              {videoPlaying ? (
+                <Box
+                  component="iframe"
+                  src={`https://drive.google.com/file/d/${photo.id}/preview`}
+                  allow="autoplay"
+                  allowFullScreen
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    inset: 0,
+                    border: 'none',
+                  }}
+                />
+              ) : (
+                <>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundImage: `url(${photo.thumbnailLink})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'linear-gradient(180deg, rgba(10,10,11,0.2), rgba(10,10,11,0.6))',
+                    }}
+                  />
+                  <Box
+                    component="button"
+                    onClick={() => setVideoPlaying(true)}
+                    sx={{
+                      position: 'relative',
+                      zIndex: 2,
+                      width: 72,
+                      height: 72,
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      background: 'rgba(219,0,7,0.9)',
+                      color: '#fff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      boxShadow: '0 0 32px rgba(219,0,7,0.5)',
+                    }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="6 4 20 12 6 20 6 4" />
+                    </svg>
+                  </Box>
+                </>
+              )}
             </Box>
           ) : (
             <Box

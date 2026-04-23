@@ -86,7 +86,13 @@ export const PhotosFilterBar = ({
                   flex: '0 0 auto',
                 }}
               />
-              <Box component="span">{match.label}</Box>
+              <Box component="span">
+                {(() => {
+                  const [y, m, d] = match.date.split('-')
+                  return `${parseInt(m)}/${parseInt(d)}/${y.slice(2)} `
+                })()}
+                {match.label}
+              </Box>
               <Box
                 component="span"
                 sx={{
