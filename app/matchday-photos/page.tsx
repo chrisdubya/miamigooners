@@ -6,10 +6,26 @@ import PhotosContent from './PhotosContent'
 import type {MatchFolder} from '../../src/types/photos'
 
 export const metadata: Metadata = {
-  title: 'Matchday Photos - Miami Gooners',
+  title: 'Matchday Photos - Miami Gooners | Arsenal Watch Party Photos in Miami',
   description:
-    'Browse matchday photos from Miami Gooners watch parties at The Bar in Coral Gables.',
+    'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL. Thousands of photos from Premier League, Champions League, FA Cup, and Carabao Cup matchdays.',
   alternates: {canonical: 'https://miamigooners.com/matchday-photos'},
+  openGraph: {
+    type: 'website',
+    url: 'https://miamigooners.com/matchday-photos',
+    title: 'Matchday Photos - Miami Gooners',
+    description:
+      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+    images: ['https://miamigooners.com/og-image.jpg'],
+    siteName: 'Miami Gooners',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Matchday Photos - Miami Gooners',
+    description:
+      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+    images: ['https://miamigooners.com/og-image.jpg'],
+  },
 }
 
 // Normalize team names so UCL API names match Drive folder names
@@ -76,9 +92,35 @@ export default async function MatchdayPhotos() {
     }
   })
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Matchday Photos - Miami Gooners',
+    description:
+      'Photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+    url: 'https://miamigooners.com/matchday-photos',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Miami Gooners',
+      url: 'https://miamigooners.com',
+    },
+    about: {
+      '@type': 'SportsClub',
+      name: 'Miami Gooners',
+    },
+    numberOfItems: data.stats.totalFiles,
+  }
+
   return (
-    <Suspense>
-      <PhotosContent data={{...data, matches: enrichedMatches}} />
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+      />
+      <Suspense>
+        <PhotosContent data={{...data, matches: enrichedMatches}} />
+      </Suspense>
+    </>
   )
 }

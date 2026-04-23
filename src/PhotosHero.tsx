@@ -125,6 +125,22 @@ export const PhotosHero = ({stats}: PhotosHeroProps) => {
           </Box>
         </Typography>
 
+        {/* Description */}
+        <Box sx={{mt: 3, maxWidth: 640}}>
+          <Typography
+            component="p"
+            sx={{
+              fontFamily: inter.style.fontFamily,
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: '#A1A1AA',
+              m: 0,
+            }}
+          >
+            Photos from our Arsenal watch parties at The Bar in Coral Gables, Miami. Shot by the group.
+          </Typography>
+        </Box>
+
         {/* Stats strip */}
         <Box
           sx={{

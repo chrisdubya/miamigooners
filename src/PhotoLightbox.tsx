@@ -314,7 +314,7 @@ export const PhotoLightbox = ({
             <Box
               component="img"
               src={`https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`}
-              alt={photo.name}
+              alt={photo.description || `Miami Gooners watch party photo – ${match.label}`}
               decoding="async"
               sx={{
                 maxWidth: '100%',

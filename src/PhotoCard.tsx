@@ -76,7 +76,7 @@ export const PhotoCard = ({photo, onOpen}: PhotoCardProps) => {
       <Box
         component="img"
         src={photo.thumbnailLink || ''}
-        alt={photo.description || photo.name}
+        alt={photo.description || `Miami Gooners watch party photo – ${photo.matchLabel}`}
         loading="lazy"
         decoding="async"
         sx={{
