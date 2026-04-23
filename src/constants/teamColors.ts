@@ -191,4 +191,29 @@ export const teamColors: TeamColors[] = [
     secondary: '#003087',
     team: 'Mansfield Town',
   },
+  {
+    primary: '#DC052D',
+    secondary: '#0066B2',
+    team: 'Bayern Munich',
+  },
+  {
+    primary: '#FFFFFF',
+    secondary: '#FEBE10',
+    team: 'Real Madrid',
+  },
+  {
+    primary: '#004170',
+    secondary: '#FFFFFF',
+    team: 'PSG',
+  },
+  {
+    primary: '#6CADDF',
+    secondary: '#1C2C5B',
+    team: 'Portsmouth',
+  },
+  {
+    primary: '#CB3524',
+    secondary: '#272E61',
+    team: 'Atletico Madrid',
+  },
 ]

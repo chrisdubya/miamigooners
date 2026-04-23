@@ -11,9 +11,10 @@ interface EventProps {
   index: number
   event: EventType
   past?: boolean
+  photoMatchId?: string
 }
 
-export const Event = ({index, event, past}: EventProps) => {
+export const Event = ({index, event, past, photoMatchId}: EventProps) => {
   const formatDuration = (date: string) => {
     const futureDate = DateTime.fromFormat(date, "yyyy-MM-dd HH:mm:ss'Z'", {
       zone: 'utc',
@@ -62,7 +63,7 @@ export const Event = ({index, event, past}: EventProps) => {
   const getResult = () => {
     const homeScore = event.HomeTeamScore
     const awayScore = event.AwayTeamScore
-    if (homeScore === undefined || awayScore === undefined) return null
+    if (homeScore == null || awayScore == null) return null
 
     const arsScore = event.HomeTeam === 'Arsenal' ? homeScore : awayScore
     const oppScore = event.HomeTeam === 'Arsenal' ? awayScore : homeScore
@@ -76,8 +77,8 @@ export const Event = ({index, event, past}: EventProps) => {
 
   const getScoreDisplay = () => {
     if (
-      event.HomeTeamScore === undefined ||
-      event.AwayTeamScore === undefined
+      event.HomeTeamScore == null ||
+      event.AwayTeamScore == null
     )
       return null
     if (event.AwayTeam === 'Arsenal') {
@@ -104,6 +105,9 @@ export const Event = ({index, event, past}: EventProps) => {
         sx={{
           position: 'relative',
           overflow: 'hidden',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
           opacity: past ? 0.7 : 1,
           transition: 'all 200ms ease',
           '&:hover': {
@@ -241,6 +245,36 @@ export const Event = ({index, event, past}: EventProps) => {
             </Typography>
           </Box>
         )}
+
+        {/* Photos link */}
+        {past && photoMatchId && (
+          <Box sx={{px: 3, pb: 1}}>
+            <Button
+              component="a"
+              href={`/matchday-photos?match=${photoMatchId}`}
+              size="small"
+              variant="outlined"
+              sx={{
+                color: '#A1A1AA',
+                borderColor: '#2E2E38',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                '&:hover': {
+                  borderColor: '#DB0007',
+                  color: '#F5F5F7',
+                  backgroundColor: 'rgba(219, 0, 7, 0.08)',
+                },
+              }}
+            >
+              View Photos
+            </Button>
+          </Box>
+        )}
+
+        {/* Spacer to push details to bottom */}
+        <Box sx={{flex: 1}} />
 
         {/* Match details zone */}
         <Box

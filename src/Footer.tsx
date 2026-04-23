@@ -98,6 +98,17 @@ export const Footer = () => {
                 >
                   Shop
                 </Link>
+                <Link
+                  href="/matchday-photos"
+                  style={{
+                    color: '#A1A1AA',
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'color 200ms ease',
+                  }}
+                >
+                  Photos
+                </Link>
                 <a
                   href="https://www.arsenalamerica.com/branches/"
                   target="_blank"

@@ -37,11 +37,13 @@ export const Navbar = () => {
 
   const navLinks = [
     {label: 'MATCHES', href: '/#matches'},
+    {label: 'PHOTOS', href: '/matchday-photos'},
     {label: 'SHOP', href: '/shop'},
   ]
 
   const isActive = (href: string) => {
     if (href === '/shop') return isShopPage
+    if (href === '/matchday-photos') return pathname.startsWith('/matchday-photos')
     if (href === '/#matches') return pathname === '/'
     return false
   }

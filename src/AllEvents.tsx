@@ -26,7 +26,7 @@ const COMPETITION_FILTERS = [
 
 type FilterType = (typeof COMPETITION_FILTERS)[number]
 
-export const AllEvents = ({events}: {events: EventType[]}) => {
+export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; photoMatchMap?: Record<string, string>}) => {
   const [filter, setFilter] = useState<FilterType>('All')
 
   const now = DateTime.now().setZone('America/New_York')
@@ -66,12 +66,8 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
     return list.filter((e) => e.competition === filter)
   }
 
-  const COMPETITIONS_WITH_RESULTS = ['Premier League', 'UEFA Champions League']
-
   const filteredUpcoming = filterEvents(upcomingEvents)
-  const filteredPast = filterEvents(pastEvents).filter((e) =>
-    e.competition != null && COMPETITIONS_WITH_RESULTS.includes(e.competition)
-  )
+  const filteredPast = filterEvents(pastEvents)
 
   return (
     <Container id="matches">
@@ -204,7 +200,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
         {/* RECENT RESULTS */}
         {filteredPast.length > 0 && (
           <Accordion
-            defaultExpanded={false}
+            defaultExpanded={true}
             sx={{
               bgcolor: 'transparent',
               backgroundImage: 'none',
@@ -231,7 +227,7 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
                     display: 'block',
                   }}
                 >
-                  Recent Results
+                  Past Matches
                 </Typography>
                 <Box
                   sx={{
@@ -246,14 +242,21 @@ export const AllEvents = ({events}: {events: EventType[]}) => {
 
             <AccordionDetails sx={{padding: 0}}>
               <Grid container spacing={2} mt={2}>
-                {filteredPast.map((event, index) => (
-                  <Event
-                    key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
-                    index={index}
-                    event={event}
-                    past
-                  />
-                ))}
+                {filteredPast.map((event, index) => {
+                  const opp = event.AwayTeam === 'Arsenal' ? event.HomeTeam : event.AwayTeam
+                  const date = event.DateUtc.split(' ')[0]
+                  const normalizedOpp = ({'bayern münchen': 'bayern munich', 'atleti': 'atletico madrid'} as Record<string, string>)[opp.toLowerCase()] ?? opp.toLowerCase()
+                  const photoMatchId = photoMatchMap[`${normalizedOpp}|${date}`]
+                  return (
+                    <Event
+                      key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
+                      index={index}
+                      event={event}
+                      past
+                      photoMatchId={photoMatchId}
+                    />
+                  )
+                })}
               </Grid>
             </AccordionDetails>
           </Accordion>
