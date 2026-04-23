@@ -233,7 +233,7 @@ async function main() {
       folderId: folder.id,
       label: parsed.label,
       opponent: parsed.opponent,
-      competition: 'Premier League',
+      competition: '',
       date: parsed.date,
       teamColor: findTeamColor(parsed.opponent),
       result: '',

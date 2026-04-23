@@ -245,7 +245,8 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
                 {filteredPast.map((event, index) => {
                   const opp = event.AwayTeam === 'Arsenal' ? event.HomeTeam : event.AwayTeam
                   const date = event.DateUtc.split(' ')[0]
-                  const photoMatchId = photoMatchMap[`${opp.toLowerCase()}|${date}`]
+                  const normalizedOpp = ({'bayern münchen': 'bayern munich', 'atleti': 'atletico madrid'} as Record<string, string>)[opp.toLowerCase()] ?? opp.toLowerCase()
+                  const photoMatchId = photoMatchMap[`${normalizedOpp}|${date}`]
                   return (
                     <Event
                       key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}

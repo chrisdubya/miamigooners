@@ -211,4 +211,9 @@ export const teamColors: TeamColors[] = [
     secondary: '#1C2C5B',
     team: 'Portsmouth',
   },
+  {
+    primary: '#CB3524',
+    secondary: '#272E61',
+    team: 'Atletico Madrid',
+  },
 ]

@@ -51,24 +51,26 @@ export const PhotoGrid = ({photos, match, onOpen}: PhotoGridProps) => {
                 mb: '12px',
               }}
             >
-              <Box
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  background: 'rgba(212, 168, 67, 0.1)',
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 10,
-                  fontWeight: 600,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#D4A843',
-                }}
-              >
-                {match.competition}
-              </Box>
+              {match.competition && (
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    background: 'rgba(212, 168, 67, 0.1)',
+                    fontFamily: inter.style.fontFamily,
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: '#D4A843',
+                  }}
+                >
+                  {match.competition}
+                </Box>
+              )}
 
               {match.result && (
                 <Box

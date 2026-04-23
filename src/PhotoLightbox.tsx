@@ -377,25 +377,27 @@ export const PhotoLightbox = ({
             </Box>
 
             <Box sx={{display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap'}}>
-              <Box
-                component="span"
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  background: 'rgba(212, 168, 67, 0.1)',
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 10,
-                  fontWeight: 600,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#D4A843',
-                }}
-              >
-                {match.competition}
-              </Box>
+              {match.competition && (
+                <Box
+                  component="span"
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    background: 'rgba(212, 168, 67, 0.1)',
+                    fontFamily: inter.style.fontFamily,
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: '#D4A843',
+                  }}
+                >
+                  {match.competition}
+                </Box>
+              )}
               <Box
                 component="span"
                 sx={{

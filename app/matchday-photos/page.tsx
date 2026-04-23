@@ -12,6 +12,17 @@ export const metadata: Metadata = {
   alternates: {canonical: 'https://miamigooners.com/matchday-photos'},
 }
 
+// Normalize team names so UCL API names match Drive folder names
+const teamNameAliases: Record<string, string> = {
+  'bayern münchen': 'bayern munich',
+  'atleti': 'atletico madrid',
+}
+
+function normalizeTeam(name: string): string {
+  const lower = name.toLowerCase()
+  return teamNameAliases[lower] ?? lower
+}
+
 export default async function MatchdayPhotos() {
   const [data, events] = await Promise.all([
     getMatchPhotos(),
@@ -25,7 +36,7 @@ export default async function MatchdayPhotos() {
         e.AwayTeam === 'Arsenal' ? e.HomeTeam : e.AwayTeam
       const eventDate = e.DateUtc.split(' ')[0]
       return (
-        opp.toLowerCase() === match.opponent.toLowerCase() &&
+        normalizeTeam(opp) === normalizeTeam(match.opponent) &&
         eventDate === match.date
       )
     })
