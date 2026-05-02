@@ -27,12 +27,12 @@ const GCS_BASE = `https://storage.googleapis.com/${BUCKET_NAME}/thumbnails`
 const THUMBNAIL_SIZES = [600, 1600]
 const CONCURRENCY = 3 // parallel uploads to avoid Drive rate limits
 
-// ── Load .env.local ──
+// ── Load env (.env.local for local dev, process.env for CI) ──
 const envPath = path.resolve(process.cwd(), '.env.local')
-const envContent = fs.readFileSync(envPath, 'utf-8')
+const envContent = fs.existsSync(envPath) ? fs.readFileSync(envPath, 'utf-8') : ''
 function getEnv(key) {
   const match = envContent.match(new RegExp(`^${key}=["']?(.*?)["']?$`, 'm'))
-  return match ? match[1] : ''
+  return match?.[1] || process.env[key] || ''
 }
 
 const FOLDER_ID = getEnv('GOOGLE_DRIVE_FOLDER_ID')
