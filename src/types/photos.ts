@@ -11,6 +11,7 @@ export interface DriveFile {
   description: string | null
   createdTime: string
   thumbnailLink: string | null
+  originalUrl: string | null
   webViewLink: string
   webContentLink: string | null
   size: string

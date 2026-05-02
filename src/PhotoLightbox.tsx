@@ -96,9 +96,11 @@ export const PhotoLightbox = ({
       : 0
   const fmtDur = `${Math.floor(durationSec / 60)}:${String(durationSec % 60).padStart(2, '0')}`
 
-  const downloadUrl = isVideo
-    ? `https://drive.google.com/uc?export=download&id=${photo.id}`
-    : `https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`
+  const downloadUrl =
+    photo.originalUrl ??
+    (isVideo
+      ? `https://drive.google.com/uc?export=download&id=${photo.id}`
+      : `https://storage.googleapis.com/miami-gooners-photos/thumbnails/${photo.id}_w1600.jpg`)
 
   return (
     <Box
