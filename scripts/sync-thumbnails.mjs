@@ -24,8 +24,27 @@ import path from 'path'
 
 const BUCKET_NAME = 'miami-gooners-photos'
 const GCS_BASE = `https://storage.googleapis.com/${BUCKET_NAME}/thumbnails`
+const ORIGINALS_BASE = `https://storage.googleapis.com/${BUCKET_NAME}/originals`
 const THUMBNAIL_SIZES = [600, 1600]
 const CONCURRENCY = 3 // parallel uploads to avoid Drive rate limits
+
+// Map mime types to file extensions for original storage paths
+const MIME_EXT = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/heic': 'heic',
+  'image/heif': 'heif',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'video/mp4': 'mp4',
+  'video/quicktime': 'mov',
+  'video/x-msvideo': 'avi',
+  'video/webm': 'webm',
+}
+function extForMime(mimeType) {
+  return MIME_EXT[mimeType] || mimeType.split('/')[1] || 'bin'
+}
 
 // ── Load env (.env.local for local dev, process.env for CI) ──
 const envPath = path.resolve(process.cwd(), '.env.local')
@@ -147,6 +166,7 @@ function mapDriveFile(f) {
     description: f.description ?? null,
     createdTime: f.createdTime ?? '',
     thumbnailLink: f.id ? `${GCS_BASE}/${f.id}_w600.jpg` : null,
+    originalUrl: f.id && f.mimeType ? `${ORIGINALS_BASE}/${f.id}.${extForMime(f.mimeType)}` : null,
     webViewLink: f.webViewLink ?? '',
     webContentLink: f.webContentLink ?? null,
     size: f.size ?? '0',
@@ -200,6 +220,37 @@ async function fileExistsInGCS(fileId, width) {
   return exists
 }
 
+async function originalExistsInGCS(fileId, mimeType) {
+  const destination = `originals/${fileId}.${extForMime(mimeType)}`
+  const [exists] = await bucket.file(destination).exists()
+  return exists
+}
+
+async function uploadOriginalToGCS(fileId, mimeType) {
+  const destination = `originals/${fileId}.${extForMime(mimeType)}`
+  const driveStream = await drive.files.get(
+    {fileId, alt: 'media'},
+    {responseType: 'stream'}
+  )
+
+  const gcsFile = bucket.file(destination)
+  const writeStream = gcsFile.createWriteStream({
+    resumable: false,
+    metadata: {
+      contentType: mimeType,
+      cacheControl: 'public, max-age=31536000', // 1 year — originals are immutable
+    },
+  })
+
+  await new Promise((resolve, reject) => {
+    driveStream.data
+      .on('error', reject)
+      .pipe(writeStream)
+      .on('error', reject)
+      .on('finish', resolve)
+  })
+}
+
 // ── Main ──
 async function main() {
   console.log('Listing match folders...')
@@ -210,6 +261,9 @@ async function main() {
   let uploaded = 0
   let skipped = 0
   let failed = 0
+  let originalsUploaded = 0
+  let originalsSkipped = 0
+  let originalsFailed = 0
   const contributorSet = new Set()
   const matches = []
 
@@ -285,6 +339,23 @@ async function main() {
             } catch (err) {
               failed++
               console.error(`\n✗ ${file.name} w${width}: ${err.message}`)
+            }
+          }
+
+          // Sync original full-size file
+          if (file.mimeType) {
+            try {
+              const exists = await originalExistsInGCS(file.id, file.mimeType)
+              if (exists) {
+                originalsSkipped++
+              } else {
+                await uploadOriginalToGCS(file.id, file.mimeType)
+                originalsUploaded++
+                process.stdout.write('o')
+              }
+            } catch (err) {
+              originalsFailed++
+              console.error(`\n✗ ${file.name} (original): ${err.message}`)
             }
           }
         })
