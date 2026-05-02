@@ -38,13 +38,26 @@ function getEnv(key) {
 const FOLDER_ID = getEnv('GOOGLE_DRIVE_FOLDER_ID')
 const SERVICE_EMAIL = getEnv('GOOGLE_SERVICE_ACCOUNT_EMAIL')
 const PRIVATE_KEY_RAW = getEnv('GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY')
+const PRIVATE_KEY_B64 = getEnv('GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_B64')
 
-if (!FOLDER_ID || !SERVICE_EMAIL || !PRIVATE_KEY_RAW) {
-  console.error('Missing Google Drive env vars in .env.local')
+if (!FOLDER_ID || !SERVICE_EMAIL || (!PRIVATE_KEY_RAW && !PRIVATE_KEY_B64)) {
+  console.error('Missing Google Drive env vars (need GOOGLE_DRIVE_FOLDER_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, and GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY or GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_B64)')
   process.exit(1)
 }
 
-const privateKey = PRIVATE_KEY_RAW.replace(/\\n/g, '\n')
+function normalizePrivateKey(raw, b64) {
+  if (b64) return Buffer.from(b64, 'base64').toString('utf-8').trim()
+  let key = raw.trim()
+  // Strip a single layer of surrounding quotes if present
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1)
+  }
+  // Convert literal \n escapes to real newlines
+  key = key.replace(/\\n/g, '\n')
+  return key
+}
+
+const privateKey = normalizePrivateKey(PRIVATE_KEY_RAW, PRIVATE_KEY_B64)
 
 // ── Drive client ──
 const driveAuth = new google.auth.JWT({
