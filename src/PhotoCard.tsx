@@ -46,8 +46,6 @@ export const PhotoCard = ({photo, onOpen, priority = false}: PhotoCardProps) => 
       sx={{
         m: 0,
         position: 'relative',
-        breakInside: 'avoid',
-        mb: 2,
         background: '#111113',
         border: '1px solid',
         borderColor: hover ? '#3A3A46' : '#2E2E38',

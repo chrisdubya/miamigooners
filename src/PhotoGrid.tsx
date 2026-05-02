@@ -1,5 +1,6 @@
 'use client'
 import {Box} from '@mui/material'
+import Masonry from '@mui/lab/Masonry'
 import {PhotoCard} from './PhotoCard'
 import {doppler, jetbrainsMono, inter} from './font'
 import type {PhotoItem, MatchFolder} from './types/photos'
@@ -182,17 +183,12 @@ export const PhotoGrid = ({photos, match, onOpen}: PhotoGridProps) => {
           </Box>
         )}
 
-        {/* Photo grid — columns, natural height */}
-        <Box
-          sx={{
-            columns: {xs: 1, sm: 2, md: 3},
-            columnGap: '16px',
-          }}
-        >
+        {/* Photo grid — masonry, row-major (left→right, top→bottom) */}
+        <Masonry columns={{xs: 1, sm: 2, md: 3}} spacing={2} sequential>
           {photos.map((p, i) => (
             <PhotoCard key={p.id} photo={p} onOpen={() => onOpen(p)} priority={i < 6} />
           ))}
-        </Box>
+        </Masonry>
       </Box>
     </Box>
   )
