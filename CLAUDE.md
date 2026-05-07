@@ -103,7 +103,9 @@ lib/
 proxy.ts                    # Auth0 middleware (replaces middleware.ts)
 styles/globals.css          # Tailwind @theme tokens, CSS animations, global styles
 public/fixtures/
-└── premier-league-25-26.json  # Premier League fixture data
+├── carabao-cup-25-26.json     # Carabao Cup fixture data (local)
+└── fa-cup-25-26.json          # FA Cup fixture data (local)
+                               # Premier League + UCL fixtures fetched live from fixturedownload.com
 ```
 
 ### Key Architecture Rules
@@ -144,7 +146,7 @@ public/fixtures/
 
 **Event.tsx**: Editorial card — opponent-color top band, Doppler opponent name (lowercase), JetBrains Mono score/countdown, competition chip (gold), W/D/L result badge, RSVP button with pulse glow. Equal-height cards via flexbox + spacer. Past matches with photos show a "View Photos" button linking to `/matchday-photos?match={id}`.
 
-**Events data flow**: `src/utils/events.ts` → imported by `app/api/events/route.ts` AND directly by server pages. Combines pre-season friendlies with PL fixtures from `public/fixtures/premier-league-25-26.json`.
+**Events data flow**: `src/utils/events.ts` → imported by `app/api/events/route.ts` AND directly by server pages. Combines pre-season friendlies with Premier League and UEFA Champions League fixtures fetched live from fixturedownload.com (1-hour ISR cache), plus FA Cup and Carabao Cup fixtures read from local JSON files. If a remote fetch fails, that competition is silently omitted (no local fallback).
 
 ### E-commerce Shop System
 
@@ -213,14 +215,18 @@ Google Drive / GCS (used by sync script only, not needed at runtime):
 
 ## Updating Fixtures
 
-Fixture files live in `public/fixtures/`. Each competition has its own JSON file:
+Fixtures come from two sources, both handled in `src/utils/events.ts`:
 
-| File | Competition | Loaded by |
-|------|-------------|-----------|
-| `premier-league-25-26.json` | Premier League | `src/utils/events.ts` (local file read) |
-| `fa-cup-25-26.json` | FA Cup | `src/utils/events.ts` (local file read) |
-| `carabao-cup-25-26.json` | Carabao Cup | `src/utils/events.ts` (local file read) |
-| `ucl-25-26.json` | UEFA Champions League | fetched from fixturedownload.com (fallback only) |
+| Competition | Source | Notes |
+|-------------|--------|-------|
+| Premier League | `https://fixturedownload.com/feed/json/epl-2025/arsenal` | Live fetch, 1-hour ISR cache. Results auto-populate. |
+| UEFA Champions League | `https://fixturedownload.com/feed/json/champions-league-2025/arsenal` | Live fetch, 1-hour ISR cache. Results auto-populate. |
+| FA Cup | `public/fixtures/fa-cup-25-26.json` | Local file. Edit by hand. |
+| Carabao Cup | `public/fixtures/carabao-cup-25-26.json` | Local file. Edit by hand. |
+
+Pre-season friendlies are hard-coded in the `preSeason25` array in `src/utils/events.ts`.
+
+If a remote feed fails, that competition is silently omitted from the events list (no local fallback file is read).
 
 **Fixture object shape:**
 ```json
@@ -240,13 +246,15 @@ Fixture files live in `public/fixtures/`. Each competition has its own JSON file
 - EDT (Mar–Nov): ET + 4h → UTC (e.g. 3PM ET = 19:00 UTC)
 - EST (Nov–Mar): ET + 5h → UTC (e.g. 3PM ET = 20:00 UTC)
 
-**Adding a new match:**
-1. Open the relevant fixture JSON file.
+**Adding a new match (FA Cup / Carabao Cup only):**
+1. Open the relevant fixture JSON file in `public/fixtures/`.
 2. Append a new object. Increment `MatchNumber` sequentially. Set `RoundNumber` to the round (e.g. FA Cup R6 = Quarter-Final).
 3. Leave `HomeTeamScore`/`AwayTeamScore` as `null` for upcoming matches (omit entirely for cup fixtures if not present).
 4. If the opponent is new, add their colors to `src/constants/teamColors.ts`.
 
-**Entering a result:** Set `HomeTeamScore` and `AwayTeamScore` to integer values.
+**Entering a result (FA Cup / Carabao Cup only):** Set `HomeTeamScore` and `AwayTeamScore` to integer values.
+
+Premier League and UCL fixtures (and their results) are pulled from fixturedownload.com automatically — no manual edits needed.
 
 ## Development Notes
 
