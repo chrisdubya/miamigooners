@@ -1,5 +1,6 @@
 import {Suspense} from 'react'
 import {EventsSection} from './EventsSection'
+import {AnnouncementModal} from '../src/AnnouncementModal'
 import {EventsSkeleton} from '../src/EventsSkeleton'
 import {Footer} from '../src/Footer'
 import {Hero} from '../src/Hero'
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <AnnouncementModal />
       <div>
         <Suspense fallback={<EventsSkeleton />}>
           <EventsSection />
