@@ -2,9 +2,10 @@
 import {Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Button, Typography, Box} from '@mui/material'
 import {Close} from '@mui/icons-material'
 import {useEffect, useState} from 'react'
+import {Confetti} from './Confetti'
 import {doppler, inter} from './font'
 
-const STORAGE_KEY = 'miami-gooners-announcement-crystal-palace-2026-05-24-dismissed'
+const STORAGE_KEY = 'miami-gooners-announcement-crystal-palace-2026-05-24-v2-dismissed'
 const EXPIRY = new Date('2026-05-24T22:00:00Z').getTime()
 
 export const AnnouncementModal = () => {
@@ -30,14 +31,16 @@ export const AnnouncementModal = () => {
   }
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth="sm"
-      fullWidth
-      scroll="paper"
-      aria-labelledby="announcement-dialog-title"
-    >
+    <>
+      <Confetti active={open} />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        scroll="paper"
+        aria-labelledby="announcement-dialog-title"
+      >
       <DialogTitle id="announcement-dialog-title" sx={{paddingRight: 6, pb: 1}}>
         <Typography
           component="div"
@@ -50,7 +53,7 @@ export const AnnouncementModal = () => {
             lineHeight: 1.1,
           }}
         >
-          must read for sunday, 5/24
+          🚨 must read for sunday 🚨
         </Typography>
         <IconButton
           aria-label="close"
@@ -67,15 +70,15 @@ export const AnnouncementModal = () => {
       </DialogTitle>
       <DialogContent dividers sx={{fontFamily: inter.style.fontFamily}}>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          Sunday has the potential to be one of the biggest days in Arsenal history, and we are expecting an absolutely
-          gargantuan turnout at The Bar.
+          Sunday will be one of the most satisfying days in Arsenal history as we watch the boys lift the trophy, and we
+          are expecting an absolutely gargantuan turnout at The Bar.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          Doors for general admission will open at <Box component="span" sx={{fontWeight: 700}}>10:30 AM sharp</Box>. Because of capacity limitations, entry will be{' '}
-          <Box component="span" sx={{fontWeight: 700}}>FIRST COME, FIRST SERVED</Box> — with a hard capacity enforced.
+          Doors for admission will open at <Box component="span" sx={{fontWeight: 700}}>10:30 AM sharp</Box>. Because of capacity limitations (roughly 200 total), entry will be{' '}
+          <Box component="span" sx={{fontWeight: 700}}>FIRST COME, FIRST SERVED</Box>.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          The Bar will have the game on inside, on the back patio, and also is installing a new 65’’ TV in the front
+          The Bar will have the game on inside, on the back patio, and also has installed a new 65’’ TV in the front
           window for overflow viewing on Giralda.
         </Typography>
         <Typography
@@ -130,20 +133,10 @@ export const AnnouncementModal = () => {
           the community while keeping everyone safe.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          This season has been special. Let’s make Sunday unforgettable.
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: doppler.style.fontFamily,
-            textTransform: 'lowercase',
-            color: '#D4A843',
-            textAlign: 'center',
-            fontSize: {xs: '1.5rem', sm: '1.75rem'},
-            letterSpacing: '0.05em',
-            mt: 3,
-          }}
-        >
-          victory through harmony
+          This season has been special.{' '}
+          <Box component="span" sx={{fontWeight: 700, color: '#D4A843'}}>
+            LET’S FUCKING PARTY!!!! ❤️🤍
+          </Box>
         </Typography>
       </DialogContent>
       <DialogActions>
@@ -151,6 +144,7 @@ export const AnnouncementModal = () => {
           Got It
         </Button>
       </DialogActions>
-    </Dialog>
+      </Dialog>
+    </>
   )
 }
