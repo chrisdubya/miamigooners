@@ -48,12 +48,12 @@ export const AnnouncementModal = () => {
             fontFamily: doppler.style.fontFamily,
             textTransform: 'lowercase',
             color: '#fff',
-            fontSize: {xs: '1.75rem', sm: '2.25rem'},
+            fontSize: {xs: '1.5rem', sm: '2rem'},
             fontWeight: 700,
             lineHeight: 1.1,
           }}
         >
-          🚨 must read for sunday 🚨
+          🚨must read for sunday🚨
         </Typography>
         <IconButton
           aria-label="close"
@@ -135,7 +135,7 @@ export const AnnouncementModal = () => {
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
           This season has been special.{' '}
           <Box component="span" sx={{fontWeight: 700, color: '#D4A843'}}>
-            LET’S FUCKING PARTY!!!! ❤️🤍
+            LET’S FUCKING PARTY!!!! ❤️🏆🤍
           </Box>
         </Typography>
       </DialogContent>
