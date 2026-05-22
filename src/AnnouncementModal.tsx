@@ -6,19 +6,29 @@ import {Confetti} from './Confetti'
 import {doppler, inter} from './font'
 
 const STORAGE_KEY = 'miami-gooners-announcement-crystal-palace-2026-05-24-v2-dismissed'
-const EXPIRY = new Date('2026-05-24T22:00:00Z').getTime()
+export const ANNOUNCEMENT_EXPIRY = new Date('2026-05-24T22:00:00Z').getTime()
+export const ANNOUNCEMENT_OPEN_EVENT = 'miami-gooners:open-announcement'
 
 export const AnnouncementModal = () => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (Date.now() > EXPIRY) return
+    if (Date.now() > ANNOUNCEMENT_EXPIRY) return
     try {
       if (localStorage.getItem(STORAGE_KEY) === 'true') return
     } catch {
       // localStorage unavailable (Safari private mode, etc.) — still show the popup
     }
     setOpen(true)
+  }, [])
+
+  useEffect(() => {
+    const handler = () => {
+      if (Date.now() > ANNOUNCEMENT_EXPIRY) return
+      setOpen(true)
+    }
+    window.addEventListener(ANNOUNCEMENT_OPEN_EVENT, handler)
+    return () => window.removeEventListener(ANNOUNCEMENT_OPEN_EVENT, handler)
   }, [])
 
   const handleClose = () => {

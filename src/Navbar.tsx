@@ -54,6 +54,7 @@ export const Navbar = () => {
         position="fixed"
         elevation={0}
         sx={{
+          top: 'var(--announcement-banner-height, 0px)',
           backgroundColor: 'rgba(10, 10, 11, 0.9)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid #2E2E38',
