@@ -6,6 +6,8 @@ import {inter} from '../src/font'
 import '../styles/globals.css'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import {Navbar} from '../src/Navbar'
+import {AnnouncementBanner} from '../src/AnnouncementBanner'
+import {AnnouncementModal} from '../src/AnnouncementModal'
 
 export const metadata: Metadata = {
   title:
@@ -99,8 +101,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <ThemeRegistry>
           <NavigationLoader />
           <Providers>
+            <AnnouncementBanner />
             <Navbar />
             {children}
+            <AnnouncementModal />
             <SpeedInsights />
           </Providers>
         </ThemeRegistry>
