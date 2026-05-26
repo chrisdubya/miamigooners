@@ -3,6 +3,8 @@ import {getProductByHandle} from '../../../src/utils/shopify'
 import type {Metadata} from 'next'
 import ProductDetailClient from './ProductDetailClient'
 
+export const revalidate = 300
+
 type Props = {
   params: Promise<{productId: string}>
 }
