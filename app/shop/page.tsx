@@ -2,6 +2,8 @@ import {getProducts} from '../../src/utils/shopify'
 import type {Metadata} from 'next'
 import ShopContent from './ShopContent'
 
+export const revalidate = 300
+
 export const metadata: Metadata = {
   title: 'Shop Official Merchandise - Miami Gooners',
   description:
