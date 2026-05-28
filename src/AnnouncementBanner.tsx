@@ -36,7 +36,7 @@ export const AnnouncementBanner = () => {
   return (
     <Box
       role="region"
-      aria-label="Crystal Palace match announcement"
+      aria-label="UCL Final vs PSG announcement"
       sx={{
         position: 'fixed',
         top: 0,
@@ -59,10 +59,10 @@ export const AnnouncementBanner = () => {
       }}
     >
       <Box component="span" sx={{display: {xs: 'none', sm: 'inline'}}}>
-        🚨 Must-read info for Sunday at The Bar
+        🚨 UCL Final vs PSG — must-read info for Saturday at The Bar
       </Box>
       <Box component="span" sx={{display: {xs: 'inline', sm: 'none'}}}>
-        🚨 Must-read for Sunday
+        🚨 UCL Final — Saturday at The Bar
       </Box>
       <Button
         onClick={handleOpen}

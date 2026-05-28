@@ -5,8 +5,8 @@ import {useEffect, useState} from 'react'
 import {Confetti} from './Confetti'
 import {doppler, inter} from './font'
 
-const STORAGE_KEY = 'miami-gooners-announcement-crystal-palace-2026-05-24-v2-dismissed'
-export const ANNOUNCEMENT_EXPIRY = new Date('2026-05-24T22:00:00Z').getTime()
+const STORAGE_KEY = 'miami-gooners-announcement-psg-2026-05-30-v1-dismissed'
+export const ANNOUNCEMENT_EXPIRY = new Date('2026-05-30T20:00:00Z').getTime()
 export const ANNOUNCEMENT_OPEN_EVENT = 'miami-gooners:open-announcement'
 
 export const AnnouncementModal = () => {
@@ -63,7 +63,7 @@ export const AnnouncementModal = () => {
             lineHeight: 1.1,
           }}
         >
-          🚨must read for sunday🚨
+          🚨ucl final saturday🚨
         </Typography>
         <IconButton
           aria-label="close"
@@ -80,16 +80,17 @@ export const AnnouncementModal = () => {
       </DialogTitle>
       <DialogContent dividers sx={{fontFamily: inter.style.fontFamily}}>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          Sunday will be one of the most satisfying days in Arsenal history as we watch the boys lift the trophy, and we
-          are expecting an absolutely gargantuan turnout at The Bar.
+          Saturday is the biggest day in Arsenal’s modern history as we watch the boys go for the Champions League
+          trophy against PSG, and we are expecting our largest turnout ever at The Bar.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          Doors for admission will open at <Box component="span" sx={{fontWeight: 700}}>10:30 AM sharp</Box>. Because of capacity limitations (roughly 200 total), entry will be{' '}
-          <Box component="span" sx={{fontWeight: 700}}>FIRST COME, FIRST SERVED</Box>.
+          Kickoff is at <Box component="span" sx={{fontWeight: 700}}>12:00 PM</Box>. Doors for admission will open at{' '}
+          <Box component="span" sx={{fontWeight: 700}}>11:30 AM sharp</Box>. Because of capacity limitations (roughly
+          200 total), entry will be <Box component="span" sx={{fontWeight: 700}}>FIRST COME, FIRST SERVED</Box>.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          The Bar will have the game on inside, on the back patio, and also has installed a new 65’’ TV in the front
-          window for overflow viewing on Giralda.
+          The Bar will have the game on inside, on the back patio, and on the 65’’ TV in the front window for overflow
+          viewing on Giralda.
         </Typography>
         <Typography
           paragraph
@@ -135,7 +136,7 @@ export const AnnouncementModal = () => {
           <li>Capacity is extremely limited and once we are full, we are full. Please arrive early.</li>
           <li>There will be virtually no seating in order to make room for extra capacity.</li>
           <li>Only Arsenal supporters will be allowed entry.</li>
-          <li>No pets for these final two matches.</li>
+          <li>No pets for this match.</li>
           <li>We strongly caution against bringing young children due to the expected crowd size and atmosphere.</li>
         </Box>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
@@ -143,7 +144,7 @@ export const AnnouncementModal = () => {
           the community while keeping everyone safe.
         </Typography>
         <Typography paragraph sx={{fontFamily: inter.style.fontFamily}}>
-          This season has been special.{' '}
+          One match away from the European crown.{' '}
           <Box component="span" sx={{fontWeight: 700, color: '#D4A843'}}>
             LET’S FUCKING PARTY!!!! ❤️🏆🤍
           </Box>
