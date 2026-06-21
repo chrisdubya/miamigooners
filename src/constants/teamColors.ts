@@ -216,4 +216,19 @@ export const teamColors: TeamColors[] = [
     secondary: '#272E61',
     team: 'Atletico Madrid',
   },
+  {
+    primary: '#3CA1DC',
+    secondary: '#FFFFFF',
+    team: 'Coventry',
+  },
+  {
+    primary: '#F18A01',
+    secondary: '#000000',
+    team: 'Hull',
+  },
+  {
+    primary: '#00954C',
+    secondary: '#FFFFFF',
+    team: 'Real Betis',
+  },
 ]
