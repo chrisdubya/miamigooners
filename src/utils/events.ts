@@ -2,7 +2,10 @@ import {EventType} from '../../types'
 import fs from 'fs'
 import path from 'path'
 
-const EPL_URL = 'https://fixturedownload.com/feed/json/epl-2025/arsenal'
+const EPL_URLS = [
+  'https://fixturedownload.com/feed/json/epl-2025/arsenal',
+  'https://fixturedownload.com/feed/json/epl-2026/arsenal',
+]
 const UCL_URL =
   'https://fixturedownload.com/feed/json/champions-league-2025/arsenal'
 
@@ -15,6 +18,27 @@ const preSeason25: EventType[] = [
     HomeTeam: 'Arsenal',
     AwayTeam: 'Athletic Club',
     competition: 'Emirates Cup',
+  },
+  {
+    MatchNumber: 2,
+    RoundNumber: 1,
+    DateUtc: '2026-08-05 18:30:00Z',
+    Location: 'Aviva Stadium',
+    HomeTeam: 'Arsenal',
+    AwayTeam: 'Real Betis',
+    competition: 'Pre-season Friendly',
+  },
+]
+
+const communityShield26: EventType[] = [
+  {
+    MatchNumber: 1,
+    RoundNumber: 1,
+    DateUtc: '2026-08-16 14:00:00Z',
+    Location: 'Principality Stadium',
+    HomeTeam: 'Arsenal',
+    AwayTeam: 'Man City',
+    competition: 'FA Community Shield',
   },
 ]
 
@@ -32,14 +56,16 @@ export async function getAllEvents(): Promise<EventType[]> {
     'fa-cup-25-26.json'
   )
 
-  const [plResult, uclResult] = await Promise.allSettled([
-    fetch(EPL_URL, {next: {revalidate: 3600}}).then((r) => r.json()),
+  const [uclResult, ...plResults] = await Promise.allSettled([
     fetch(UCL_URL, {next: {revalidate: 3600}}).then((r) => r.json()),
+    ...EPL_URLS.map((url) =>
+      fetch(url, {next: {revalidate: 3600}}).then((r) => r.json())
+    ),
   ])
 
-  const plSeason25: EventType[] = (
-    plResult.status === 'fulfilled' ? plResult.value : []
-  ).map((event: EventType) => ({competition: 'Premier League', ...event}))
+  const plSeason25: EventType[] = plResults
+    .flatMap((result) => (result.status === 'fulfilled' ? result.value : []))
+    .map((event: EventType) => ({competition: 'Premier League', ...event}))
 
   const uclSeason25: EventType[] = (
     uclResult.status === 'fulfilled' ? uclResult.value : []
@@ -55,6 +81,7 @@ export async function getAllEvents(): Promise<EventType[]> {
 
   return [
     ...preSeason25,
+    ...communityShield26,
     ...plSeason25,
     ...uclSeason25,
     ...carabaoCupSeason25,
