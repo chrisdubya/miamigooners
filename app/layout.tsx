@@ -10,6 +10,7 @@ import {AnnouncementBanner} from '../src/AnnouncementBanner'
 import {AnnouncementModal} from '../src/AnnouncementModal'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://miamigooners.com'),
   title:
     'The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners',
   description:
