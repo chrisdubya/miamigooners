@@ -10,6 +10,24 @@ const nextConfig = {
         destination: '/',
         permanent: false,
       },
+      {
+        source: '/pass',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
     ]
   },
   images: {
