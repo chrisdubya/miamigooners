@@ -15,8 +15,9 @@ import {ShopHero} from '../../../src/ShopHero'
 import {ProductImageGallery} from '../../../src/ProductImageGallery'
 import {CartButton} from '../../../src/CartButton'
 import Grid from '@mui/material/Grid2'
-import {ArrowBack, ShoppingCart} from '@mui/icons-material'
+import {ArrowBack, ShoppingCart, LocalShipping} from '@mui/icons-material'
 import {ShopifyProduct, formatPrice} from '../../../src/utils/shopify'
+import {FREE_SHIPPING_MESSAGE} from '../../../src/constants/shipping'
 import {useState} from 'react'
 import {useCart} from '../../../src/context/CartContext'
 
@@ -138,6 +139,24 @@ export default function ProductDetailClient({
                   </Typography>
                 )}
               </Box>
+
+              {!product.tags.includes('local-pickup') && (
+                <Box
+                  component="div"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    marginBottom: 3,
+                    color: '#D4A843',
+                  }}
+                >
+                  <LocalShipping sx={{fontSize: 18}} />
+                  <Typography variant="body2" sx={{fontWeight: 600}}>
+                    {FREE_SHIPPING_MESSAGE}
+                  </Typography>
+                </Box>
+              )}
 
               <Typography
                 variant="body1"
