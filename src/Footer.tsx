@@ -7,6 +7,7 @@ import {PrivacyPolicy} from './policies/PrivacyPolicy'
 import {Box, Container, IconButton, Typography} from '@mui/material'
 import {Instagram, X, Mail} from '@mui/icons-material'
 import {doppler} from './font'
+import {CONSENT_OPEN_EVENT} from './utils/consent'
 
 export const Footer = () => {
   const [returnPolicyOpen, setReturnPolicyOpen] = useState(false)
@@ -239,6 +240,24 @@ export const Footer = () => {
                 }}
               >
                 Return Policy
+              </button>
+              <Typography variant="caption" sx={{color: '#2E2E38'}}>
+                |
+              </Typography>
+              <button
+                onClick={() =>
+                  window.dispatchEvent(new Event(CONSENT_OPEN_EVENT))
+                }
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#71717A',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
+                Cookie Preferences
               </button>
             </Box>
           </Box>
