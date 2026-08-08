@@ -11,13 +11,41 @@ import Link from 'next/link'
 import {Footer} from '../../src/Footer'
 import {ShopHero} from '../../src/ShopHero'
 import {ShopifyProduct, formatPrice} from '../../src/utils/shopify'
-import {doppler} from '../../src/font'
-import {ArrowForward} from '@mui/icons-material'
+import {doppler, inter} from '../../src/font'
+import {ArrowForward, LocalShipping} from '@mui/icons-material'
+import {FREE_SHIPPING_MESSAGE} from '../../src/constants/shipping'
 
 export default function ShopContent({products}: {products: ShopifyProduct[]}) {
   return (
     <>
       <ShopHero />
+
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1,
+          py: 1.5,
+          px: 2,
+          backgroundColor: 'rgba(212,168,67,0.08)',
+          borderBottom: '1px solid rgba(212,168,67,0.3)',
+        }}
+      >
+        <LocalShipping sx={{fontSize: 18, color: '#D4A843'}} />
+        <Typography
+          sx={{
+            fontFamily: inter.style.fontFamily,
+            fontSize: {xs: '0.7rem', sm: '0.8rem'},
+            fontWeight: 600,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: '#D4A843',
+          }}
+        >
+          {FREE_SHIPPING_MESSAGE}
+        </Typography>
+      </Box>
 
       <Container maxWidth="lg" sx={{pt: 4, pb: 4}}>
         {products.length === 0 ? (

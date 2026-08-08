@@ -19,12 +19,15 @@ import {
   ShoppingCart,
   Remove,
   Add,
+  LocalShipping,
+  CheckCircle,
 } from '@mui/icons-material'
 import {useCart} from '../../../src/context/CartContext'
 import {
   formatPrice,
   createCartWithMultipleItems,
 } from '../../../src/utils/shopify'
+import {FREE_SHIPPING_THRESHOLD} from '../../../src/constants/shipping'
 import {useState} from 'react'
 
 export default function Cart() {
@@ -71,6 +74,10 @@ export default function Cart() {
   const subtotal = state.items.reduce((total, item) => {
     return total + parseFloat(item.price.amount) * item.quantity
   }, 0)
+
+  const currencyCode = state.items[0]?.price.currencyCode || 'USD'
+  const qualifiesForFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - subtotal
 
   if (state.items.length === 0) {
     return (
@@ -291,6 +298,31 @@ export default function Cart() {
                       subtotal.toString(),
                       state.items[0]?.price.currencyCode || 'USD'
                     )}
+                  </Typography>
+                </Box>
+
+                <Box
+                  component="div"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    marginBottom: 1,
+                    color: qualifiesForFreeShipping ? '#22C55E' : '#D4A843',
+                  }}
+                >
+                  {qualifiesForFreeShipping ? (
+                    <CheckCircle sx={{fontSize: 18}} />
+                  ) : (
+                    <LocalShipping sx={{fontSize: 18}} />
+                  )}
+                  <Typography variant="body2" sx={{fontWeight: 600}}>
+                    {qualifiesForFreeShipping
+                      ? 'Your order qualifies for free shipping!'
+                      : `Add ${formatPrice(
+                          amountToFreeShipping.toString(),
+                          currencyCode
+                        )} more for free shipping`}
                   </Typography>
                 </Box>
 
