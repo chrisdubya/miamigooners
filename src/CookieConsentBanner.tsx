@@ -1,5 +1,5 @@
 'use client'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Box, Button, Typography} from '@mui/material'
 import {PolicyModal} from './PolicyModal'
 import {PrivacyPolicy} from './policies/PrivacyPolicy'
@@ -15,12 +15,32 @@ import {inter} from './font'
 export const CookieConsentBanner = () => {
   const [visible, setVisible] = useState(false)
   const [privacyPolicyOpen, setPrivacyPolicyOpen] = useState(false)
+  const bannerRef = useRef<HTMLDivElement>(null)
+
+  // The banner is fixed to the bottom, so without this it sits on top of the
+  // footer's policy links and swallows clicks on them until a choice is made.
+  useEffect(() => {
+    if (!visible) {
+      document.body.style.removeProperty('padding-bottom')
+      return
+    }
+    const apply = () => {
+      const height = bannerRef.current?.offsetHeight
+      if (height) document.body.style.paddingBottom = `${height}px`
+    }
+    apply()
+    window.addEventListener('resize', apply)
+    return () => {
+      window.removeEventListener('resize', apply)
+      document.body.style.removeProperty('padding-bottom')
+    }
+  }, [visible])
 
   // Start hidden and reveal in an effect — the server can't know localStorage,
   // so rendering the banner during SSR would cause a hydration mismatch.
   //
   // A Global Privacy Control signal is itself an opt-out, which our Privacy
-  // Policy commits to honouring, so we don't ask. Consent already defaults to
+  // Policy commits to honoring, so we don't ask. Consent already defaults to
   // denied; the footer link still lets those visitors opt in deliberately.
   useEffect(() => {
     if (readConsent() !== null) return
@@ -46,6 +66,7 @@ export const CookieConsentBanner = () => {
   return (
     <>
       <Box
+        ref={bannerRef}
         role="region"
         aria-label="Cookie consent"
         sx={{

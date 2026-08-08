@@ -8,6 +8,10 @@ export const ReturnPolicy = () => {
       </Typography>
 
       <Typography paragraph>
+        <strong>Where we ship.</strong> Most items ship domestically within the United States only. Certain items are also available for international delivery, including to the European Union — those items are marked <strong>"international shipping available"</strong> on their product page. If an item is not marked that way, we can only ship it to a US address.
+      </Typography>
+
+      <Typography paragraph>
         To be eligible for a return, your item must be in the same condition that you received it, unworn or unused, with tags, and in its original packaging. You'll also need the receipt or proof of purchase.
       </Typography>
 
@@ -53,7 +57,7 @@ export const ReturnPolicy = () => {
         European Union 14 day cooling off period
       </Typography>
       <Typography paragraph>
-        Notwithstanding the above, if the merchandise is being shipped into the European Union, you have the right to cancel or return your order within 14 days, for any reason and without a justification. As above, your item must be in the same condition that you received it, unworn or unused, with tags, and in its original packaging. You'll also need the receipt or proof of purchase.
+        This applies only to the items we offer for international delivery, which are marked "international shipping available" on their product page — we do not ship other items into the European Union. Where merchandise is being shipped into the European Union, you have the right to cancel or return your order within 14 days, for any reason and without a justification. As above, your item must be in the same condition that you received it, unworn or unused, with tags, and in its original packaging. You'll also need the receipt or proof of purchase.
       </Typography>
 
       <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>

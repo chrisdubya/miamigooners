@@ -8,7 +8,7 @@ export const PrivacyPolicy = () => {
       </Typography>
 
       <Typography paragraph>
-        Miami Gooners Shop operates this store and website, including all related information, content, features, tools, products and services, in order to provide you, the customer, with a curated shopping experience (the "Services"). Miami Gooners Shop is powered by Shopify, which enables us to provide the Services to you. This Privacy Policy describes how we collect, use, and disclose your personal information when you visit, use, or make a purchase or other transaction using the Services or otherwise communicate with us. If there is a conflict between our Terms of Service and this Privacy Policy, this Privacy Policy controls with respect to the collection, processing, and disclosure of your personal information.
+        Miami Gooners is the official Arsenal FC supporters club in Miami, Florida. We operate miamigooners.com, including our match listings, matchday photo gallery, and online shop (together, the "Services"). This Privacy Policy describes how we collect, use, and disclose your personal information when you visit or use the Services, buy merchandise from us, or otherwise communicate with us. Our shop is powered by Shopify, and when you buy something you complete your order on Shopify's own checkout pages — see "Relationship with Shopify" below.
       </Typography>
 
       <Typography paragraph>
@@ -23,10 +23,10 @@ export const PrivacyPolicy = () => {
       </Typography>
 
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li>Contact details including your name, address, billing address, shipping address, phone number, and email address.</li>
-        <li>Financial information including credit card, debit card, and financial account numbers, payment card information, financial account information, transaction details, form of payment, payment confirmation and other payment details.</li>
-        <li>Account information including your username, password, security questions, preferences and settings.</li>
-        <li>Transaction information including the items you view, put in your cart, add to your wishlist, or purchase, return, exchange or cancel and your past transactions.</li>
+        <li>Contact details including your name, shipping address, billing address, phone number, and email address. This website does not ask you for any of these — they are collected by Shopify when you check out, and shared back with us so we can fulfill your order.</li>
+        <li>Financial information including payment card and payment account details. These are collected and processed entirely by Shopify and its payment processors on their own checkout pages. We never receive or store your full card details.</li>
+        <li>Transaction information including the items you view, put in your cart, or purchase, return, exchange or cancel, and your past transactions.</li>
+        <li>Photographs and contributor names, where you appear in or have contributed images to our matchday photo gallery. See "Matchday Photos" below.</li>
         <li>Communications with us including the information you include in communications with us, for example, when sending a customer support inquiry.</li>
         <li>Device information including information about your device, browser, or network connection, your IP address, and other unique identifiers.</li>
         <li>Usage information including information regarding your interaction with the Services, including how and when you interact with or navigate the Services.</li>
@@ -39,7 +39,7 @@ export const PrivacyPolicy = () => {
         We may collect personal information from the following sources:
       </Typography>
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li>Directly from you including when you create an account, visit or use the Services, communicate with us, or otherwise provide us with your personal information;</li>
+        <li>Directly from you including when you visit or use the Services, place an order, communicate with us, or otherwise provide us with your personal information;</li>
         <li>Automatically through the Services including from your device when you use our products or services or visit our websites, and through the use of cookies and similar technologies;</li>
         <li>From our service providers including when we engage them to enable certain technology and when they collect or process your personal information on our behalf;</li>
         <li>From our partners or other third parties.</li>
@@ -52,9 +52,8 @@ export const PrivacyPolicy = () => {
         Depending on how you interact with us or which of the Services you use, we may use personal information for the following purposes:
       </Typography>
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li><strong>Provide, Tailor, and Improve the Services.</strong> We use your personal information to provide you with the Services, including to perform our contract with you, to process your payments, to fulfill your orders, to remember your preferences and items you are interested in, to send notifications to you related to your account, to process purchases, returns, exchanges or other transactions, to create, maintain and otherwise manage your account, to arrange for shipping, to facilitate any returns and exchanges, to enable you to post reviews, and to create a customized shopping experience for you, such as recommending products related to your purchases. This may include using your personal information to better tailor and improve the Services.</li>
-        <li><strong>Marketing and Advertising.</strong> We use your personal information for marketing and promotional purposes, such as to send marketing, advertising and promotional communications by email, text message or postal mail, and to show you online advertisements for products or services on the Services or other websites, including based on items you previously have purchased or added to your cart and other activity on the Services.</li>
-        <li><strong>Security and Fraud Prevention.</strong> We use your personal information to authenticate your account, to provide a secure payment and shopping experience, detect, investigate or take action regarding possible fraudulent, illegal, unsafe, or malicious activity, protect public safety, and to secure our services. If you choose to use the Services and register an account, you are responsible for keeping your account credentials safe. We highly recommend that you do not share your username, password or other access details with anyone else.</li>
+        <li><strong>Provide, Tailor, and Improve the Services.</strong> We use your personal information to provide you with the Services, including to perform our contract with you, to process your payments, to fulfill your orders, to process purchases, returns, exchanges or other transactions, to arrange for shipping, and to facilitate any returns and exchanges. This may include using your personal information to better tailor and improve the Services.</li>
+        <li><strong>Security and Fraud Prevention.</strong> We use your personal information to provide a secure payment and shopping experience, to detect, investigate or take action regarding possible fraudulent, illegal, unsafe, or malicious activity, to protect public safety, and to secure our services.</li>
         <li><strong>Communicating with You.</strong> We use your personal information to provide you with customer support, to be responsive to you, to provide effective services to you and to maintain our business relationship with you.</li>
         <li><strong>Legal Reasons.</strong> We use your personal information to comply with applicable law or respond to valid legal process, including requests from law enforcement or government agencies, to investigate or participate in civil discovery, potential or actual litigation, or other adversarial legal proceedings, and to enforce or investigate potential violations of our terms or policies.</li>
       </Typography>
@@ -66,18 +65,16 @@ export const PrivacyPolicy = () => {
         In certain circumstances, we may disclose your personal information to third parties for legitimate purposes subject to this Privacy Policy. Such circumstances may include:
       </Typography>
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li>With Shopify, vendors and other third parties who perform services on our behalf (e.g. IT management, payment processing, data analytics, customer support, cloud storage, fulfillment and shipping).</li>
-        <li>With business and marketing partners to provide marketing services and advertise to you. For example, we use Shopify to support personalized advertising with third-party services based on your online activity with different merchants and websites. Our business and marketing partners will use your information in accordance with their own privacy notices.</li>
-        <li>When you direct, request us or otherwise consent to our disclosure of certain information to third parties, such as to ship you products or through your use of social media widgets or login integrations.</li>
-        <li>With our affiliates or otherwise within our corporate group.</li>
-        <li>In connection with a business transaction such as a merger or bankruptcy, to comply with any applicable legal obligations (including to respond to subpoenas, search warrants and similar requests), to enforce any applicable terms of service or policies, and to protect or defend the Services, our rights, and the rights of our users or others.</li>
+        <li>With the service providers who help us run the Services. In practice these are: <strong>Shopify</strong> (online shop, checkout, payment processing and order fulfillment), <strong>Vercel</strong> (website hosting and anonymous performance measurement), <strong>Google Analytics</strong> (website analytics, only if you accept analytics cookies), and <strong>Google Cloud Storage and Google Drive</strong> (hosting the matchday photo gallery). Each uses your information in accordance with its own privacy notice.</li>
+        <li>When you direct, request us or otherwise consent to our disclosure of certain information to third parties, such as to ship you products.</li>
+        <li>In connection with a business transaction such as a merger or bankruptcy, to comply with any applicable legal obligations (including to respond to subpoenas, search warrants and similar requests), to enforce any applicable policies, and to protect or defend the Services, our rights, and the rights of our users or others.</li>
       </Typography>
 
       <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>
         Relationship with Shopify
       </Typography>
       <Typography paragraph>
-        The Services are hosted by Shopify, which collects and processes personal information about your access to and use of the Services in order to provide and improve the Services for you. Information you submit to the Services will be transmitted to and shared with Shopify as well as third parties that may be located in countries other than where you reside, in order to provide and improve the Services for you. In addition, to help protect, grow, and improve our business, we use certain Shopify enhanced features that incorporate data and information obtained from your interactions with our Store, along with other merchants and with Shopify. To provide these enhanced features, Shopify may make use of personal information collected about your interactions with our store, along with other merchants, and with Shopify. In these circumstances, Shopify is responsible for the processing of your personal information, including for responding to your requests to exercise your rights over use of your personal information for these purposes. To learn more about how Shopify uses your personal information and any rights you may have, you can visit the{' '}
+        miamigooners.com is hosted on Vercel, not on Shopify. Shopify powers our online shop: we use it to look up product and price information, and it hosts the checkout. While you are browsing the shop on this website, you are not sending anything to Shopify beyond the items you put in your cart. When you select "Proceed to Checkout" you leave miamigooners.com and continue on Shopify's own checkout pages, where Shopify collects your contact, shipping and payment details directly. From that point Shopify is responsible for processing your personal information, including responding to requests to exercise your rights over it, and its own privacy policy applies. Shopify may transfer and process that information in countries other than where you reside. To learn more about how Shopify uses your personal information and any rights you may have, you can visit the{' '}
         <Link href="https://www.shopify.com/legal/privacy/customers" target="_blank" rel="noopener noreferrer">
           Shopify Consumer Privacy Policy
         </Link>.
@@ -104,6 +101,17 @@ export const PrivacyPolicy = () => {
       </Typography>
 
       <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>
+        Matchday Photos
+      </Typography>
+      <Typography paragraph>
+        We publish photographs and videos taken at our matchday events and other club gatherings in the matchday photo gallery on this website. These images are taken in a public or semi-public venue and may show people who attended, including you. Each set of photos is credited using the display name of the club member who contributed it; we do not publish contributors' email addresses. The images are stored in Google Drive and served through Google Cloud Storage.
+      </Typography>
+      <Typography paragraph>
+        If you appear in a photograph and would like it removed, or you contributed photos and want your credit changed or taken down, email us at{' '}
+        <Link href="mailto:info@miamigooners.com">info@miamigooners.com</Link> and we will remove it.
+      </Typography>
+
+      <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>
         Third Party Websites and Links
       </Typography>
       <Typography paragraph>
@@ -124,7 +132,7 @@ export const PrivacyPolicy = () => {
         Please be aware that no security measures are perfect or impenetrable, and we cannot guarantee "perfect security." In addition, any information you send to us may not be secure while in transit. We recommend that you do not use unsecure channels to communicate sensitive or confidential information to us.
       </Typography>
       <Typography paragraph>
-        How long we retain your personal information depends on different factors, such as whether we need the information to maintain your account, to provide you with Services, comply with legal obligations, resolve disputes or enforce other applicable contracts and policies.
+        How long we retain your personal information depends on different factors, such as whether we need the information to provide you with Services, comply with legal obligations, resolve disputes or enforce other applicable contracts and policies.
       </Typography>
 
       <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>
@@ -138,12 +146,12 @@ export const PrivacyPolicy = () => {
         <li><strong>Right to Delete.</strong> You may have a right to request that we delete personal information we maintain about you.</li>
         <li><strong>Right to Correct.</strong> You may have a right to request that we correct inaccurate personal information we maintain about you.</li>
         <li><strong>Right of Portability.</strong> You may have a right to receive a copy of the personal information we hold about you and to request that we transfer it to a third party, in certain circumstances and with certain exceptions.</li>
-        <li><strong>Right to Opt out of Sale or Sharing for Targeted Advertising.</strong> Depending on where you reside, you may have a right to opt out of the "sale" or "share" of your personal information or to opt out of the processing of your personal information for purposes considered to be "targeted advertising", as defined in applicable privacy laws. Please note that if you visit our website with the Global Privacy Control opt-out preference signal enabled, depending on where you are, we will automatically treat this as a request to opt-out for the device and browser that you use to visit the website. If we are able to associate the device sending the signal to a Shopify account, we will apply the opt out request to the account as well. To learn more about Global Privacy Control, you can visit{' '}
+        <li><strong>Right to Opt out of Sale or Sharing for Targeted Advertising.</strong> Depending on where you reside, you may have a right to opt out of the "sale" or "share" of your personal information or to opt out of the processing of your personal information for purposes considered to be "targeted advertising", as defined in applicable privacy laws. We do not currently sell your personal information, or share it for cross-context behavioral or targeted advertising. If you visit our website with the Global Privacy Control opt-out preference signal enabled, we automatically treat this as a request to opt out for that device and browser, and we will not set analytics cookies. To learn more about Global Privacy Control, you can visit{' '}
           <Link href="https://globalprivacycontrol.org/" target="_blank" rel="noopener noreferrer">
             https://globalprivacycontrol.org/
           </Link>. Other than the Global Privacy Control, we do not recognize other "Do Not Track" signals that may be sent from your web browser or device.
         </li>
-        <li><strong>Managing Communication Preferences.</strong> We may send you promotional emails, and you may opt out of receiving these at any time by using the unsubscribe option displayed in our emails to you. If you opt out, we may still send you non-promotional emails, such as those about your account or orders that you have made.</li>
+        <li><strong>Email We Send You.</strong> We do not run email marketing campaigns and we do not have a newsletter. If you buy something, Shopify sends you transactional email about that order — order confirmation, shipping and delivery updates, and any return you request. If we ever start sending promotional email, it will include an unsubscribe option.</li>
       </Typography>
       <Typography paragraph>
         You may exercise any of these rights where indicated on the Services or by contacting us using the contact details provided below. To learn more about how Shopify uses your personal information and any rights you may have, including rights related to data processed by Shopify, you can visit{' '}

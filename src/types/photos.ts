@@ -1,6 +1,5 @@
 export interface DriveOwner {
   displayName: string
-  emailAddress: string
   photoLink?: string
 }
 

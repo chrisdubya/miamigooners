@@ -146,7 +146,7 @@ async function listFilesInFolder(folderId) {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed = false and (mimeType contains 'image/' or mimeType contains 'video/')`,
       fields:
-        'nextPageToken, files(id,name,mimeType,description,createdTime,webViewLink,webContentLink,size,imageMediaMetadata(width,height),videoMediaMetadata(width,height,durationMillis),owners(displayName,emailAddress,photoLink))',
+        'nextPageToken, files(id,name,mimeType,description,createdTime,webViewLink,webContentLink,size,imageMediaMetadata(width,height),videoMediaMetadata(width,height,durationMillis),owners(displayName,photoLink))',
       orderBy: 'createdTime desc',
       pageSize: 100,
       pageToken,
@@ -180,9 +180,10 @@ function mapDriveFile(f) {
           durationMillis: String(f.videoMediaMetadata.durationMillis ?? '0'),
         }
       : undefined,
+    // Only displayName is ever shown (photo credits). Contributor email
+    // addresses must not enter the manifest — it is a public GCS object.
     owners: (f.owners ?? []).map((o) => ({
       displayName: o.displayName ?? '',
-      emailAddress: o.emailAddress ?? '',
       photoLink: o.photoLink ?? undefined,
     })),
   }
