@@ -9,7 +9,7 @@ const EPL_URLS = [
 const UCL_URL =
   'https://fixturedownload.com/feed/json/champions-league-2025/arsenal'
 
-const preSeason25: EventType[] = [
+const preSeason: EventType[] = [
   {
     MatchNumber: 1,
     RoundNumber: 1,
@@ -17,15 +17,48 @@ const preSeason25: EventType[] = [
     Location: 'Emirates Stadium',
     HomeTeam: 'Arsenal',
     AwayTeam: 'Athletic Club',
+    HomeTeamScore: 3,
+    AwayTeamScore: 0,
     competition: 'Emirates Cup',
   },
   {
     MatchNumber: 2,
     RoundNumber: 1,
+    DateUtc: '2026-08-01 18:00:00Z',
+    Location: 'Estadi Montilivi',
+    HomeTeam: 'Girona',
+    AwayTeam: 'Arsenal',
+    HomeTeamScore: 1,
+    AwayTeamScore: 4,
+    competition: 'Pre-season Friendly',
+  },
+  {
+    MatchNumber: 3,
+    RoundNumber: 1,
     DateUtc: '2026-08-05 18:30:00Z',
     Location: 'Aviva Stadium',
     HomeTeam: 'Arsenal',
     AwayTeam: 'Real Betis',
+    HomeTeamScore: 1,
+    AwayTeamScore: 3,
+    competition: 'Pre-season Friendly',
+  },
+  {
+    MatchNumber: 4,
+    RoundNumber: 1,
+    DateUtc: '2026-08-09 13:00:00Z',
+    Location: 'Emirates Stadium',
+    HomeTeam: 'Arsenal',
+    AwayTeam: 'Borussia Dortmund',
+    competition: 'Emirates Cup',
+  },
+  {
+    MatchNumber: 5,
+    RoundNumber: 1,
+    DateUtc: '2026-08-12 18:30:00Z',
+    Location: 'Emirates Stadium',
+    HomeTeam: 'Arsenal',
+    AwayTeam: 'Como',
     competition: 'Pre-season Friendly',
   },
 ]
@@ -80,7 +113,7 @@ export async function getAllEvents(): Promise<EventType[]> {
   ).map((event: EventType) => ({competition: 'FA Cup', ...event}))
 
   return [
-    ...preSeason25,
+    ...preSeason,
     ...communityShield26,
     ...plSeason25,
     ...uclSeason25,

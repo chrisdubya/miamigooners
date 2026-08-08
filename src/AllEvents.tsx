@@ -18,11 +18,19 @@ import {doppler} from './font'
 
 const COMPETITION_FILTERS = [
   'All',
+  'Pre-season',
   'Premier League',
   'UEFA Champions League',
   'FA Cup',
   'Carabao Cup',
 ] as const
+
+// Competitions grouped under the single "Pre-season" chip
+const PRE_SEASON_COMPETITIONS = [
+  'Pre-season Friendly',
+  'Emirates Cup',
+  'FA Community Shield',
+]
 
 type FilterType = (typeof COMPETITION_FILTERS)[number]
 
@@ -63,6 +71,10 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
 
   const filterEvents = (list: EventType[]) => {
     if (filter === 'All') return list
+    if (filter === 'Pre-season')
+      return list.filter(
+        (e) => e.competition && PRE_SEASON_COMPETITIONS.includes(e.competition)
+      )
     return list.filter((e) => e.competition === filter)
   }
 
