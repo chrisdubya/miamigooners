@@ -1,3 +1,14 @@
+declare global {
+	interface Window {
+		dataLayer?: unknown[];
+		gtag?: (...args: unknown[]) => void;
+	}
+	interface Navigator {
+		// Global Privacy Control opt-out signal — honoured per our Privacy Policy
+		globalPrivacyControl?: boolean;
+	}
+}
+
 export interface EventType {
 	MatchNumber: number;
 	RoundNumber: number;

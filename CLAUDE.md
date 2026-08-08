@@ -31,7 +31,6 @@ npm run sync-photos
 - **Framework**: Next.js 16 (App Router, Turbopack) with TypeScript
 - **UI**: Material-UI v6 (@mui/material) with Emotion for styling
 - **Particle Animation**: Three.js with React Three Fiber (@react-three/fiber 9.x) + Drei (@react-three/drei 10.x) — particles only, no 3D models
-- **Authentication**: Auth0 v4 (@auth0/nextjs-auth0)
 - **E-commerce**: Shopify Storefront API 2026-01 (@shopify/storefront-api-client)
 - **Date Handling**: Luxon for timezone-aware date formatting
 - **Photos Storage**: Google Cloud Storage (thumbnails + manifest JSON)
@@ -46,7 +45,7 @@ app/
 ├── not-found.tsx           # 404 page
 ├── ThemeRegistry.tsx       # 'use client' — Emotion cache + MUI ThemeProvider
 ├── NavigationLoader.tsx    # 'use client' — loading overlay on navigation
-├── Providers.tsx           # 'use client' — Auth0Provider + CartProvider
+├── Providers.tsx           # 'use client' — CartProvider
 ├── matchday-photos/
 │   ├── page.tsx            # Server Component — fetches manifest + events, enriches matches
 │   └── PhotosContent.tsx   # 'use client' — filter bar, grid, lightbox orchestrator
@@ -97,10 +96,6 @@ src/
 scripts/
 └── sync-thumbnails.mjs     # Syncs photos from Google Drive to GCS + generates manifest
 
-lib/
-└── auth0.ts                # Auth0Client singleton
-
-proxy.ts                    # Auth0 middleware (replaces middleware.ts)
 styles/globals.css          # Tailwind @theme tokens, CSS animations, global styles
 public/fixtures/
 ├── carabao-cup-25-26.json     # Carabao Cup fixture data (local)
@@ -196,13 +191,6 @@ Photos from matchday events are stored in Google Drive (organized as subfolders 
 Match dates stored in UTC (`"yyyy-MM-dd HH:mm:ss'Z'"`) and converted to `America/New_York` timezone via Luxon.
 
 ## Environment Variables
-
-Auth0:
-- `AUTH0_SECRET`
-- `AUTH0_BASE_URL`
-- `AUTH0_ISSUER_BASE_URL`
-- `AUTH0_CLIENT_ID`
-- `AUTH0_CLIENT_SECRET`
 
 Shopify:
 - `SHOPIFY_STORE_DOMAIN` (your-store.myshopify.com)

@@ -4,7 +4,7 @@ export const PrivacyPolicy = () => {
   return (
     <>
       <Typography variant="body2" color="text.secondary" paragraph>
-        Last updated: February 27, 2026
+        Last updated: August 8, 2026
       </Typography>
 
       <Typography paragraph>
@@ -81,6 +81,26 @@ export const PrivacyPolicy = () => {
         <Link href="https://www.shopify.com/legal/privacy/customers" target="_blank" rel="noopener noreferrer">
           Shopify Consumer Privacy Policy
         </Link>.
+      </Typography>
+
+      <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>
+        Cookies and Similar Technologies
+      </Typography>
+      <Typography paragraph>
+        We use a small number of cookies and similar browser storage technologies on miamigooners.com. Some are necessary for the site to function; analytics cookies are only set if you choose to accept them.
+      </Typography>
+      <Typography component="ul" sx={{paddingLeft: 2}}>
+        <li><strong>Google Analytics (<code>_ga</code>, <code>_ga_G-1ZGEWQ7JLM</code>) — analytics, up to 2 years.</strong> Helps us understand which pages and matches people visit. These are only set after you select "Accept" in our cookie banner. If you reject or have not yet chosen, Google Analytics runs in a restricted mode that stores nothing on your device.</li>
+        <li><strong>Shopping cart (<code>miami-gooners-cart</code>) — strictly necessary, stored until cleared.</strong> Browser local storage that remembers the items in your cart between visits. Without it the shop cannot work.</li>
+        <li><strong>Cookie choice (<code>miami-gooners-cookie-consent-v1</code>) — strictly necessary, stored until cleared.</strong> Records whether you accepted or rejected analytics so we do not ask again.</li>
+        <li><strong>Announcement dismissal — functional, stored until cleared.</strong> Remembers that you have closed a site announcement.</li>
+        <li><strong>Vercel Speed Insights — no cookies.</strong> Our hosting provider collects anonymous page performance measurements. It sets no cookies and does not identify you.</li>
+      </Typography>
+      <Typography paragraph>
+        Two features load content from other companies only when you ask for them. Playing a match video in our photo gallery loads a video player from Google Drive, and starting checkout takes you to Shopify's own checkout pages. Both may set their own cookies at that point, governed by Google's and Shopify's privacy policies rather than this one.
+      </Typography>
+      <Typography paragraph>
+        You can change your choice at any time using the <strong>Cookie Preferences</strong> link at the bottom of any page, or by clearing the site data in your browser settings.
       </Typography>
 
       <Typography variant="h6" fontWeight="bold" gutterBottom sx={{marginTop: 3}}>

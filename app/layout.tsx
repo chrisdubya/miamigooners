@@ -8,6 +8,7 @@ import {SpeedInsights} from '@vercel/speed-insights/next'
 import {Navbar} from '../src/Navbar'
 import {AnnouncementBanner} from '../src/AnnouncementBanner'
 import {AnnouncementModal} from '../src/AnnouncementModal'
+import {CookieConsentBanner} from '../src/CookieConsentBanner'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://miamigooners.com'),
@@ -84,18 +85,41 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
       </head>
       <body>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-1ZGEWQ7JLM"
-        />
+        {/*
+          Google Consent Mode v2. Until analytics_storage is granted, GA4 sets no
+          cookies and sends only cookieless pings. Returning visitors who already
+          accepted are read straight from localStorage, so there's no flicker and
+          no lost pageview.
+
+          The gtag loader is injected from here rather than written as a JSX
+          <script async src>: React hoists those into <head>, which would let the
+          library run before this consent default is queued. Creating the element
+          ourselves keeps the order deterministic — consent, then config, then load.
+        */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              var mgConsent = 'denied';
+              try {
+                if (localStorage.getItem('miami-gooners-cookie-consent-v1') === 'granted') {
+                  mgConsent = 'granted';
+                }
+              } catch (e) {}
+              gtag('consent', 'default', {
+                analytics_storage: mgConsent,
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500
+              });
               gtag('js', new Date());
               gtag('config', 'G-1ZGEWQ7JLM');
+              var mgTag = document.createElement('script');
+              mgTag.async = true;
+              mgTag.src = 'https://www.googletagmanager.com/gtag/js?id=G-1ZGEWQ7JLM';
+              document.head.appendChild(mgTag);
             `,
           }}
         />
@@ -106,6 +130,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <Navbar />
             {children}
             <AnnouncementModal />
+            <CookieConsentBanner />
             <SpeedInsights />
           </Providers>
         </ThemeRegistry>
