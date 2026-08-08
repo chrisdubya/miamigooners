@@ -231,4 +231,19 @@ export const teamColors: TeamColors[] = [
     secondary: '#FFFFFF',
     team: 'Real Betis',
   },
+  {
+    primary: '#D8232A',
+    secondary: '#FFFFFF',
+    team: 'Girona',
+  },
+  {
+    primary: '#FDE100',
+    secondary: '#000000',
+    team: 'Borussia Dortmund',
+  },
+  {
+    primary: '#005BAC',
+    secondary: '#FFFFFF',
+    team: 'Como',
+  },
 ]

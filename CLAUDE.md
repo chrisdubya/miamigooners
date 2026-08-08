@@ -224,7 +224,7 @@ Fixtures come from two sources, both handled in `src/utils/events.ts`:
 | FA Cup | `public/fixtures/fa-cup-25-26.json` | Local file. Edit by hand. |
 | Carabao Cup | `public/fixtures/carabao-cup-25-26.json` | Local file. Edit by hand. |
 
-Pre-season friendlies are hard-coded in the `preSeason25` array in `src/utils/events.ts`.
+Pre-season friendlies are hard-coded in the `preSeason` array in `src/utils/events.ts`, and the Community Shield in the `communityShield26` array in the same file. Both are edited by hand — scores included.
 
 If a remote feed fails, that competition is silently omitted from the events list (no local fallback file is read).
 
