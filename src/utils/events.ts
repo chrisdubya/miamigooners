@@ -50,6 +50,8 @@ const preSeason: EventType[] = [
     Location: 'Emirates Stadium',
     HomeTeam: 'Arsenal',
     AwayTeam: 'Borussia Dortmund',
+    HomeTeamScore: 2,
+    AwayTeamScore: 3,
     competition: 'Emirates Cup',
   },
   {
