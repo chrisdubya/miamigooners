@@ -32,12 +32,14 @@ const PRE_SEASON_COMPETITIONS = [
   'FA Community Shield',
 ]
 
+// A match stays under Upcoming until this long after kickoff, so it stays
+// visible while it is still being played
+const MATCH_WINDOW_HOURS = 2
+
 type FilterType = (typeof COMPETITION_FILTERS)[number]
 
 export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; photoMatchMap?: Record<string, string>}) => {
   const [filter, setFilter] = useState<FilterType>('All')
-
-  const now = DateTime.now().setZone('America/New_York')
 
   const parseDate = (dateUtc: string) =>
     DateTime.fromFormat(dateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
@@ -45,14 +47,13 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
     }).setZone('America/New_York')
 
   const {upcomingEvents, pastEvents} = useMemo(() => {
+    const now = DateTime.now().setZone('America/New_York')
     const upcoming: EventType[] = []
     const past: EventType[] = []
 
     events.forEach((event) => {
       const eventDate = parseDate(event.DateUtc)
-      const todayISO = now.toISODate()
-      const eventISO = eventDate.toISODate()
-      if (eventISO && todayISO && eventISO >= todayISO) {
+      if (eventDate.plus({hours: MATCH_WINDOW_HOURS}) > now) {
         upcoming.push(event)
       } else {
         past.push(event)
