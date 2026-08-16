@@ -73,6 +73,8 @@ const communityShield26: EventType[] = [
     Location: 'Principality Stadium',
     HomeTeam: 'Arsenal',
     AwayTeam: 'Man City',
+    HomeTeamScore: 3,
+    AwayTeamScore: 0,
     competition: 'FA Community Shield',
   },
 ]

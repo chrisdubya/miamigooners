@@ -32,12 +32,14 @@ const PRE_SEASON_COMPETITIONS = [
   'FA Community Shield',
 ]
 
+// A match stays under Upcoming until this long after kickoff, so it stays
+// visible while it is still being played
+const MATCH_WINDOW_HOURS = 2
+
 type FilterType = (typeof COMPETITION_FILTERS)[number]
 
 export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; photoMatchMap?: Record<string, string>}) => {
   const [filter, setFilter] = useState<FilterType>('All')
-
-  const now = DateTime.now().setZone('America/New_York')
 
   const parseDate = (dateUtc: string) =>
     DateTime.fromFormat(dateUtc, "yyyy-MM-dd HH:mm:ss'Z'", {
@@ -45,14 +47,13 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
     }).setZone('America/New_York')
 
   const {upcomingEvents, pastEvents} = useMemo(() => {
+    const now = DateTime.now().setZone('America/New_York')
     const upcoming: EventType[] = []
     const past: EventType[] = []
 
     events.forEach((event) => {
       const eventDate = parseDate(event.DateUtc)
-      const todayISO = now.toISODate()
-      const eventISO = eventDate.toISODate()
-      if (eventISO && todayISO && eventISO >= todayISO) {
+      if (eventDate.plus({hours: MATCH_WINDOW_HOURS}) > now) {
         upcoming.push(event)
       } else {
         past.push(event)
@@ -163,51 +164,70 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
         </Box>
 
         {/* UPCOMING MATCHES */}
-        <Box sx={{mt: 4}}>
-          <Typography
-            component="h2"
-            sx={{
-              fontFamily: doppler.style.fontFamily,
-              fontWeight: 700,
-              fontSize: {xs: '1.5rem', md: '2rem'},
-              letterSpacing: '0.02em',
-              textTransform: 'lowercase',
-              color: 'text.primary',
-            }}
+        <Accordion
+          defaultExpanded={true}
+          sx={{
+            bgcolor: 'transparent',
+            backgroundImage: 'none',
+            boxShadow: 'none',
+            mt: 4,
+          }}
+        >
+          <AccordionSummary
+            sx={{padding: 0}}
+            expandIcon={<ExpandMoreIcon sx={{color: '#DB0007'}} />}
+            aria-controls="upcoming-matches-content"
+            id="upcoming-matches-header"
           >
-            Upcoming Matches
-          </Typography>
-          <Box
-            sx={{
-              width: 80,
-              height: 2,
-              bgcolor: '#DB0007',
-              mt: 1,
-              mb: 4,
-            }}
-          />
-
-          <Grid container spacing={2}>
-            {filteredUpcoming.length ? (
-              filteredUpcoming.map((event, index) => (
-                <Event
-                  key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
-                  index={index}
-                  event={event}
-                />
-              ))
-            ) : (
+            <Box>
               <Typography
-                variant="h5"
-                gutterBottom
-                color="text.secondary"
-                ml={1}
+                component="h2"
+                sx={{
+                  fontFamily: doppler.style.fontFamily,
+                  fontWeight: 700,
+                  fontSize: {xs: '1.5rem', md: '2rem'},
+                  letterSpacing: '0.02em',
+                  textTransform: 'lowercase',
+                  color: 'text.primary',
+                  margin: 0,
+                }}
               >
-                No upcoming matches
+                Upcoming Matches
               </Typography>
-            )}
-          </Grid>
-        </Box>
+              <Box
+                sx={{
+                  width: 80,
+                  height: 2,
+                  bgcolor: '#DB0007',
+                  mt: 1,
+                }}
+              />
+            </Box>
+          </AccordionSummary>
+
+          <AccordionDetails sx={{padding: 0}}>
+            <Grid container spacing={2} mt={2}>
+              {filteredUpcoming.length ? (
+                filteredUpcoming.map((event, index) => (
+                  <Event
+                    key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
+                    index={index}
+                    event={event}
+                  />
+                ))
+              ) : (
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  color="text.secondary"
+                  ml={1}
+                >
+                  No upcoming matches
+                </Typography>
+              )}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
 
         {/* RECENT RESULTS */}
         {filteredPast.length > 0 && (
