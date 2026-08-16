@@ -164,51 +164,70 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
         </Box>
 
         {/* UPCOMING MATCHES */}
-        <Box sx={{mt: 4}}>
-          <Typography
-            component="h2"
-            sx={{
-              fontFamily: doppler.style.fontFamily,
-              fontWeight: 700,
-              fontSize: {xs: '1.5rem', md: '2rem'},
-              letterSpacing: '0.02em',
-              textTransform: 'lowercase',
-              color: 'text.primary',
-            }}
+        <Accordion
+          defaultExpanded={true}
+          sx={{
+            bgcolor: 'transparent',
+            backgroundImage: 'none',
+            boxShadow: 'none',
+            mt: 4,
+          }}
+        >
+          <AccordionSummary
+            sx={{padding: 0}}
+            expandIcon={<ExpandMoreIcon sx={{color: '#DB0007'}} />}
+            aria-controls="upcoming-matches-content"
+            id="upcoming-matches-header"
           >
-            Upcoming Matches
-          </Typography>
-          <Box
-            sx={{
-              width: 80,
-              height: 2,
-              bgcolor: '#DB0007',
-              mt: 1,
-              mb: 4,
-            }}
-          />
-
-          <Grid container spacing={2}>
-            {filteredUpcoming.length ? (
-              filteredUpcoming.map((event, index) => (
-                <Event
-                  key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
-                  index={index}
-                  event={event}
-                />
-              ))
-            ) : (
+            <Box>
               <Typography
-                variant="h5"
-                gutterBottom
-                color="text.secondary"
-                ml={1}
+                component="h2"
+                sx={{
+                  fontFamily: doppler.style.fontFamily,
+                  fontWeight: 700,
+                  fontSize: {xs: '1.5rem', md: '2rem'},
+                  letterSpacing: '0.02em',
+                  textTransform: 'lowercase',
+                  color: 'text.primary',
+                  margin: 0,
+                }}
               >
-                No upcoming matches
+                Upcoming Matches
               </Typography>
-            )}
-          </Grid>
-        </Box>
+              <Box
+                sx={{
+                  width: 80,
+                  height: 2,
+                  bgcolor: '#DB0007',
+                  mt: 1,
+                }}
+              />
+            </Box>
+          </AccordionSummary>
+
+          <AccordionDetails sx={{padding: 0}}>
+            <Grid container spacing={2} mt={2}>
+              {filteredUpcoming.length ? (
+                filteredUpcoming.map((event, index) => (
+                  <Event
+                    key={`${event.DateUtc}-${event.HomeTeam}-${event.AwayTeam}`}
+                    index={index}
+                    event={event}
+                  />
+                ))
+              ) : (
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  color="text.secondary"
+                  ml={1}
+                >
+                  No upcoming matches
+                </Typography>
+              )}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
 
         {/* RECENT RESULTS */}
         {filteredPast.length > 0 && (
