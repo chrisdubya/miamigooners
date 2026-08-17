@@ -262,6 +262,7 @@ export const Navbar = () => {
                     fontWeight: 600,
                     fontSize: '1.5rem',
                     letterSpacing: '-0.015em',
+                    textTransform: 'lowercase',
                     textAlign: 'center',
                     color: isActive(link.href) ? '#DB0007' : '#F5F5F7',
                   },
