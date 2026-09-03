@@ -1,26 +1,42 @@
 [
   {
     "MatchNumber": 1,
-    "RoundNumber": 4,
-    "DateUtc": "2026-02-14 15:00:00Z",
-    "Location": "Emirates Stadium",
-    "HomeTeam": "Arsenal",
-    "AwayTeam": "Wigan Athletic"
+    "RoundNumber": 3,
+    "DateUtc": "2026-01-11 14:00:00Z",
+    "Location": "Fratton Park",
+    "HomeTeam": "Portsmouth",
+    "AwayTeam": "Arsenal",
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 4
   },
   {
     "MatchNumber": 2,
+    "RoundNumber": 4,
+    "DateUtc": "2026-02-15 16:30:00Z",
+    "Location": "Emirates Stadium",
+    "HomeTeam": "Arsenal",
+    "AwayTeam": "Wigan Athletic",
+    "HomeTeamScore": 4,
+    "AwayTeamScore": 0
+  },
+  {
+    "MatchNumber": 3,
     "RoundNumber": 5,
     "DateUtc": "2026-03-07 12:15:00Z",
     "Location": "One Call Stadium",
     "HomeTeam": "Mansfield Town",
-    "AwayTeam": "Arsenal"
+    "AwayTeam": "Arsenal",
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 2
   },
   {
-    "MatchNumber": 3,
+    "MatchNumber": 4,
     "RoundNumber": 6,
     "DateUtc": "2026-04-04 19:00:00Z",
     "Location": "St. Mary's Stadium",
     "HomeTeam": "Southampton",
-    "AwayTeam": "Arsenal"
+    "AwayTeam": "Arsenal",
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 1
   }
 ]

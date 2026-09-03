@@ -98,8 +98,10 @@ scripts/
 
 styles/globals.css          # Tailwind @theme tokens, CSS animations, global styles
 public/fixtures/
-├── carabao-cup-25-26.json     # Carabao Cup fixture data (local)
-└── fa-cup-25-26.json          # FA Cup fixture data (local)
+├── carabao-cup-25-26.json     # Carabao Cup fixture data (local, per season)
+├── carabao-cup-26-27.json
+├── fa-cup-25-26.json          # FA Cup fixture data (local, per season)
+└── fa-cup-26-27.json
                                # Premier League + UCL fixtures fetched live from fixturedownload.com
 ```
 
@@ -207,10 +209,12 @@ Fixtures come from two sources, both handled in `src/utils/events.ts`:
 
 | Competition | Source | Notes |
 |-------------|--------|-------|
-| Premier League | `https://fixturedownload.com/feed/json/epl-2025/arsenal` | Live fetch, 1-hour ISR cache. Results auto-populate. |
-| UEFA Champions League | `https://fixturedownload.com/feed/json/champions-league-2025/arsenal` | Live fetch, 1-hour ISR cache. Results auto-populate. |
-| FA Cup | `public/fixtures/fa-cup-25-26.json` | Local file. Edit by hand. |
-| Carabao Cup | `public/fixtures/carabao-cup-25-26.json` | Local file. Edit by hand. |
+| Premier League | `https://fixturedownload.com/feed/json/epl-{year}/arsenal` (one feed per season, listed in `EPL_URLS`) | Live fetch, 1-hour ISR cache. Results auto-populate. |
+| UEFA Champions League | `https://fixturedownload.com/feed/json/champions-league-{year}/arsenal` (one feed per season, listed in `UCL_URLS`) | Live fetch, 1-hour ISR cache. Results auto-populate. |
+| FA Cup | `public/fixtures/fa-cup-*.json` (one file per season, listed in `FA_CUP_FILES`) | Local files. Edit by hand. |
+| Carabao Cup | `public/fixtures/carabao-cup-*.json` (one file per season, listed in `CARABAO_CUP_FILES`) | Local files. Edit by hand. |
+
+When a new season starts, add the new season's feed URL to `EPL_URLS`/`UCL_URLS` and create the new season's cup JSON files (registering them in `CARABAO_CUP_FILES`/`FA_CUP_FILES`). Feeds that don't exist yet fail silently, but the local JSON files must exist (an empty `[]` is fine).
 
 Pre-season friendlies are hard-coded in the `preSeason` array in `src/utils/events.ts`, and the Community Shield in the `communityShield26` array in the same file. Both are edited by hand — scores included.
 

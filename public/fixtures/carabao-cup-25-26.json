@@ -1,1 +1,35 @@
-[{"MatchNumber":1,"RoundNumber":1,"DateUtc":"2026-02-03 20:00:00Z","Location":"Emirates Stadium","HomeTeam":"Arsenal","AwayTeam":"Chelsea","Group":null,"HomeTeamScore":null,"AwayTeamScore":null},{"MatchNumber":2,"RoundNumber":2,"DateUtc":"2026-03-22 16:30:00Z","Location":"Wembley Stadium","HomeTeam":"Arsenal","AwayTeam":"Man City","Group":null,"HomeTeamScore":null,"AwayTeamScore":null}]
+[
+  {
+    "MatchNumber": 1,
+    "RoundNumber": 1,
+    "DateUtc": "2026-01-14 20:00:00Z",
+    "Location": "Stamford Bridge",
+    "HomeTeam": "Chelsea",
+    "AwayTeam": "Arsenal",
+    "Group": null,
+    "HomeTeamScore": 2,
+    "AwayTeamScore": 3
+  },
+  {
+    "MatchNumber": 2,
+    "RoundNumber": 1,
+    "DateUtc": "2026-02-03 20:00:00Z",
+    "Location": "Emirates Stadium",
+    "HomeTeam": "Arsenal",
+    "AwayTeam": "Chelsea",
+    "Group": null,
+    "HomeTeamScore": 1,
+    "AwayTeamScore": 0
+  },
+  {
+    "MatchNumber": 3,
+    "RoundNumber": 2,
+    "DateUtc": "2026-03-22 16:30:00Z",
+    "Location": "Wembley Stadium",
+    "HomeTeam": "Arsenal",
+    "AwayTeam": "Man City",
+    "Group": null,
+    "HomeTeamScore": 0,
+    "AwayTeamScore": 2
+  }
+]

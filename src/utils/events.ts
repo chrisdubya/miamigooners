@@ -6,8 +6,13 @@ const EPL_URLS = [
   'https://fixturedownload.com/feed/json/epl-2025/arsenal',
   'https://fixturedownload.com/feed/json/epl-2026/arsenal',
 ]
-const UCL_URL =
-  'https://fixturedownload.com/feed/json/champions-league-2025/arsenal'
+const UCL_URLS = [
+  'https://fixturedownload.com/feed/json/champions-league-2025/arsenal',
+  'https://fixturedownload.com/feed/json/champions-league-2026/arsenal',
+]
+
+const CARABAO_CUP_FILES = ['carabao-cup-25-26.json', 'carabao-cup-26-27.json']
+const FA_CUP_FILES = ['fa-cup-25-26.json', 'fa-cup-26-27.json']
 
 const preSeason: EventType[] = [
   {
@@ -79,50 +84,51 @@ const communityShield26: EventType[] = [
   },
 ]
 
+function readLocalFixtures(files: string[]): EventType[] {
+  return files.flatMap((file) =>
+    JSON.parse(
+      fs.readFileSync(
+        path.join(process.cwd(), 'public', 'fixtures', file),
+        'utf8'
+      )
+    )
+  )
+}
+
 export async function getAllEvents(): Promise<EventType[]> {
-  const carabaoCupFixturesPath = path.join(
-    process.cwd(),
-    'public',
-    'fixtures',
-    'carabao-cup-25-26.json'
-  )
-  const faCupFixturesPath = path.join(
-    process.cwd(),
-    'public',
-    'fixtures',
-    'fa-cup-25-26.json'
+  const [plResults, uclResults] = await Promise.all(
+    [EPL_URLS, UCL_URLS].map((urls) =>
+      Promise.allSettled(
+        urls.map((url) =>
+          fetch(url, {next: {revalidate: 3600}}).then((r) => r.json())
+        )
+      )
+    )
   )
 
-  const [uclResult, ...plResults] = await Promise.allSettled([
-    fetch(UCL_URL, {next: {revalidate: 3600}}).then((r) => r.json()),
-    ...EPL_URLS.map((url) =>
-      fetch(url, {next: {revalidate: 3600}}).then((r) => r.json())
-    ),
-  ])
-
-  const plSeason25: EventType[] = plResults
+  const premierLeague: EventType[] = plResults
     .flatMap((result) => (result.status === 'fulfilled' ? result.value : []))
     .map((event: EventType) => ({competition: 'Premier League', ...event}))
 
-  const uclSeason25: EventType[] = (
-    uclResult.status === 'fulfilled' ? uclResult.value : []
-  ).map((event: EventType) => ({competition: 'UEFA Champions League', ...event}))
+  const championsLeague: EventType[] = uclResults
+    .flatMap((result) => (result.status === 'fulfilled' ? result.value : []))
+    .map((event: EventType) => ({competition: 'UEFA Champions League', ...event}))
 
-  const carabaoCupSeason25: EventType[] = JSON.parse(
-    fs.readFileSync(carabaoCupFixturesPath, 'utf8')
-  ).map((event: EventType) => ({competition: 'Carabao Cup', ...event}))
+  const carabaoCup: EventType[] = readLocalFixtures(CARABAO_CUP_FILES).map(
+    (event: EventType) => ({competition: 'Carabao Cup', ...event})
+  )
 
-  const faCupSeason25: EventType[] = JSON.parse(
-    fs.readFileSync(faCupFixturesPath, 'utf8')
-  ).map((event: EventType) => ({competition: 'FA Cup', ...event}))
+  const faCup: EventType[] = readLocalFixtures(FA_CUP_FILES).map(
+    (event: EventType) => ({competition: 'FA Cup', ...event})
+  )
 
   return [
     ...preSeason,
     ...communityShield26,
-    ...plSeason25,
-    ...uclSeason25,
-    ...carabaoCupSeason25,
-    ...faCupSeason25,
+    ...premierLeague,
+    ...championsLeague,
+    ...carabaoCup,
+    ...faCup,
   ].sort(
     (a, b) => new Date(a.DateUtc).getTime() - new Date(b.DateUtc).getTime()
   )
