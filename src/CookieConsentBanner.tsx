@@ -99,7 +99,7 @@ export const CookieConsentBanner = () => {
           }}
         >
           We use cookies to measure how the site is used. Analytics cookies are
-          only set if you accept — rejecting keeps everything working.{' '}
+          only set if you accept. Rejecting keeps everything working.{' '}
           <Box
             component="button"
             onClick={() => setPrivacyPolicyOpen(true)}
