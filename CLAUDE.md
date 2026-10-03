@@ -69,7 +69,7 @@ src/
 ├── AllEvents.tsx           # 'use client' — Events listing with competition filter chips
 ├── Event.tsx               # 'use client' — Individual event card (editorial design)
 ├── Footer.tsx              # 'use client' — 3-column footer
-├── Locations.tsx           # 'use client' — "where we watch" section (home page, #locations) with click-to-load Google Maps embeds
+├── Locations.tsx           # 'use client' — Club intro + "where we watch" section (home page, above matches, #locations) with click-to-load Google Maps embeds
 ├── EventsSkeleton.tsx      # 'use client' — Loading skeleton for events
 ├── LoadingOverlay.tsx      # 'use client' — Navigation loading backdrop
 ├── CartButton.tsx          # 'use client' — Cart icon with badge

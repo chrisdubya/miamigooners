@@ -20,10 +20,10 @@ export default function Home() {
     <>
       <Hero />
       <div>
+        <Locations />
         <Suspense fallback={<EventsSkeleton />}>
           <EventsSection />
         </Suspense>
-        <Locations />
         <Footer />
       </div>
     </>

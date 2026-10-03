@@ -85,77 +85,8 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
   return (
     <Container id="matches">
       <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, pt: {xs: 6, md: 8}, pb: {xs: 8, md: 12}}}>
-        {/* Intro text */}
-        <Typography
-          component="h2"
-          sx={{
-            fontFamily: doppler.style.fontFamily,
-            fontWeight: 400,
-            fontSize: {xs: '1.25rem', md: '1.5rem'},
-            lineHeight: 1.2,
-            color: 'text.secondary',
-            textTransform: 'lowercase',
-          }}
-        >
-          The{' '}
-          <a
-            style={{color: '#DB0007', textDecoration: 'underline'}}
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.arsenalamerica.com/branches/"
-          >
-            official
-          </a>{' '}
-          Arsenal Supporters Branch in Miami, FL
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: {xs: '1rem', md: '1.125rem'},
-            lineHeight: 1.6,
-            color: 'text.secondary',
-          }}
-        >
-          We watch all matches at{' '}
-          <a
-            style={{color: '#DB0007', textDecoration: 'underline'}}
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.instagram.com/thebargables"
-          >
-            the Bar
-          </a>{' '}
-          in Coral Gables and at our satellite location,{' '}
-          <a
-            style={{color: '#DB0007', textDecoration: 'underline'}}
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://theleinstermiami.com"
-          >
-            the Leinster
-          </a>
-          , in Downtown Miami (
-          <a style={{color: '#DB0007', textDecoration: 'underline'}} href="#locations">
-            addresses &amp; maps
-          </a>
-          ). Follow our{' '}
-          <a
-            style={{color: '#DB0007', textDecoration: 'underline'}}
-            href="https://www.instagram.com/miamigooners/"
-          >
-            Instagram
-          </a>{' '}
-          or{' '}
-          <a
-            style={{color: '#DB0007', textDecoration: 'underline'}}
-            href="https://twitter.com/miamigooners"
-          >
-            X
-          </a>{' '}
-          for the latest info. Come join us!
-        </Typography>
-
         {/* Competition filter chips */}
-        <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap', mt: 2}}>
+        <Box sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
           {COMPETITION_FILTERS.map((comp) => (
             <Chip
               key={comp}

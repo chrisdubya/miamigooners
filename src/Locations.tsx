@@ -20,7 +20,7 @@ const LocationMap = ({location}: {location: WatchLocation}) => {
     <Box
       sx={{
         position: 'relative',
-        aspectRatio: {xs: '4 / 3', md: '16 / 10'},
+        aspectRatio: {xs: '16 / 10', md: '2 / 1'},
         backgroundColor: '#0A0A0B',
         borderTop: '1px solid #2E2E38',
       }}
@@ -90,7 +90,7 @@ const LocationCard = ({location}: {location: WatchLocation}) => (
           sx={{
             fontFamily: doppler.style.fontFamily,
             textTransform: 'lowercase',
-            fontSize: {xs: '1.75rem', md: '2rem'},
+            fontSize: {xs: '1.5rem', md: '1.75rem'},
             lineHeight: 1.1,
           }}
         >
@@ -146,24 +146,63 @@ const LocationCard = ({location}: {location: WatchLocation}) => (
   </Box>
 )
 
+const linkStyle = {color: '#DB0007', textDecoration: 'underline'}
+
 export const Locations = () => (
-  <Box component="section" id="locations" sx={{borderTop: '1px solid #2E2E38'}}>
-    <Container sx={{pt: {xs: 6, md: 8}, pb: {xs: 8, md: 12}}}>
+  <Box component="section" id="locations" aria-labelledby="locations-heading">
+    <Container sx={{pt: {xs: 6, md: 8}, pb: {xs: 2, md: 4}}}>
       <Typography
+        variant="overline"
+        component="p"
+        sx={{color: '#D4A843', letterSpacing: '0.15em', lineHeight: 1.5, mb: 1}}
+      >
+        Official Arsenal Supporters Branch &middot; Miami, FL
+      </Typography>
+      <Typography
+        id="locations-heading"
         component="h2"
         sx={{
           fontFamily: doppler.style.fontFamily,
+          fontWeight: 700,
+          fontSize: {xs: '1.5rem', md: '2rem'},
+          letterSpacing: '0.02em',
           textTransform: 'lowercase',
-          fontSize: {xs: '2rem', md: '2.5rem'},
-          lineHeight: 1.1,
-          mb: 1,
+          color: 'text.primary',
+          margin: 0,
         }}
       >
-        where we watch
+        Where We Watch
       </Typography>
-      <Typography sx={{color: 'text.secondary', fontSize: {xs: '1rem', md: '1.125rem'}, mb: 4}}>
-        Two places to watch Arsenal with us — our home in Coral Gables and our
-        satellite in Downtown Miami.
+      <Box sx={{width: 80, height: 2, bgcolor: '#DB0007', mt: 1, mb: 3}} />
+      <Typography
+        sx={{
+          fontSize: {xs: '1rem', md: '1.125rem'},
+          lineHeight: 1.6,
+          color: 'text.secondary',
+          maxWidth: 760,
+          mb: {xs: 4, md: 5},
+        }}
+      >
+        Miami Gooners is the{' '}
+        <a
+          style={linkStyle}
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.arsenalamerica.com/branches/"
+        >
+          official
+        </a>{' '}
+        Arsenal Supporters Branch in Miami. We watch every match at two
+        locations: our home, The Bar in Coral Gables, and our satellite, The
+        Leinster in Downtown Miami. Follow our{' '}
+        <a style={linkStyle} href="https://www.instagram.com/miamigooners/">
+          Instagram
+        </a>{' '}
+        or{' '}
+        <a style={linkStyle} href="https://twitter.com/miamigooners">
+          X
+        </a>{' '}
+        for the latest info. Come join us!
       </Typography>
       <Box
         sx={{
