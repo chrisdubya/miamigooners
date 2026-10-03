@@ -94,7 +94,7 @@ export const PrivacyPolicy = () => {
         <li><strong>Vercel Speed Insights — no cookies.</strong> Our hosting provider collects anonymous page performance measurements. It sets no cookies and does not identify you.</li>
       </Typography>
       <Typography paragraph>
-        Two features load content from other companies only when you ask for them. Playing a match video in our photo gallery loads a video player from Google Drive, and starting checkout takes you to Shopify's own checkout pages. Both may set their own cookies at that point, governed by Google's and Shopify's privacy policies rather than this one.
+        Three features load content from other companies only when you ask for them. Playing a match video in our photo gallery loads a video player from Google Drive, selecting "Show map" on one of our watch locations loads Google Maps, and starting checkout takes you to Shopify's own checkout pages. Each may set its own cookies at that point, governed by Google's and Shopify's privacy policies rather than this one.
       </Typography>
       <Typography paragraph>
         You can change your choice at any time using the <strong>Cookie Preferences</strong> link at the bottom of any page, or by clearing the site data in your browser settings.

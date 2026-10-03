@@ -124,7 +124,20 @@ export const AllEvents = ({events, photoMatchMap = {}}: {events: EventType[]; ph
           >
             the Bar
           </a>{' '}
-          in Coral Gables. Follow our{' '}
+          in Coral Gables and at our satellite location,{' '}
+          <a
+            style={{color: '#DB0007', textDecoration: 'underline'}}
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://theleinstermiami.com"
+          >
+            the Leinster
+          </a>
+          , in Downtown Miami (
+          <a style={{color: '#DB0007', textDecoration: 'underline'}} href="#locations">
+            addresses &amp; maps
+          </a>
+          ). Follow our{' '}
           <a
             style={{color: '#DB0007', textDecoration: 'underline'}}
             href="https://www.instagram.com/miamigooners/"

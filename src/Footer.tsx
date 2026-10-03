@@ -58,7 +58,8 @@ export const Footer = () => {
                 Arsenal&apos;s Official Supporters Club in Miami, FL
               </Typography>
               <Typography variant="body2" sx={{color: '#71717A'}}>
-                We watch all matches at The Bar in Coral Gables
+                We watch all matches at The Bar in Coral Gables and The Leinster
+                in Downtown Miami
               </Typography>
             </Box>
 
@@ -87,6 +88,17 @@ export const Footer = () => {
                   }}
                 >
                   Matches
+                </Link>
+                <Link
+                  href="/#locations"
+                  style={{
+                    color: '#A1A1AA',
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                    transition: 'color 200ms ease',
+                  }}
+                >
+                  Locations
                 </Link>
                 <Link
                   href="/shop"
