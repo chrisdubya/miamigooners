@@ -8,14 +8,14 @@ import type {MatchFolder} from '../../src/types/photos'
 export const metadata: Metadata = {
   title: 'Matchday Photos - Miami Gooners | Arsenal Watch Party Photos in Miami',
   description:
-    'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL. Thousands of photos from Premier League, Champions League, FA Cup, and Carabao Cup matchdays.',
+    'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables and The Leinster in Downtown Miami, FL. Thousands of photos from Premier League, Champions League, FA Cup, and Carabao Cup matchdays.',
   alternates: {canonical: 'https://miamigooners.com/matchday-photos'},
   openGraph: {
     type: 'website',
     url: 'https://miamigooners.com/matchday-photos',
     title: 'Matchday Photos - Miami Gooners',
     description:
-      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables and The Leinster in Downtown Miami, FL.',
     images: ['https://miamigooners.com/og-image.jpg'],
     siteName: 'Miami Gooners',
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Matchday Photos - Miami Gooners',
     description:
-      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+      'Browse matchday photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables and The Leinster in Downtown Miami, FL.',
     images: ['https://miamigooners.com/og-image.jpg'],
   },
 }
@@ -97,7 +97,7 @@ export default async function MatchdayPhotos() {
     '@type': 'CollectionPage',
     name: 'Matchday Photos - Miami Gooners',
     description:
-      'Photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables, FL.',
+      'Photos from Miami Gooners Arsenal watch parties at The Bar in Coral Gables and The Leinster in Downtown Miami, FL.',
     url: 'https://miamigooners.com/matchday-photos',
     isPartOf: {
       '@type': 'WebSite',

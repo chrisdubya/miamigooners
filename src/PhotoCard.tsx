@@ -35,7 +35,6 @@ export const PhotoCard = ({photo, onOpen, priority = false}: PhotoCardProps) => 
     isVideo && photo.videoMediaMetadata
       ? Math.round(parseInt(photo.videoMediaMetadata.durationMillis, 10) / 1000)
       : 0
-  const shortOwner = photo.owners?.[0]?.displayName?.split(' ')[0] || ''
 
   return (
     <Box
@@ -178,14 +177,6 @@ export const PhotoCard = ({photo, onOpen, priority = false}: PhotoCardProps) => 
             }}
           >
             <span>{relTime(photo.createdTime)}</span>
-            {shortOwner && (
-              <>
-                <Box component="span" sx={{color: '#3A3A46'}}>
-                  ·
-                </Box>
-                <span>{shortOwner}</span>
-              </>
-            )}
           </Box>
         </Box>
       </Box>

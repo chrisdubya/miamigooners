@@ -8,7 +8,7 @@ export const PrivacyPolicy = () => {
       </Typography>
 
       <Typography paragraph>
-        Miami Gooners is the official Arsenal FC supporters club in Miami, Florida. We operate miamigooners.com, including our match listings, matchday photo gallery, and online shop (together, the "Services"). This Privacy Policy describes how we collect, use, and disclose your personal information when you visit or use the Services, buy merchandise from us, or otherwise communicate with us. Our shop is powered by Shopify, and when you buy something you complete your order on Shopify's own checkout pages — see "Relationship with Shopify" below.
+        Miami Gooners is the official Arsenal FC supporters club in Miami, Florida. We operate miamigooners.com, including our match listings, matchday photo gallery, and online shop (together, the "Services"). This Privacy Policy describes how we collect, use, and disclose your personal information when you visit or use the Services, buy merchandise from us, or otherwise communicate with us. Our shop is powered by Shopify, and when you buy something you complete your order on Shopify's own checkout pages (see "Relationship with Shopify" below).
       </Typography>
 
       <Typography paragraph>
@@ -23,10 +23,10 @@ export const PrivacyPolicy = () => {
       </Typography>
 
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li>Contact details including your name, shipping address, billing address, phone number, and email address. This website does not ask you for any of these — they are collected by Shopify when you check out, and shared back with us so we can fulfill your order.</li>
+        <li>Contact details including your name, shipping address, billing address, phone number, and email address. This website does not ask you for any of these. They are collected by Shopify when you check out, and shared back with us so we can fulfill your order.</li>
         <li>Financial information including payment card and payment account details. These are collected and processed entirely by Shopify and its payment processors on their own checkout pages. We never receive or store your full card details.</li>
         <li>Transaction information including the items you view, put in your cart, or purchase, return, exchange or cancel, and your past transactions.</li>
-        <li>Photographs and contributor names, where you appear in or have contributed images to our matchday photo gallery. See "Matchday Photos" below.</li>
+        <li>Photographs, where you appear in or have contributed images to our matchday photo gallery. See "Matchday Photos" below.</li>
         <li>Communications with us including the information you include in communications with us, for example, when sending a customer support inquiry.</li>
         <li>Device information including information about your device, browser, or network connection, your IP address, and other unique identifiers.</li>
         <li>Usage information including information regarding your interaction with the Services, including how and when you interact with or navigate the Services.</li>
@@ -87,14 +87,14 @@ export const PrivacyPolicy = () => {
         We use a small number of cookies and similar browser storage technologies on miamigooners.com. Some are necessary for the site to function; analytics cookies are only set if you choose to accept them.
       </Typography>
       <Typography component="ul" sx={{paddingLeft: 2}}>
-        <li><strong>Google Analytics (<code>_ga</code>, <code>_ga_G-1ZGEWQ7JLM</code>) — analytics, up to 2 years.</strong> Helps us understand which pages and matches people visit. These are only set after you select "Accept" in our cookie banner. If you reject or have not yet chosen, Google Analytics runs in a restricted mode that stores nothing on your device.</li>
-        <li><strong>Shopping cart (<code>miami-gooners-cart</code>) — strictly necessary, stored until cleared.</strong> Browser local storage that remembers the items in your cart between visits. Without it the shop cannot work.</li>
-        <li><strong>Cookie choice (<code>miami-gooners-cookie-consent-v1</code>) — strictly necessary, stored until cleared.</strong> Records whether you accepted or rejected analytics so we do not ask again.</li>
-        <li><strong>Announcement dismissal — functional, stored until cleared.</strong> Remembers that you have closed a site announcement.</li>
-        <li><strong>Vercel Speed Insights — no cookies.</strong> Our hosting provider collects anonymous page performance measurements. It sets no cookies and does not identify you.</li>
+        <li><strong>Google Analytics (<code>_ga</code>, <code>_ga_G-1ZGEWQ7JLM</code>): analytics, up to 2 years.</strong> Helps us understand which pages and matches people visit. These are only set after you select "Accept" in our cookie banner. If you reject or have not yet chosen, Google Analytics runs in a restricted mode that stores nothing on your device.</li>
+        <li><strong>Shopping cart (<code>miami-gooners-cart</code>): strictly necessary, stored until cleared.</strong> Browser local storage that remembers the items in your cart between visits. Without it the shop cannot work.</li>
+        <li><strong>Cookie choice (<code>miami-gooners-cookie-consent-v1</code>): strictly necessary, stored until cleared.</strong> Records whether you accepted or rejected analytics so we do not ask again.</li>
+        <li><strong>Announcement dismissal: functional, stored until cleared.</strong> Remembers that you have closed a site announcement.</li>
+        <li><strong>Vercel Speed Insights: no cookies.</strong> Our hosting provider collects anonymous page performance measurements. It sets no cookies and does not identify you.</li>
       </Typography>
       <Typography paragraph>
-        Two features load content from other companies only when you ask for them. Playing a match video in our photo gallery loads a video player from Google Drive, and starting checkout takes you to Shopify's own checkout pages. Both may set their own cookies at that point, governed by Google's and Shopify's privacy policies rather than this one.
+        Three features load content from other companies only when you ask for them. Playing a match video in our photo gallery loads a video player from Google Drive, selecting "Show map" on one of our watch locations loads Google Maps, and starting checkout takes you to Shopify's own checkout pages. Each may set its own cookies at that point, governed by Google's and Shopify's privacy policies rather than this one.
       </Typography>
       <Typography paragraph>
         You can change your choice at any time using the <strong>Cookie Preferences</strong> link at the bottom of any page, or by clearing the site data in your browser settings.
@@ -104,7 +104,7 @@ export const PrivacyPolicy = () => {
         Matchday Photos
       </Typography>
       <Typography paragraph>
-        We publish photographs and videos taken at our matchday events and other club gatherings in the matchday photo gallery on this website. These images are taken in a public or semi-public venue and may show people who attended, including you. Each set of photos is credited using the display name of the club member who contributed it; we do not publish contributors' email addresses. The images are stored in Google Drive and served through Google Cloud Storage.
+        We publish photographs and videos taken at our matchday events and other club gatherings in the matchday photo gallery on this website. These images are taken in a public or semi-public venue and may show people who attended, including you. We do not display contributors' names or email addresses alongside the photos. The images are stored in Google Drive and served through Google Cloud Storage.
       </Typography>
       <Typography paragraph>
         If you appear in a photograph and would like it removed, or you contributed photos and want your credit changed or taken down, email us at{' '}
@@ -151,7 +151,7 @@ export const PrivacyPolicy = () => {
             https://globalprivacycontrol.org/
           </Link>. Other than the Global Privacy Control, we do not recognize other "Do Not Track" signals that may be sent from your web browser or device.
         </li>
-        <li><strong>Email We Send You.</strong> We do not run email marketing campaigns and we do not have a newsletter. If you buy something, Shopify sends you transactional email about that order — order confirmation, shipping and delivery updates, and any return you request. If we ever start sending promotional email, it will include an unsubscribe option.</li>
+        <li><strong>Email We Send You.</strong> We do not run email marketing campaigns and we do not have a newsletter. If you buy something, Shopify sends you transactional email about that order: order confirmation, shipping and delivery updates, and any return you request. If we ever start sending promotional email, it will include an unsubscribe option.</li>
       </Typography>
       <Typography paragraph>
         You may exercise any of these rights where indicated on the Services or by contacting us using the contact details provided below. To learn more about how Shopify uses your personal information and any rights you may have, including rights related to data processed by Shopify, you can visit{' '}

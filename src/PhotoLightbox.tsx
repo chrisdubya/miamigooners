@@ -83,12 +83,6 @@ export const PhotoLightbox = ({
   if (!photo || !match) return null
 
   const isVideo = photo.mimeType?.startsWith('video/')
-  const ownerName = photo.owners?.[0]?.displayName || 'Unknown'
-  const initials = ownerName
-    .split(' ')
-    .map((s) => s[0])
-    .join('')
-    .slice(0, 2)
 
   const durationSec =
     isVideo && photo.videoMediaMetadata
@@ -352,41 +346,6 @@ export const PhotoLightbox = ({
         >
           {/* Header */}
           <Box sx={{padding: '20px 24px 16px', borderBottom: '1px solid #2E2E38'}}>
-            <Box sx={{display: 'flex', alignItems: 'center', gap: '10px', mb: '12px'}}>
-              {/* Avatar */}
-              <Box
-                sx={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '50%',
-                  background: '#1A1A1E',
-                  border: '1px solid #2E2E38',
-                  color: '#F5F5F7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontFamily: inter.style.fontFamily,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  flex: '0 0 auto',
-                }}
-              >
-                {initials}
-              </Box>
-              <Box sx={{minWidth: 0, flex: 1}}>
-                <Typography
-                  sx={{
-                    fontFamily: inter.style.fontFamily,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: '#F5F5F7',
-                  }}
-                >
-                  {ownerName}
-                </Typography>
-              </Box>
-            </Box>
-
             <Box sx={{display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap'}}>
               {match.competition && (
                 <Box

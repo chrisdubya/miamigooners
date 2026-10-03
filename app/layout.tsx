@@ -9,20 +9,21 @@ import {Navbar} from '../src/Navbar'
 import {AnnouncementBanner} from '../src/AnnouncementBanner'
 import {AnnouncementModal} from '../src/AnnouncementModal'
 import {CookieConsentBanner} from '../src/CookieConsentBanner'
+import {LOCATIONS} from '../src/constants/locations'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://miamigooners.com'),
   title:
     'The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners',
   description:
-    'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners.',
+    'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches at The Bar in Coral Gables and The Leinster in Downtown Miami. Follow us on instagram and X @miamigooners.',
   openGraph: {
     type: 'website',
     url: 'https://miamigooners.com/',
     title:
       'The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners',
     description:
-      'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners.',
+      'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches at The Bar in Coral Gables and The Leinster in Downtown Miami. Follow us on instagram and X @miamigooners.',
     images: ['https://miamigooners.com/og-image.jpg'],
     siteName: 'Miami Gooners',
   },
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     title:
       'The Official Miami Arsenal FC Supporters Club in Miami, FL - Miami Gooners',
     description:
-      'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches @thebargables. Follow us on instagram and X @miamigooners.',
+      'Miami Gooners: Official Arsenal FC Supporters Club. We watch all matches at The Bar in Coral Gables and The Leinster in Downtown Miami. Follow us on instagram and X @miamigooners.',
     images: ['https://miamigooners.com/og-image.jpg'],
   },
   icons: {
@@ -70,16 +71,18 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 'https://instagram.com/miamigooners',
                 'https://twitter.com/miamigooners',
               ],
-              location: {
+              location: LOCATIONS.map((loc) => ({
                 '@type': 'Place',
-                name: 'The Bar Gables',
+                name: loc.name,
                 address: {
                   '@type': 'PostalAddress',
-                  addressLocality: 'Miami',
-                  addressRegion: 'FL',
+                  streetAddress: loc.street,
+                  addressLocality: loc.city,
+                  addressRegion: loc.region,
+                  postalCode: loc.postalCode,
                   addressCountry: 'US',
                 },
-              },
+              })),
             }),
           }}
         />

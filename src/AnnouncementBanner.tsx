@@ -59,10 +59,10 @@ export const AnnouncementBanner = () => {
       }}
     >
       <Box component="span" sx={{display: {xs: 'none', sm: 'inline'}}}>
-        🚨 UCL Final vs PSG — must-read info for Saturday at The Bar
+        🚨 UCL Final vs PSG: must-read info for Saturday at The Bar
       </Box>
       <Box component="span" sx={{display: {xs: 'inline', sm: 'none'}}}>
-        🚨 UCL Final — Saturday at The Bar
+        🚨 UCL Final: Saturday at The Bar
       </Box>
       <Button
         onClick={handleOpen}

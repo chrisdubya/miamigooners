@@ -137,7 +137,7 @@ export const PhotosHero = ({stats}: PhotosHeroProps) => {
               m: 0,
             }}
           >
-            Photos from our Arsenal watch parties at The Bar in Coral Gables, Miami. Shot by the group.
+            Photos from our watch parties.
           </Typography>
         </Box>
 
