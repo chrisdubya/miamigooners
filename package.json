@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "sync-photos": "node scripts/sync-thumbnails.mjs"
+    "sync-photos": "node scripts/sync-thumbnails.mjs",
+    "sync-photos:check-names": "node scripts/sync-thumbnails.mjs --check-names",
+    "test:scripts": "node --test scripts/lib/*.test.mjs"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
