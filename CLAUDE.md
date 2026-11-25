@@ -21,8 +21,14 @@ npm start
 # Run linter
 npm run lint
 
-# Sync matchday photos from Google Drive to GCS
+# Sync matchday photos from Google Drive to GCS (also renames misnamed Drive folders)
 npm run sync-photos
+
+# Report which Drive folders would be renamed, without changing anything
+npm run sync-photos:check-names
+
+# Unit tests for the sync script's folder-name normalizer
+npm run test:scripts
 ```
 
 ## Architecture
@@ -96,7 +102,10 @@ src/
     └── shopify.ts          # Shopify Storefront API client
 
 scripts/
-└── sync-thumbnails.mjs     # Syncs photos from Google Drive to GCS + generates manifest
+├── sync-thumbnails.mjs     # Syncs photos from Google Drive to GCS + generates manifest
+└── lib/
+    ├── folderName.mjs      # Normalizes Drive folder names to "Opponent · YYYY-MM-DD"
+    └── folderName.test.mjs # node:test suite for the normalizer
 
 styles/globals.css          # Tailwind @theme tokens, CSS animations, global styles
 public/fixtures/
@@ -161,8 +170,9 @@ Photos from matchday events are stored in Google Drive (organized as subfolders 
 
 **Architecture:**
 
-1. **Sync script** (`scripts/sync-thumbnails.mjs`) — run manually via `npm run sync-photos`
+1. **Sync script** (`scripts/sync-thumbnails.mjs`) — run via `npm run sync-photos` (also every 30 min by `.github/workflows/sync-photos.yml`)
    - Reads folder structure and file metadata from Google Drive API
+   - **Normalizes folder names** (`scripts/lib/folderName.mjs`): contributors don't always use the `"Opponent · YYYY-MM-DD"` format, so each folder name is parsed loosely (any separator, `vs`/`Arsenal`/`(H)`/competition noise stripped, nicknames like `Tottenham`/`Man City`/`Bayern München` mapped to the names in `teamColors.ts`, US/European/textual dates, missing years) and the folder is renamed in Drive to the canonical name. Fixture data (fixturedownload feeds + local cup JSON + hard-coded friendlies, parsed from `src/utils/events.ts`) resolves ambiguous dates such as `3/2/26`; folders with no date fall back to the photos' EXIF capture day. Anything that can't be resolved confidently (ambiguous date, no opponent, name collision with an existing folder) is left untouched and listed at the end of the run. `--check-names` reports without changing anything; `--no-rename` syncs without renaming. Requires the service account to have **edit** access to the shared folder (Drive scope `auth/drive`).
    - Downloads thumbnails at two sizes (w600 for grid, w1600 for lightbox) and uploads to GCS
    - Skips thumbnails that already exist in GCS (idempotent)
    - Parses folder names to extract opponent and date, resolves team aliases, looks up team colors from `src/constants/teamColors.ts` (parsed at runtime via regex)
@@ -181,9 +191,9 @@ Photos from matchday events are stored in Google Drive (organized as subfolders 
 
 **Adding photos to a new match:**
 
-1. Create a folder in Google Drive named `"Opponent · YYYY-MM-DD"` (e.g. `"Chelsea · 2026-03-15"`)
+1. Create a folder in Google Drive named `"Opponent · YYYY-MM-DD"` (e.g. `"Chelsea · 2026-03-15"`). Loosely named folders (e.g. `"Arsenal vs Chelsea 3/15/26"`) are renamed automatically by the sync, but use the canonical name when you can.
 2. Upload photos/videos to the folder
-3. Run `npm run sync-photos` to generate thumbnails and update the manifest
+3. Run `npm run sync-photos` to generate thumbnails and update the manifest (or wait for the scheduled workflow)
 4. If the opponent has a matching fixture in `public/fixtures/`, the match metadata (score, competition, result) will be populated automatically
 
 ### Team Colors System

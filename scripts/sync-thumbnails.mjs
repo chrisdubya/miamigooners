@@ -9,8 +9,17 @@
  * After all thumbnails are synced, generates and uploads a manifest.json
  * containing the full PhotosData structure the app consumes.
  *
+ * Before syncing, every match folder name is checked against the expected
+ * "Opponent · YYYY-MM-DD" format. Folders other contributors named loosely
+ * (e.g. "Arsenal vs Chelsea 2/3/26", "chelsea - 3 Feb") are renamed in Drive
+ * to the canonical form (see scripts/lib/folderName.mjs). Fixture data is used
+ * to resolve ambiguous dates; folders that cannot be resolved with confidence
+ * are left alone and reported.
+ *
  * Usage:
- *   node scripts/sync-thumbnails.mjs
+ *   node scripts/sync-thumbnails.mjs                 # rename + sync
+ *   node scripts/sync-thumbnails.mjs --check-names   # report renames only, change nothing
+ *   node scripts/sync-thumbnails.mjs --no-rename     # sync without renaming folders
  *
  * Requires:
  *   - .env.local with GOOGLE_DRIVE_FOLDER_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -21,6 +30,11 @@ import {google} from 'googleapis'
 import {Storage} from '@google-cloud/storage'
 import fs from 'fs'
 import path from 'path'
+import {normalizeFolderName} from './lib/folderName.mjs'
+
+const args = new Set(process.argv.slice(2))
+const CHECK_NAMES_ONLY = args.has('--check-names')
+const RENAME_FOLDERS = !args.has('--no-rename')
 
 const BUCKET_NAME = 'miami-gooners-photos'
 const GCS_BASE = `https://storage.googleapis.com/${BUCKET_NAME}/thumbnails`
@@ -86,7 +100,9 @@ const privateKey = normalizePrivateKey(PRIVATE_KEY_RAW, PRIVATE_KEY_B64)
 const driveAuth = new google.auth.JWT({
   email: SERVICE_EMAIL,
   key: privateKey,
-  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+  // Full Drive scope: the sync renames misnamed match folders. The service
+  // account must have edit access to the shared photos folder for that.
+  scopes: ['https://www.googleapis.com/auth/drive'],
 })
 const drive = google.drive({version: 'v3', auth: driveAuth})
 
@@ -105,19 +121,44 @@ const teamColorsSrc = fs.readFileSync(teamColorsPath, 'utf-8')
 const teamColors = [...teamColorsSrc.matchAll(/primary:\s*(['"])(.+?)\1\s*,\s*\n\s*secondary:\s*(['"]).+?\3\s*,\s*\n\s*team:\s*(['"])(.+?)\4/g)]
   .map(([, , primary, , , team]) => ({primary, team}))
 
-// ── Folder parsing (mirrors src/utils/googleDrive.ts) ──
-const teamAliases = {
-  'wigan': 'Wigan Athletic',
-  'nottingham forest': 'Nottingham Forest',
-}
+const knownTeams = teamColors.map((tc) => tc.team)
 
-function parseFolderName(name) {
-  const match = name.match(/^(.+?)\s*·\s*(\d{4}-\d{2}-\d{2})$/)
-  if (!match) return null
-  const [, rawOpponent, date] = match
-  const opponent = rawOpponent.trim()
-  const canonical = teamAliases[opponent.toLowerCase()] ?? opponent
-  return {label: `vs ${opponent}`, opponent: canonical, date}
+// ── Fixture hints (used to resolve ambiguous / incomplete folder dates) ──
+// Mirrors the sources in src/utils/events.ts without importing TypeScript:
+// remote fixturedownload.com feeds, local cup JSON files, and the hard-coded
+// friendlies. Any source that fails is skipped — hints are optional.
+async function loadFixtureHints() {
+  const eventsSrc = fs.readFileSync(path.resolve(process.cwd(), 'src/utils/events.ts'), 'utf-8')
+  const raw = []
+
+  const feedUrls = [...eventsSrc.matchAll(/https:\/\/fixturedownload\.com\/feed\/json\/[^'"\s]+/g)].map((m) => m[0])
+  const feeds = await Promise.allSettled(
+    feedUrls.map((url) => fetch(url, {signal: AbortSignal.timeout(15_000)}).then((r) => (r.ok ? r.json() : [])))
+  )
+  for (const f of feeds) if (f.status === 'fulfilled' && Array.isArray(f.value)) raw.push(...f.value)
+
+  const fixturesDir = path.resolve(process.cwd(), 'public/fixtures')
+  if (fs.existsSync(fixturesDir)) {
+    for (const file of fs.readdirSync(fixturesDir).filter((f) => f.endsWith('.json'))) {
+      try {
+        const data = JSON.parse(fs.readFileSync(path.join(fixturesDir, file), 'utf-8'))
+        if (Array.isArray(data)) raw.push(...data)
+      } catch {
+        // ignore malformed local file
+      }
+    }
+  }
+
+  for (const m of eventsSrc.matchAll(/DateUtc:\s*'([^']+)'[\s\S]*?HomeTeam:\s*'([^']+)'[\s\S]*?AwayTeam:\s*'([^']+)'/g)) {
+    raw.push({DateUtc: m[1], HomeTeam: m[2], AwayTeam: m[3]})
+  }
+
+  return raw
+    .filter((e) => e?.DateUtc && e.HomeTeam && e.AwayTeam)
+    .map((e) => ({
+      opponent: e.HomeTeam === 'Arsenal' ? e.AwayTeam : e.HomeTeam,
+      date: String(e.DateUtc).slice(0, 10),
+    }))
 }
 
 function findTeamColor(teamName) {
@@ -129,13 +170,28 @@ function findTeamColor(teamName) {
 
 // ── Drive helpers ──
 async function listSubFolders(parentId) {
-  const res = await drive.files.list({
-    q: `'${parentId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
-    fields: 'files(id, name, createdTime)',
-    orderBy: 'createdTime desc',
-    pageSize: 100,
+  const folders = []
+  let pageToken = undefined
+  do {
+    const res = await drive.files.list({
+      q: `'${parentId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+      fields: 'nextPageToken, files(id, name, createdTime)',
+      orderBy: 'createdTime desc',
+      pageSize: 100,
+      pageToken,
+    })
+    folders.push(...(res.data.files || []))
+    pageToken = res.data.nextPageToken
+  } while (pageToken)
+  return folders
+}
+
+async function renameFolder(folderId, name) {
+  await drive.files.update({
+    fileId: folderId,
+    requestBody: {name},
+    supportsAllDrives: true,
   })
-  return res.data.files || []
 }
 
 async function listFilesInFolder(folderId) {
@@ -146,7 +202,7 @@ async function listFilesInFolder(folderId) {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed = false and (mimeType contains 'image/' or mimeType contains 'video/')`,
       fields:
-        'nextPageToken, files(id,name,mimeType,description,createdTime,webViewLink,webContentLink,size,imageMediaMetadata(width,height),videoMediaMetadata(width,height,durationMillis),owners(displayName,photoLink))',
+        'nextPageToken, files(id,name,mimeType,description,createdTime,webViewLink,webContentLink,size,imageMediaMetadata(width,height,time),videoMediaMetadata(width,height,durationMillis),owners(displayName,photoLink))',
       orderBy: 'createdTime desc',
       pageSize: 100,
       pageToken,
@@ -265,8 +321,19 @@ async function main() {
   let originalsUploaded = 0
   let originalsSkipped = 0
   let originalsFailed = 0
+  let renamed = 0
+  let renameFailed = 0
+  const unresolved = []
   const contributorSet = new Set()
   const matches = []
+
+  const fixtures = await loadFixtureHints()
+  console.log(`Loaded ${fixtures.length} fixtures for date matching`)
+  if (CHECK_NAMES_ONLY) console.log('--check-names: reporting folder names only, nothing will be changed\n')
+  else if (!RENAME_FOLDERS) console.log('--no-rename: misnamed folders will be reported but not renamed\n')
+
+  // Names already in use, so a rename never produces a duplicate folder
+  const namesInUse = new Map(folders.map((f) => [f.name, f.id]))
 
   for (const folder of folders) {
     if (!folder.id || !folder.name) continue
@@ -277,16 +344,47 @@ async function main() {
       continue
     }
 
-    const parsed = parseFolderName(folder.name)
-    if (!parsed) {
-      console.warn(`⊘ Skipping folder with unparseable name: "${folder.name}"`)
+    const rawFiles = await listFilesInFolder(folder.id)
+
+    // ── Folder name check / rename ──
+    const parsed = normalizeFolderName(folder.name, {
+      knownTeams,
+      fixtures,
+      createdTime: folder.createdTime,
+      exifTimes: rawFiles.map((f) => f.imageMediaMetadata?.time).filter(Boolean),
+    })
+    if (!parsed.ok) {
+      console.warn(`⊘ Skipping "${folder.name}": ${parsed.reason}`)
+      unresolved.push({name: folder.name, reason: parsed.reason})
       continue
     }
+    for (const w of parsed.warnings) console.warn(`  ⚠ "${folder.name}": ${w}`)
 
-    const rawFiles = await listFilesInFolder(folder.id)
+    if (parsed.changed) {
+      const clash = namesInUse.get(parsed.name)
+      if (clash && clash !== folder.id) {
+        console.warn(`  ⚠ "${folder.name}" resolves to "${parsed.name}", which already exists — not renaming (merge these folders in Drive)`)
+      } else if (CHECK_NAMES_ONLY || !RENAME_FOLDERS) {
+        console.log(`  ↻ would rename "${folder.name}" → "${parsed.name}" (${parsed.source})`)
+        renamed++
+      } else {
+        try {
+          await renameFolder(folder.id, parsed.name)
+          namesInUse.delete(folder.name)
+          namesInUse.set(parsed.name, folder.id)
+          console.log(`  ✓ Renamed "${folder.name}" → "${parsed.name}" (${parsed.source})`)
+          renamed++
+        } catch (err) {
+          renameFailed++
+          console.error(`  ✗ Could not rename "${folder.name}" → "${parsed.name}": ${err.message}`)
+        }
+      }
+    }
+
+    if (CHECK_NAMES_ONLY) continue
     if (rawFiles.length === 0) continue
 
-    console.log(`\n📁 ${folder.name} — ${rawFiles.length} files`)
+    console.log(`\n📁 ${parsed.name} — ${rawFiles.length} files`)
     totalFiles += rawFiles.length
 
     // Map Drive files to app format
@@ -303,7 +401,7 @@ async function main() {
     matches.push({
       id: folder.id,
       folderId: folder.id,
-      label: parsed.label,
+      label: `vs ${parsed.opponent}`,
       opponent: parsed.opponent,
       competition: '',
       date: parsed.date,
@@ -368,6 +466,22 @@ async function main() {
     }
   }
 
+  const reportNames = () => {
+    const verb = CHECK_NAMES_ONLY || !RENAME_FOLDERS ? 'Would rename' : 'Renamed'
+    console.log(`  ${verb}:`.padEnd(16) + `${renamed} folder${renamed === 1 ? '' : 's'}`)
+    if (renameFailed) console.log(`  Rename failed: ${renameFailed} (does the service account have edit access?)`)
+    if (unresolved.length) {
+      console.log(`  Unresolved folder names (fix these by hand in Drive):`)
+      for (const u of unresolved) console.log(`    - "${u.name}": ${u.reason}`)
+    }
+  }
+
+  if (CHECK_NAMES_ONLY) {
+    console.log('\n✓ Folder name check complete')
+    reportNames()
+    return
+  }
+
   // Sort matches by date descending (most recent first)
   matches.sort((a, b) => b.date.localeCompare(a.date))
 
@@ -399,6 +513,7 @@ async function main() {
   console.log(`  Skipped:      ${skipped} (already existed)`)
   console.log(`  Failed:       ${failed}`)
   console.log(`  Contributors: ${contributorSet.size}`)
+  reportNames()
   console.log(`\n  Manifest: https://storage.googleapis.com/${BUCKET_NAME}/manifest.json`)
   console.log(`  Bucket:   https://storage.googleapis.com/${BUCKET_NAME}/thumbnails/`)
 }
